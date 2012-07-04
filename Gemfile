@@ -12,7 +12,6 @@ gem 'mysql2'
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -20,7 +19,12 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+# Gems used only for testing and not required
+# in production environment by default
+group :development, :test do
+  gem 'jasmine', '>= 1.0.2.1'
+  gem 'headless', '0.1.0'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
