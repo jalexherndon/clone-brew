@@ -11,7 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715195300) do
+ActiveRecord::Schema.define(:version => 20120715212931) do
+
+  create_table "beers", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "brewery_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "beers", ["brewery_id"], :name => "index_beers_on_brewery_id"
+
+  create_table "breweries", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "city"
+    t.string   "state"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "ingredients", :force => true do |t|
     t.string   "name"
