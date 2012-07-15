@@ -1,4 +1,6 @@
 CloneBrew::Application.routes.draw do
+  resources :breweries
+
   resources :ingredients
 
   get "welcome/index"
