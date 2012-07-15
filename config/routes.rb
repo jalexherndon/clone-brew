@@ -1,4 +1,6 @@
 CloneBrew::Application.routes.draw do
+  resources :ingredients
+
   get "welcome/index"
 
   # The priority is based upon order of creation:
