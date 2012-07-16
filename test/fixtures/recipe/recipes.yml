@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  beer: 
+  directions: MyText
+  recipe_type: 
+
+two:
+  beer: 
+  directions: MyText
+  recipe_type: 
