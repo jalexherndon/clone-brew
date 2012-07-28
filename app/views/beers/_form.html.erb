@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :brewery_id %><br />
-    <%= f.text_field :brewery_id %>
+    <%= f.collection_select(:brewery_id, Brewery.all, :id, :name, :prompt => true) %>
   </div>
   <div class="actions">
     <%= f.submit %>

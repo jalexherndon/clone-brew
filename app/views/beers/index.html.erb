@@ -14,10 +14,10 @@
   <tr>
     <td><%= beer.name %></td>
     <td><%= beer.description %></td>
-    <td><%= beer.brewery %></td>
+    <td><% unless beer.brewery.nil? %><%= beer.brewery.name %><% end %></td>
     <td><%= link_to 'Show', beer %></td>
     <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
-    <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= button_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

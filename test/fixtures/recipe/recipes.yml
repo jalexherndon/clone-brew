@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  beer: 
+  beer_id: 1
   directions: MyText
   type:
 
 two:
-  beer: 
+  beer_id: 1
   directions: MyText
   type:

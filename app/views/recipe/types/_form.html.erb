@@ -1,17 +1,21 @@
 <%= form_for(@recipe_type) do |f| %>
-  <% if @recipe_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@recipe_type.errors.count, "error") %> prohibited this recipe_type from being saved:</h2>
+    <% if @recipe_type.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@recipe_type.errors.count, "error") %> prohibited this recipe_type from being saved:</h2>
 
-      <ul>
-      <% @recipe_type.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+            <ul>
+                <% @recipe_type.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="actions">
+        <%= f.submit %>
+    </div>
 <% end %>

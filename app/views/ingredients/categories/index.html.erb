@@ -15,7 +15,7 @@
     <td><%= ingredients_category.description %></td>
     <td><%= link_to 'Show', ingredients_category %></td>
     <td><%= link_to 'Edit', edit_ingredients_category_path(ingredients_category) %></td>
-    <td><%= link_to 'Destroy', ingredients_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= button_to 'Destroy', ingredients_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

@@ -1,11 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
+  id: 1
   name: MyString
   description: MyText
   brewery: 
 
 two:
+  id: 2
   name: MyString
   description: MyText
-  brewery: 
+  brewery:
+
+guiness:
+  id: 3
+  name: guiness
+  description: hearty
+  brewery:

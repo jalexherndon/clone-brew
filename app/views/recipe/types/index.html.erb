@@ -13,7 +13,7 @@
     <td><%= recipe_type.name %></td>
     <td><%= link_to 'Show', recipe_type %></td>
     <td><%= link_to 'Edit', edit_recipe_type_path(recipe_type) %></td>
-    <td><%= link_to 'Destroy', recipe_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= button_to 'Destroy', recipe_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
