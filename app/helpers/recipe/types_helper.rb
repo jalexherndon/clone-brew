@@ -1,0 +1,2 @@
+module Recipe::TypesHelper
+end

@@ -3,9 +3,9 @@
 one:
   beer: 
   directions: MyText
-  recipe_type: 
+  type:
 
 two:
   beer: 
   directions: MyText
-  recipe_type: 
+  type:

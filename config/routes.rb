@@ -1,7 +1,7 @@
 CloneBrew::Application.routes.draw do
   namespace :recipe do
     resources :recipes
-    resources :recipe_types
+    resources :types
   end
 
   resources :beers
