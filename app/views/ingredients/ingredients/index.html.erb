@@ -1,0 +1,21 @@
+<h1>Listing ingredients_ingredients</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ingredients_ingredients.each do |ingredients_ingredient| %>
+  <tr>
+    <td><%= link_to 'Show', ingredients_ingredient %></td>
+    <td><%= link_to 'Edit', edit_ingredients_ingredient_path(ingredients_ingredient) %></td>
+    <td><%= link_to 'Destroy', ingredients_ingredient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ingredient', new_ingredients_ingredient_path %>

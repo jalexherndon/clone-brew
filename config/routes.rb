@@ -1,4 +1,9 @@
 CloneBrew::Application.routes.draw do
+  namespace :ingredients do
+    resources :ingredients
+    resources :categories
+  end
+
   namespace :recipe do
     resources :recipes
     resources :types
@@ -7,8 +12,6 @@ CloneBrew::Application.routes.draw do
   resources :beers
 
   resources :breweries
-
-  resources :ingredients
 
   get "welcome/index"
 
