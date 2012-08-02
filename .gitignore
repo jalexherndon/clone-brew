@@ -19,3 +19,6 @@
 *.iws
 *.iml
 *.ids
+
+# Ignore all eclipse project files
+.project
