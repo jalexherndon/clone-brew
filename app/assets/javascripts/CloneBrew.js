@@ -1,4 +1,5 @@
 require([
-], function() {
-    var constructed = true;
+	"Brew/ui/ViewPort"
+], function(viewPort) {
+    var brewPort = new viewPort({});
 });
