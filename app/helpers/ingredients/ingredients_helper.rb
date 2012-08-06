@@ -1,2 +1,0 @@
-module Ingredients::IngredientsHelper
-end

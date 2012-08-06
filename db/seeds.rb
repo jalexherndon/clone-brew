@@ -11,7 +11,7 @@ RecipeType.create([
   { name: "Extract" }
 ])
 
-Ingredients::Category.create([
+IngredientCategory.create([
   { name: "Grain" },
   { name: "Fruit" },
   { name: "Hops" }

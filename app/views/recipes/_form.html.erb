@@ -26,7 +26,7 @@
 
     <p>
         <b>Ingredients</b><br />
-        <%= f.collection_select :ingredient_ids, Ingredients::Ingredient.all(:order => 'name'), :id, :name, {}, :multiple => true %>
+        <%= f.collection_select :ingredient_ids, Ingredient.all(:order => 'name'), :id, :name, {}, :multiple => true %>
     </p>
     <div class="actions">
         <%= f.submit %>
