@@ -12,7 +12,7 @@
 
 <p>
   <b>Brewery:</b>
-  <%= @beer.brewery %>
+  <% unless @beer.brewery.nil? %><%= @beer.brewery.name %><% end %>
 </p>
 
 

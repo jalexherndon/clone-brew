@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Recipe::Type.create([
+RecipeType.create([
   { name: "All Grain" },
   { name: "Mini-Mash" },
   { name: "Extract" }

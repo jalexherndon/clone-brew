@@ -4,16 +4,16 @@ one:
   id: 1
   name: MyString
   description: MyText
-  brewery: 
+  brewery_id: 1
 
 two:
   id: 2
   name: MyString
   description: MyText
-  brewery:
+  brewery_id: 1
 
 guiness:
   id: 3
   name: guiness
   description: hearty
-  brewery:
+  brewery_id: 2

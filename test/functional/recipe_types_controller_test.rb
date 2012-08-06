@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Recipe::TypesControllerTest < ActionController::TestCase
+class RecipeTypesControllerTest < ActionController::TestCase
   setup do
     @recipe_type = recipe_types(:one)
   end
@@ -17,8 +17,8 @@ class Recipe::TypesControllerTest < ActionController::TestCase
   end
 
   test "should create recipe_type" do
-    assert_difference('Recipe::Type.count') do
-      post :create, recipe_type: { :name => "test name" }
+    assert_difference('RecipeType.count') do
+      post :create, recipe_type: { :name => @recipe_type.name }
     end
 
     assert_redirected_to recipe_type_path(assigns(:recipe_type))
@@ -40,7 +40,7 @@ class Recipe::TypesControllerTest < ActionController::TestCase
   end
 
   test "should destroy recipe_type" do
-    assert_difference('Recipe::Type.count', -1) do
+    assert_difference('RecipeType.count', -1) do
       delete :destroy, id: @recipe_type
     end
 

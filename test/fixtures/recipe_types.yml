@@ -2,15 +2,20 @@
 
 one:
   name: MyString
+  id: 1
 
 two:
   name: MyString
+  id: 2
 
 all_grain:
   name: "All Grain"
+  id: 3
 
 mini_mash:
   name: "Mini Mash"
+  id: 4
 
 extract:
   name: "Extract"
+  id: 5

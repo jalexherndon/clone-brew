@@ -3,9 +3,9 @@
 one:
   beer_id: 1
   directions: MyText
-  type:
+  recipe_type_id: 1
 
 two:
   beer_id: 1
   directions: MyText
-  type:
+  recipe_type_id: 2

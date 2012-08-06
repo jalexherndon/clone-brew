@@ -4,10 +4,9 @@ CloneBrew::Application.routes.draw do
     resources :categories
   end
 
-  namespace :recipe do
-    resources :recipes
-    resources :types
-  end
+  resources :recipes
+
+  resources :recipe_types
 
   resources :beers
 
