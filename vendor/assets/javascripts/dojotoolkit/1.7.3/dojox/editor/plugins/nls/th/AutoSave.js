@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/th/AutoSave", //begin v1.x content
+//begin v1.x content
 ({
 	"saveLabel": "บันทึก",
 	"saveSettingLabelOn": "ตั้งช่วงเวลาบันทึกอัตโนมัติ...",

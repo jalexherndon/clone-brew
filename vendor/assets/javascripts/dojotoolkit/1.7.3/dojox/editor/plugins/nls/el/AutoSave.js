@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/el/AutoSave", //begin v1.x content
+//begin v1.x content
 ({
 	"saveLabel": "Αποθήκευση",
 	"saveSettingLabelOn": "Ορισμός διαστήματος αυτόματης αποθήκευσης...",

@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hr/SpellCheck", ({
+({
 	widgetLabel: "Provjera pravopisa paketa",
 	unfound: "Nije nađeno",
 	skip: "Preskoči",

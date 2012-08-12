@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hr/Smiley", ({
+({
 	smiley: "Umetni emotikon",
 	emoticonSmile: "smiješak",
 	emoticonLaughing: "smijanje",

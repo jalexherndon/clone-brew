@@ -1,4 +1,8 @@
-//>>built
-define("dojox/image",["./image/_base"],function(_1){
-return _1;
+define(["./image/_base"], function(image){
+	/*=====
+	dojox.image = {
+		// summary: Collection of image-related widgets and controls
+	};
+	=====*/
+	return image;
 });

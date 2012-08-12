@@ -1,6 +1,4 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/tr/Smiley", //begin v1.x content
 ({
 	smiley: "İfade Ekle",
 	emoticonSmile: "gülümseme",
@@ -23,6 +21,4 @@ define(
 	emoticonCrying: "ağlayan ifade",
 	emoticonHappy: "mutlu ifade"
 })
-
-//end v1.x content
 );

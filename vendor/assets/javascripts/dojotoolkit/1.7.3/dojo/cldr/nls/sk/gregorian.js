@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojo/cldr/nls/sk/gregorian", //begin v1.x content
+//begin v1.x content
 {
 	"field-dayperiod": "Časť dňa",
 	"dateFormatItem-yQ": "Q yyyy",

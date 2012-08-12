@@ -1,5 +1,4 @@
-//>>built
-define("dojox/editor/plugins/nls/Breadcrumb", { root:
+define({ root:
 //begin v1.x content
 ({
 	"nodeActions": "${nodeName} Actions",

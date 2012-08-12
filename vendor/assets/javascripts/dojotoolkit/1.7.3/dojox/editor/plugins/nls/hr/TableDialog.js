@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hr/TableDialog", ({
+({
 	insertTableTitle: "Umetni tablicu",
 	modifyTableTitle: "Promijeni tablicu",
 	rows: "Redovi:",

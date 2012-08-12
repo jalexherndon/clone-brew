@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/fi/InsertEntity", //begin v1.x content
+//begin v1.x content
 ({
 	insertEntity: "Lisää symboli"
 })

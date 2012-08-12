@@ -1,6 +1,4 @@
-//>>built
 define(
-"dojox/grid/enhanced/nls/sl/Pagination", //begin v1.x content
 ({
 	"descTemplate": "${2} - ${3} od ${1} ${0}",
 	"firstTip": "Prva stran",
@@ -18,8 +16,6 @@ define(
 	"pageCountIndication": " (${0} strani)",
 	"dialogConfirm": "Pojdi",
 	"dialogCancel": "Prekliči",
-	"all": "vse"
+	"all": "Vse"
 })
-//end v1.x content
 );
-

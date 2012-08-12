@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/grid/enhanced/nls/he/EnhancedGrid", //begin v1.x content
+//begin v1.x content
 ({
 	singleSort: "מיון יחיד",
 	nestedSort: "מיון מקונן",

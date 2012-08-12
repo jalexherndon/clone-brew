@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/atom/widget/nls/fi/FeedEntryViewer", //begin v1.x content
+//begin v1.x content
 ({
 	displayOptions: "[näyttöasetukset]",
 	title: "Otsikko",

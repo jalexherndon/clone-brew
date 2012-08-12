@@ -1,5 +1,14 @@
-//>>built
-define("dojox/charting/themes/RoyalPurples",["../Theme","./common"],function(_1,_2){
-_2.RoyalPurples=new _1({colors:["#473980","#685aa7","#7970b3","#231c3f","#7267ae"]});
-return _2.RoyalPurples;
+define(["../Theme", "./common"], function(Theme, themes){
+	
+	themes.RoyalPurples=new Theme({
+		colors: [
+			"#473980",
+			"#685aa7",
+			"#7970b3",
+			"#231c3f",
+			"#7267ae"
+		]
+	});
+	
+	return themes.RoyalPurples;
 });

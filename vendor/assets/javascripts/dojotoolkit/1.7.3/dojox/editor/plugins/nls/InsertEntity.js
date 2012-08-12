@@ -1,5 +1,4 @@
-//>>built
-define("dojox/editor/plugins/nls/InsertEntity", { root:
+define({ root:
 //begin v1.x content
 ({
 	insertEntity: "Insert Symbol"

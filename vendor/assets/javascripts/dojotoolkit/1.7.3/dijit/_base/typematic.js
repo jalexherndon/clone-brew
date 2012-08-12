@@ -1,3 +1,3 @@
-//>>built
-define("dijit/_base/typematic",["../typematic"],function(){
+define(["../typematic"], function(){
+	// for back-compat, just loads top level module
 });

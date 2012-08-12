@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/grid/enhanced/nls/hr/Filter", //begin v1.x content
+//begin v1.x content
 ({
 	"clearFilterDialogTitle": "Brisanje filtera",
 	"filterDefDialogTitle": "Filter",

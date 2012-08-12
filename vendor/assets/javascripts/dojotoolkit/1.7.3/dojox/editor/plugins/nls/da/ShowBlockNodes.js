@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/da/ShowBlockNodes", //begin v1.x content
+//begin v1.x content
 ({
 	"showBlockNodes": "Vis HTML-blokelementer"
 })

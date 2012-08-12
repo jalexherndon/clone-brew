@@ -1,6 +1,5 @@
-//>>built
 define(
-"dijit/form/nls/nb/validate", //begin v1.x content
+//begin v1.x content
 ({
 	invalidMessage: "Den angitte verdien er ikke gyldig.",
 	missingMessage: "Denne verdien er obligatorisk.",

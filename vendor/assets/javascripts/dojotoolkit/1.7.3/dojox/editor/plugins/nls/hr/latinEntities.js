@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hr/latinEntities", ({
+({
 	/* These are already handled in the default RTE
 		amp:"ampersand",lt:"less-than sign",
 		gt:"greater-than sign",

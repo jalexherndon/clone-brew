@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojo/cldr/nls/tr/number", //begin v1.x content
+//begin v1.x content
 {
 	"group": ".",
 	"percentSign": "%",

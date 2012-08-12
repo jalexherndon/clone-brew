@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/ca/FindReplace", //begin v1.x content
+//begin v1.x content
 ({
 	"findLabel": "Cerca:",
 	"findTooltip": "Especifiqueu el text que voleu trobar",

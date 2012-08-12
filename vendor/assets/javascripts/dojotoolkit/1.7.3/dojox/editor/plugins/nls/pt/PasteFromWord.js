@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/pt/PasteFromWord", //begin v1.x content
+//begin v1.x content
 ({
 	"pasteFromWord": "Colar do Word",
 	"paste": "Colar",

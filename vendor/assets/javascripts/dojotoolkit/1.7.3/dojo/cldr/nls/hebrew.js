@@ -1,5 +1,4 @@
-//>>built
-define("dojo/cldr/nls/hebrew", { root:
+define({ root:
 
 //begin v1.x content
 {

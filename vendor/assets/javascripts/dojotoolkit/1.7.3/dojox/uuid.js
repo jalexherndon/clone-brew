@@ -1,4 +1,3 @@
-//>>built
-define("dojox/uuid",["dojox/uuid/_base"],function(_1){
-return _1;
+define(['dojox/uuid/_base'], function(uuid){
+	return uuid;
 });

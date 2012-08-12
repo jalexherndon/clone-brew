@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/ko/FindReplace", //begin v1.x content
+//begin v1.x content
 ({
 	"findLabel": "찾기:",
 	"findTooltip": "찾을 텍스트 입력",

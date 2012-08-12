@@ -1,4 +1,3 @@
-//>>built
-define("dojox/color",["./color/_base"],function(_1){
-return _1;
+define(["./color/_base"], function(dxcolor){
+	return dxcolor;
 });

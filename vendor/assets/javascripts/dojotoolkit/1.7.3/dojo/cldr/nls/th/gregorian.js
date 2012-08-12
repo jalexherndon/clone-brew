@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojo/cldr/nls/th/gregorian", //begin v1.x content
+//begin v1.x content
 {
 	"months-format-narrow": [
 		"ม.ค.",

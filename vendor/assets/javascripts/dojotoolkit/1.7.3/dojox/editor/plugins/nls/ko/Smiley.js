@@ -1,6 +1,4 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/ko/Smiley", //begin v1.x content
 ({
 	smiley: "이모티콘 삽입",
 	emoticonSmile: "미소",
@@ -23,5 +21,4 @@ define(
 	emoticonCrying: "울음",
 	emoticonHappy: "기쁜"
 })
-//end v1.x content
 );

@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hr/PasteFromWord", ({
+({
 	"pasteFromWord": "Zalijepi iz Worda",
 	"paste": "Zalijepi",
 	"cancel": "Opoziv",

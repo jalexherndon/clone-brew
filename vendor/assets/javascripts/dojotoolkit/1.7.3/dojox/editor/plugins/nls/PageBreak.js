@@ -1,5 +1,4 @@
-//>>built
-define("dojox/editor/plugins/nls/PageBreak", { root:
+define({ root:
 //begin v1.x content
 ({
 	"pageBreak": "Page Break"

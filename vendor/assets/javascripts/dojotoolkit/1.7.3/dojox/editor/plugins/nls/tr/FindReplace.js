@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/tr/FindReplace", //begin v1.x content
+//begin v1.x content
 ({
 	"findLabel": "Bul:",
 	"findTooltip": "Bulunacak metni girin",

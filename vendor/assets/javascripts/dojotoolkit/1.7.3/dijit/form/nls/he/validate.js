@@ -1,6 +1,5 @@
-//>>built
 define(
-"dijit/form/nls/he/validate", //begin v1.x content
+//begin v1.x content
 ({
 	invalidMessage: "הערך שצוין אינו חוקי.",
 	missingMessage: "זהו ערך דרוש.",

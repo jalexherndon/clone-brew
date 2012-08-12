@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/az/TableDialog", ({
+({
 	"buttonSet" : "Yönəlt",
 	"insertTableTitle" : "Cədvəl əlavə et",
 	"insertTableRowAfterLabel" : "Sətirin sonuna əlavə et",

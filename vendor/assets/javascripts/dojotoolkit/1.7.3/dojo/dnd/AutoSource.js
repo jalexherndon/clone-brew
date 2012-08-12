@@ -1,12 +1,13 @@
-/*
-	Copyright (c) 2004-2011, The Dojo Foundation All Rights Reserved.
-	Available via Academic Free License >= 2.1 OR the modified BSD license.
-	see: http://dojotoolkit.org/license for details
-*/
+define([ "./Source" ], function(Source){
+	/*===== Source = dojo.dnd.Source =====*/
+	return dojo.declare("dojo.dnd.AutoSource", Source, {
+		// summary:
+		//		a source that syncs its DnD nodes by default
 
-//>>built
-define("dojo/dnd/AutoSource",["./Source"],function(_1){
-return dojo.declare("dojo.dnd.AutoSource",_1,{constructor:function(_2,_3){
-this.autoSync=true;
-}});
+		constructor: function(node, params){
+			// summary:
+			//		constructor of the AutoSource --- see the Source constructor for details
+			this.autoSync = true;
+		}
+	});
 });

@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/atom/widget/nls/nb/PeopleEditor", //begin v1.x content
+//begin v1.x content
 ({
 	add: "Legg til",
 	addAuthor: "Legg til forfatter",

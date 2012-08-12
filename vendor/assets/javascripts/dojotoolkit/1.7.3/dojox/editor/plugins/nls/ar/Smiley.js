@@ -1,6 +1,4 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/ar/Smiley", //begin v1.x content
 ({
 	smiley: "ادراج شكل متحرك",
 	emoticonSmile: "ابتسامة",
@@ -20,8 +18,7 @@ define(
 	emoticonYes: "نعم",
 	emoticonNo: "لا",
 	emoticonAngel: "ملاك",
-	emoticonCrying: "يبكي"
+	emoticonCrying: "يبكي",
+	emoticonHappy: "سعيد"
 })
-
-//end v1.x content
 );

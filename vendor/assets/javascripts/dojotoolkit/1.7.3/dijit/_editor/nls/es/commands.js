@@ -1,6 +1,5 @@
-//>>built
 define(
-"dijit/_editor/nls/es/commands", //begin v1.x content
+//begin v1.x content
 ({
 	'bold': 'Negrita',
 	'copy': 'Copiar',

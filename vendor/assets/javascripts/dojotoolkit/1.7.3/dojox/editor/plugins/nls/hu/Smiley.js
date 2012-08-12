@@ -1,6 +1,4 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hu/Smiley", //begin v1.x content
 ({
 	smiley: "Hangulatjel beszúrása",
 	emoticonSmile: "mosoly",
@@ -23,6 +21,4 @@ define(
 	emoticonCrying: "sírás",
 	emoticonHappy: "boldog"
 })
-
-//end v1.x content
 );

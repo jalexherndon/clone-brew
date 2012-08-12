@@ -1,5 +1,4 @@
-//>>built
-define("dojox/editor/plugins/nls/Smiley", { root:
+define({ root:
 //begin v1.x content
 ({
 	smiley: "Insert Emoticon",

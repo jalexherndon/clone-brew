@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/atom/widget/nls/sl/FeedViewerEntry", //begin v1.x content
+//begin v1.x content
 ({
 	deleteButton: "[Izbriši]"
 })

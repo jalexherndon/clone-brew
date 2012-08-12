@@ -1,159 +1,228 @@
-//>>built
-define("dojox/mobile/SwapView",["dojo/_base/array","dojo/_base/connect","dojo/_base/declare","dojo/dom","dojo/dom-class","dijit/registry","./View","./_ScrollableMixin"],function(_1,_2,_3,_4,_5,_6,_7,_8){
-return _3("dojox.mobile.SwapView",[_7,_8],{scrollDir:"f",weight:1.2,buildRendering:function(){
-this.inherited(arguments);
-_5.add(this.domNode,"mblSwapView");
-this.setSelectable(this.domNode,false);
-this.containerNode=this.domNode;
-_2.subscribe("/dojox/mobile/nextPage",this,"handleNextPage");
-_2.subscribe("/dojox/mobile/prevPage",this,"handlePrevPage");
-this.findAppBars();
-},resize:function(){
-this.inherited(arguments);
-_1.forEach(this.getChildren(),function(_9){
-if(_9.resize){
-_9.resize();
-}
-});
-},onTouchStart:function(e){
-var _a=this.domNode.offsetTop;
-var _b=this.nextView(this.domNode);
-if(_b){
-_b.stopAnimation();
-_5.add(_b.domNode,"mblIn");
-_b.containerNode.style.paddingTop=_a+"px";
-}
-var _c=this.previousView(this.domNode);
-if(_c){
-_c.stopAnimation();
-_5.add(_c.domNode,"mblIn");
-_c.containerNode.style.paddingTop=_a+"px";
-}
-this.inherited(arguments);
-},handleNextPage:function(w){
-var _d=w.refId&&_4.byId(w.refId)||w.domNode;
-if(this.domNode.parentNode!==_d.parentNode){
-return;
-}
-if(this.getShowingView()!==this){
-return;
-}
-this.goTo(1);
-},handlePrevPage:function(w){
-var _e=w.refId&&_4.byId(w.refId)||w.domNode;
-if(this.domNode.parentNode!==_e.parentNode){
-return;
-}
-if(this.getShowingView()!==this){
-return;
-}
-this.goTo(-1);
-},goTo:function(_f){
-var w=this.domNode.offsetWidth;
-var _10=(_f==1)?this.nextView(this.domNode):this.previousView(this.domNode);
-if(!_10){
-return;
-}
-_10._beingFlipped=true;
-_10.scrollTo({x:w*_f});
-_10._beingFlipped=false;
-_10.domNode.style.display="";
-_5.add(_10.domNode,"mblIn");
-this.slideTo({x:0},0.5,"ease-out",{x:-w*_f});
-},isSwapView:function(_11){
-return (_11&&_11.nodeType===1&&_5.contains(_11,"mblSwapView"));
-},nextView:function(_12){
-for(var n=_12.nextSibling;n;n=n.nextSibling){
-if(this.isSwapView(n)){
-return _6.byNode(n);
-}
-}
-return null;
-},previousView:function(_13){
-for(var n=_13.previousSibling;n;n=n.previousSibling){
-if(this.isSwapView(n)){
-return _6.byNode(n);
-}
-}
-return null;
-},scrollTo:function(to){
-if(!this._beingFlipped){
-var _14,x;
-if(to.x<0){
-_14=this.nextView(this.domNode);
-x=to.x+this.domNode.offsetWidth;
-}else{
-_14=this.previousView(this.domNode);
-x=to.x-this.domNode.offsetWidth;
-}
-if(_14){
-_14.domNode.style.display="";
-_14._beingFlipped=true;
-_14.scrollTo({x:x});
-_14._beingFlipped=false;
-}
-}
-this.inherited(arguments);
-},slideTo:function(to,_15,_16,_17){
-if(!this._beingFlipped){
-var w=this.domNode.offsetWidth;
-var pos=_17||this.getPos();
-var _18,_19;
-if(pos.x<0){
-_18=this.nextView(this.domNode);
-if(pos.x<-w/4){
-if(_18){
-to.x=-w;
-_19=0;
-}
-}else{
-if(_18){
-_19=w;
-}
-}
-}else{
-_18=this.previousView(this.domNode);
-if(pos.x>w/4){
-if(_18){
-to.x=w;
-_19=0;
-}
-}else{
-if(_18){
-_19=-w;
-}
-}
-}
-if(_18){
-_18._beingFlipped=true;
-_18.slideTo({x:_19},_15,_16);
-_18._beingFlipped=false;
-if(_19===0){
-dojox.mobile.currentView=_18;
-}
-_18.domNode._isShowing=(_18&&_19===0);
-}
-this.domNode._isShowing=!(_18&&_19===0);
-}
-this.inherited(arguments);
-},onFlickAnimationEnd:function(e){
-if(e&&e.animationName&&e.animationName!=="scrollableViewScroll2"){
-return;
-}
-var _1a=this.domNode.parentNode.childNodes;
-for(var i=0;i<_1a.length;i++){
-var c=_1a[i];
-if(this.isSwapView(c)){
-_5.remove(c,"mblIn");
-if(!c._isShowing){
-c.style.display="none";
-}
-}
-}
-this.inherited(arguments);
-if(this.getShowingView()===this){
-_2.publish("/dojox/mobile/viewChanged",[this]);
-this.containerNode.style.paddingTop="";
-}
-}});
+define([
+	"dojo/_base/array",
+	"dojo/_base/connect",
+	"dojo/_base/declare",
+	"dojo/dom",
+	"dojo/dom-class",
+	"dijit/registry",	// registry.byNode
+	"./View",
+	"./_ScrollableMixin"
+], function(array, connect, declare, dom, domClass, registry, View, ScrollableMixin){
+
+/*=====
+	var View = dojox.mobile.View;
+	var ScrollableMixin = dojox.mobile._ScrollableMixin;
+=====*/
+
+	// module:
+	//		dojox/mobile/SwapView
+	// summary:
+	//		A container that can be flipped horizontally.
+
+	return declare("dojox.mobile.SwapView", [View, ScrollableMixin], {
+		// summary:
+		//		A container that can be flipped horizontally.
+		// description:
+		//		SwapView is a container widget that represents entire mobile
+		//		device screen, and can be swiped horizontally. (In dojo-1.6, it
+		//		was called 'FlippableView'.) SwapView is a subclass of
+		//		dojox.mobile.View. SwapView allows the user to swipe the screen
+		//		left or right to move between the views. When SwapView is
+		//		swiped, it finds an adjacent SwapView to open it.
+
+		/* internal properties */	
+		scrollDir: "f",
+		weight: 1.2,
+
+		buildRendering: function(){
+			this.inherited(arguments);
+			domClass.add(this.domNode, "mblSwapView");
+			this.setSelectable(this.domNode, false);
+			this.containerNode = this.domNode;
+			connect.subscribe("/dojox/mobile/nextPage", this, "handleNextPage");
+			connect.subscribe("/dojox/mobile/prevPage", this, "handlePrevPage");
+			this.findAppBars();
+		},
+
+		resize: function(){
+			// summary:
+			//		Calls resize() of each child widget.
+			this.inherited(arguments); // scrollable#resize() will be called
+			array.forEach(this.getChildren(), function(child){
+				if(child.resize){ child.resize(); }
+			});
+		},
+
+		onTouchStart: function(e){
+			// summary:
+			//		Internal function to handle touchStart events.
+			var fromTop = this.domNode.offsetTop;
+			var nextView = this.nextView(this.domNode);
+			if(nextView){
+				nextView.stopAnimation();
+				domClass.add(nextView.domNode, "mblIn");
+				// Temporarily add padding to align with the fromNode while transition
+				nextView.containerNode.style.paddingTop = fromTop + "px";
+			}
+			var prevView = this.previousView(this.domNode);
+			if(prevView){
+				prevView.stopAnimation();
+				domClass.add(prevView.domNode, "mblIn");
+				// Temporarily add padding to align with the fromNode while transition
+				prevView.containerNode.style.paddingTop = fromTop + "px";
+			}
+			this.inherited(arguments);
+		},
+
+		handleNextPage: function(/*Widget*/w){
+			// summary:
+			//		Called when the "/dojox/mobile/nextPage" topic is published.
+			var refNode = w.refId && dom.byId(w.refId) || w.domNode;
+			if(this.domNode.parentNode !== refNode.parentNode){ return; }
+			if(this.getShowingView() !== this){ return; }
+			this.goTo(1);
+		},
+
+		handlePrevPage: function(/*Widget*/w){
+			// summary:
+			//		Called when the "/dojox/mobile/prevPage" topic is published.
+			var refNode = w.refId && dom.byId(w.refId) || w.domNode;
+			if(this.domNode.parentNode !== refNode.parentNode){ return; }
+			if(this.getShowingView() !== this){ return; }
+			this.goTo(-1);
+		},
+
+		goTo: function(/*Number*/dir){
+			// summary:
+			//		Moves to the next or previous view.
+			var w = this.domNode.offsetWidth;
+			var view = (dir == 1) ? this.nextView(this.domNode) : this.previousView(this.domNode);
+			if(!view){ return; }
+			view._beingFlipped = true;
+			view.scrollTo({x:w*dir});
+			view._beingFlipped = false;
+			view.domNode.style.display = "";
+			domClass.add(view.domNode, "mblIn");
+			this.slideTo({x:0}, 0.5, "ease-out", {x:-w*dir});
+		},
+
+		isSwapView: function(node){
+			// summary:
+			//		Returns true if the given node is a SwapView widget.
+			return (node && node.nodeType === 1 && domClass.contains(node, "mblSwapView"));
+		},
+
+		nextView: function(node){
+			// summary:
+			//		Returns the next view.
+			for(var n = node.nextSibling; n; n = n.nextSibling){
+				if(this.isSwapView(n)){ return registry.byNode(n); }
+			}
+			return null;
+		},
+
+		previousView: function(node){
+			// summary:
+			//		Returns the previous view.
+			for(var n = node.previousSibling; n; n = n.previousSibling){
+				if(this.isSwapView(n)){ return registry.byNode(n); }
+			}
+			return null;
+		},
+
+		scrollTo: function(/*Object*/to){
+			// summary:
+			//		Overrides dojox.mobile.scrollable.scrollTo().
+			if(!this._beingFlipped){
+				var newView, x;
+				if(to.x < 0){
+					newView = this.nextView(this.domNode);
+					x = to.x + this.domNode.offsetWidth;
+				}else{
+					newView = this.previousView(this.domNode);
+					x = to.x - this.domNode.offsetWidth;
+				}
+				if(newView){
+					newView.domNode.style.display = "";
+					newView._beingFlipped = true;
+					newView.scrollTo({x:x});
+					newView._beingFlipped = false;
+				}
+			}
+			this.inherited(arguments);
+		},
+
+		slideTo: function(/*Object*/to, /*Number*/duration, /*String*/easing, fake_pos){
+			// summary:
+			//		Overrides dojox.mobile.scrollable.slideTo().
+			if(!this._beingFlipped){
+				var w = this.domNode.offsetWidth;
+				var pos = fake_pos || this.getPos();
+				var newView, newX;
+				if(pos.x < 0){ // moving to left
+					newView = this.nextView(this.domNode);
+					if(pos.x < -w/4){ // slide to next
+						if(newView){
+							to.x = -w;
+							newX = 0;
+						}
+					}else{ // go back
+						if(newView){
+							newX = w;
+						}
+					}
+				}else{ // moving to right
+					newView = this.previousView(this.domNode);
+					if(pos.x > w/4){ // slide to previous
+						if(newView){
+							to.x = w;
+							newX = 0;
+						}
+					}else{ // go back
+						if(newView){
+							newX = -w;
+						}
+					}
+				}
+	
+				if(newView){
+					newView._beingFlipped = true;
+					newView.slideTo({x:newX}, duration, easing);
+					newView._beingFlipped = false;
+	
+					if(newX === 0){ // moving to another view
+						dojox.mobile.currentView = newView;
+					}
+					newView.domNode._isShowing = (newView && newX === 0);
+				}
+				this.domNode._isShowing = !(newView && newX === 0);
+			}
+			this.inherited(arguments);
+		},
+	
+		onFlickAnimationEnd: function(e){
+			// summary:
+			//		Overrides dojox.mobile.scrollable.onFlickAnimationEnd().
+			if(e && e.animationName && e.animationName !== "scrollableViewScroll2"){ return; }
+			// Hide all the views other than the currently showing one.
+			// Otherwise, when the orientation is changed, other views
+			// may appear unexpectedly.
+			var children = this.domNode.parentNode.childNodes;
+			for(var i = 0; i < children.length; i++){
+				var c = children[i];
+				if(this.isSwapView(c)){
+					domClass.remove(c, "mblIn");
+					if(!c._isShowing){
+						c.style.display = "none";
+					}
+				}
+			}
+			this.inherited(arguments);
+			if(this.getShowingView() === this){
+				connect.publish("/dojox/mobile/viewChanged", [this]);
+				// Reset the temporary padding
+				this.containerNode.style.paddingTop = "";
+			}
+		}
+	});
 });

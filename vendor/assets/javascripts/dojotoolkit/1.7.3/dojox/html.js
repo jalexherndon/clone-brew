@@ -1,4 +1,3 @@
-//>>built
-define("dojox/html",["./html/_base"],function(_1){
-return _1;
+define(["./html/_base"], function (html) {
+	return html;
 });

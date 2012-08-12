@@ -12,4 +12,7 @@
 //
 //= require dojoConfig
 //= require dojotoolkit/1.7.3/dojo/dojo
-//= require CloneBrew
+
+require(["Brew/app", "dojo/domReady!"], function(app) {
+    app.init();
+});

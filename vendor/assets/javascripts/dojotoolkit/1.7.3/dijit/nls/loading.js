@@ -1,5 +1,4 @@
-//>>built
-define("dijit/nls/loading", { root:
+define({ root:
 //begin v1.x content
 ({
 	loadingState: "Loading...",

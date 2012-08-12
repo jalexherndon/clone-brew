@@ -1,4 +1,8 @@
-//>>built
-define("dojox/validate",["./validate/_base"],function(_1){
-return _1;
+define(["./validate/_base"], function(validate){
+	/*===== 
+	dojox.validate = {
+		// summary: Additional validation routines for Strings, Numbers, credit cards, and other esoteric needs. 
+	};
+	=====*/
+	return validate;
 });

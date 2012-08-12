@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/grid/enhanced/nls/he/Filter", //begin v1.x content
+//begin v1.x content
 ({
 	"clearFilterDialogTitle": "ניקוי מסנן",
 	"filterDefDialogTitle": "מסנן",

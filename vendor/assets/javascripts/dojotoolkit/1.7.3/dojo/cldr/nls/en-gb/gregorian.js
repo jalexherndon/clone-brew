@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojo/cldr/nls/en-gb/gregorian", //begin v1.x content
+//begin v1.x content
 {
 	"dateFormatItem-yyMMM": "MMM yy",
 	"dateFormatItem-Md": "d/M",

@@ -1,6 +1,5 @@
-//>>built
 define(
-"dijit/_editor/nls/ja/commands", //begin v1.x content
+//begin v1.x content
 ({
 	'bold': '太字',
 	'copy': 'コピー',

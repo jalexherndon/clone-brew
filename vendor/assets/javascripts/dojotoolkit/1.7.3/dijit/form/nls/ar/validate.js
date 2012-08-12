@@ -1,6 +1,5 @@
-//>>built
 define(
-"dijit/form/nls/ar/validate", //begin v1.x content
+//begin v1.x content
 ({
 	invalidMessage: "القيمة التي تم ادخالها غير صحيحة.",
 	missingMessage: "يجب ادخال هذه القيمة.",

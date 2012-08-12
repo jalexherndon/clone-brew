@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/fi/PasteFromWord", //begin v1.x content
+//begin v1.x content
 ({
 	"pasteFromWord": "Liitä Word-ohjelmasta",
 	"paste": "Liitä",

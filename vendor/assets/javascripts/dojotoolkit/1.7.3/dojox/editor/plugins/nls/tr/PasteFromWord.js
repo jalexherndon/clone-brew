@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/tr/PasteFromWord", //begin v1.x content
+//begin v1.x content
 ({
 	"pasteFromWord": "Word'den Kopyala",
 	"paste": "Yapıştır",

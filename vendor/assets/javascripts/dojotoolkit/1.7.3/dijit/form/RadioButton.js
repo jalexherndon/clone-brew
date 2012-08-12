@@ -1,4 +1,23 @@
-//>>built
-define("dijit/form/RadioButton",["dojo/_base/declare","./CheckBox","./_RadioButtonMixin"],function(_1,_2,_3){
-return _1("dijit.form.RadioButton",[_2,_3],{baseClass:"dijitRadio"});
+define([
+	"dojo/_base/declare", // declare
+	"./CheckBox",
+	"./_RadioButtonMixin"
+], function(declare, CheckBox, _RadioButtonMixin){
+
+/*=====
+	var CheckBox = dijit.form.CheckBox;
+	var _RadioButtonMixin = dijit.form._RadioButtonMixin;
+=====*/
+
+	// module:
+	//		dijit/form/RadioButton
+	// summary:
+	//		Radio button widget
+
+	return declare("dijit.form.RadioButton", [CheckBox, _RadioButtonMixin], {
+		// summary:
+		// 		Same as an HTML radio, but with fancy styling.
+
+		baseClass: "dijitRadio"
+	});
 });

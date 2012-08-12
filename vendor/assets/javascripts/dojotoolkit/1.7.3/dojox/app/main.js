@@ -1,70 +1,114 @@
-//>>built
-define("dojox/app/main",["dojo/_base/kernel","dojo/_base/lang","dojo/_base/declare","dojo/_base/Deferred","dojo/_base/connect","dojo/ready","dojo/_base/window","dojo/dom-construct","./scene"],function(_1,_2,_3,_4,_5,_6,_7,_8,_9){
-_1.experimental("dojox.app");
-var _a=_3([_9],{constructor:function(_b){
-this.scenes={};
-if(_b.stores){
-for(var _c in _b.stores){
-if(_c.charAt(0)!=="_"){
-var _d=_b.stores[_c].type?_b.stores[_c].type:"dojo.store.Memory";
-var _e={};
-if(_b.stores[_c].params){
-_1.mixin(_e,_b.stores[_c].params);
-}
-var _f=_1.getObject(_d);
-if(_e.data&&_2.isString(_e.data)){
-_e.data=_1.getObject(_e.data);
-}
-_b.stores[_c].store=new _f(_e);
-}
-}
-}
-},start:function(_10){
-var _11=this.loadChild();
-_4.when(_11,_1.hitch(this,function(){
-this.startup();
-this.setStatus(this.lifecycle.STARTED);
-}));
-},templateString:"<div></div>",selectedChild:null,baseClass:"application mblView",defaultViewType:_9,buildRendering:function(){
-if(this.srcNodeRef===_7.body()){
-this.srcNodeRef=_8.create("DIV",{},_7.body());
-}
-this.inherited(arguments);
-}});
-function _12(_13,_14,_15,_16){
-var _17=_13.modules.concat(_13.dependencies);
-if(_13.template){
-_17.push("dojo/text!"+"app/"+_13.template);
-}
-require(_17,function(){
-var _18=[_a];
-for(var i=0;i<_13.modules.length;i++){
-_18.push(arguments[i]);
-}
-if(_13.template){
-var ext={templateString:arguments[arguments.length-1]};
-}
-App=_3(_18,ext);
-_6(function(){
-app=App(_13,_14||_7.body());
-app.setStatus(app.lifecycle.STARTING);
-app.start();
-});
-});
-};
-return function(_19,_1a){
-if(!_19){
-throw Error("App Config Missing");
-}
-if(_19.validate){
-require(["dojox/json/schema","dojox/json/ref","dojo/text!dojox/application/schema/application.json"],function(_1b,_1c){
-_1b=dojox.json.ref.resolveJson(_1b);
-if(_1b.validate(_19,_1c)){
-_12(_19,_1a);
-}
-});
-}else{
-_12(_19,_1a);
-}
-};
+define(["dojo/_base/lang",
+	"dojo/_base/declare",
+	"dojo/_base/Deferred",
+	"dojo/_base/connect",
+	"dojo/ready",
+	"dojo/_base/window",
+	"dojo/dom-construct",
+	"./scene"],
+	function(dlang, declare, deferred, connect, ready, baseWindow, dom, sceneCtor){
+
+        dojo.experimental("dojox.app");
+	var Application = declare([sceneCtor], {
+		constructor: function(params){
+			this.scenes={};
+			if(params.stores){
+			    //create stores in the configuration.
+			    for (var item in params.stores){
+			        if(item.charAt(0)!=="_"){//skip the private properties
+			            var type = params.stores[item].type? params.stores[item].type : "dojo.store.Memory";
+			            var config = {};
+			            if(params.stores[item].params){
+			                dlang.mixin(config, params.stores[item].params);
+			            }
+			            var storeCtor = dojo.getObject(type);
+			            if(config.data && dlang.isString(config.data)){
+			                //get the object specified by string value of data property
+			                //cannot assign object literal or reference to data property
+			                //because json.ref will generate __parent to point to its parent
+			                //and will cause infinitive loop when creating StatefulModel.
+			                config.data = dlang.getObject(config.data);
+			            }
+			            params.stores[item].store = new storeCtor(config);
+			        }
+			    }
+			}
+
+		},
+
+		// load default view and startup the default view
+        start: function(applicaton){
+            var child = this.loadChild();
+
+            deferred.when(child, dlang.hitch(this, function(){
+                this.startup();
+
+                //set application status to STARTED
+                this.setStatus(this.lifecycle.STARTED);
+            }));
+        },
+		templateString: "<div></div>",
+		selectedChild: null,
+		baseClass: "application mblView",
+		defaultViewType: sceneCtor,
+		buildRendering: function(){
+			if (this.srcNodeRef===baseWindow.body()){
+				this.srcNodeRef = dom.create("DIV",{},baseWindow.body());
+			}
+			this.inherited(arguments);
+		}
+	});
+	
+	function generateApp(config,node,appSchema,validate){
+
+		//console.log("config.modules: ", config.modules);
+		var modules = config.modules.concat(config.dependencies);
+
+		if (config.template){
+			//console.log("config.template: ", config.template);
+			modules.push("dojo/text!" + "app/" + config.template);
+		}
+		//console.log("modules: ", modules);	
+
+		require(modules, function(){
+			var modules=[Application];
+			for(var i=0;i<config.modules.length;i++){
+				modules.push(arguments[i]);
+			}
+
+			if (config.template){
+				var ext = {
+					templateString: arguments[arguments.length-1] 
+				}	
+			}
+			App = declare(modules,ext);
+
+			ready(function(){
+				app = App(config,node || baseWindow.body());
+                app.setStatus(app.lifecycle.STARTING);
+                app.start();
+			});
+		});
+	}
+
+
+	return function(config,node){
+		if (!config){
+			throw Error("App Config Missing");
+		}
+
+		
+		if (config.validate){
+			require(["dojox/json/schema","dojox/json/ref","dojo/text!dojox/application/schema/application.json"],function(schema,appSchema){
+				schema = dojox.json.ref.resolveJson(schema);	
+				if (schema.validate(config,appSchema)){
+					generateApp(config,node);
+				}	
+			});
+		
+
+		}else{
+			generateApp(config,node);
+		}
+	}
 });

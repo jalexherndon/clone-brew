@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojo/cldr/nls/pt-pt/gregorian", //begin v1.x content
+//begin v1.x content
 {
 	"quarters-standAlone-wide": [
 		"1.º trimestre",

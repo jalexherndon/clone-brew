@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/cs/FindReplace", //begin v1.x content
+//begin v1.x content
 ({
 	"findLabel": "Najít:",
 	"findTooltip": "Zadejte hledaný text.",

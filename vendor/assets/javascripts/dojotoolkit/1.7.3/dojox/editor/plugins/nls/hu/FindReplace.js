@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hu/FindReplace", //begin v1.x content
+//begin v1.x content
 ({
 	"findLabel": "Keresés:",
 	"findTooltip": "Adja meg a keresett szöveget",

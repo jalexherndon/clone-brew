@@ -1,5 +1,4 @@
-//>>built
-define("dojox/form/nls/Uploader", { root:
+define({ root:
 //begin v1.x content
 ({
 	label: "Select Files..."

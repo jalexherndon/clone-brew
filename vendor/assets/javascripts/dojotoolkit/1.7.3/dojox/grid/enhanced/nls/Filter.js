@@ -1,5 +1,4 @@
-//>>built
-define("dojox/grid/enhanced/nls/Filter", { root:
+define({ root:
 //begin v1.x content
 ({
 	"clearFilterDialogTitle": "Clear Filter",

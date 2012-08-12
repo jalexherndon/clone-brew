@@ -1,4 +1,8 @@
-//>>built
-define("dojox/mvc",["./mvc/_base"],function(_1){
-return _1;
+define(["./mvc/_base"], function(dxmvc){
+	// module:
+	//		dojox/mvc
+	// summary:
+	//		Adds elements of MVC support to Dojo.
+
+	return dxmvc;
 });

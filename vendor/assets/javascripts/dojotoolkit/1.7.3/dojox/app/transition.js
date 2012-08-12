@@ -1,45 +1,60 @@
-//>>built
-define("dojox/app/transition",["dojo/_base/kernel","dojo/_base/array","dojo/_base/html","dojo/DeferredList","./animation"],function(_1,_2,_3,_4,_5){
-return function(_6,to,_7){
-var _8=(_7&&_7.reverse)?-1:1;
-if(!_7||!_7.transition||!_5[_7.transition]){
-_1.style(_6,"display","none");
-_1.style(to,"display","");
-if(_7.transitionDefs){
-if(_7.transitionDefs[_6.id]){
-_7.transitionDefs[_6.id].resolve(_6);
-}
-if(_7.transitionDefs[to.id]){
-_7.transitionDefs[to.id].resolve(to);
-}
-}
-}else{
-var _9=[];
-var _a=[];
-var _b=250;
-if(_7.transition==="fade"){
-_b=600;
-}else{
-if(_7.transition==="flip"){
-_b=200;
-}
-}
-_1.style(_6,"display","");
-_1.style(to,"display","");
-if(_6){
-var _c=_5[_7.transition](_6,{"in":false,direction:_8,duration:_b,deferred:(_7.transitionDefs&&_7.transitionDefs[_6.id])?_7.transitionDefs[_6.id]:null});
-_9.push(_c.deferred);
-_a.push(_c);
-}
-var _d=_5[_7.transition](to,{direction:_8,duration:_b,deferred:(_7.transitionDefs&&_7.transitionDefs[to.id])?_7.transitionDefs[to.id]:null});
-_9.push(_d.deferred);
-_a.push(_d);
-if(_7.transition==="flip"){
-_5.chainedPlay(_a);
-}else{
-_5.groupedPlay(_a);
-}
-return new _1.DeferredList(_9);
-}
-};
+define(["dojo/_base/kernel", "dojo/_base/array","dojo/_base/html","dojo/DeferredList","./animation"],
+	function(dojo, darray, dhtml, DeferredList,animation){
+	return function(from, to, options){
+		var rev = (options && options.reverse) ? -1 : 1;
+		if(!options || !options.transition || !animation[options.transition]){
+			dojo.style(from,"display","none");
+			dojo.style(to, "display", "");
+			if(options.transitionDefs){
+			    if(options.transitionDefs[from.id]){
+			        options.transitionDefs[from.id].resolve(from);
+			    }
+			    if(options.transitionDefs[to.id]){
+                                options.transitionDefs[to.id].resolve(to);
+                            }
+			}
+		}else{
+			var defs=[];
+			var transit=[];
+			var duration = 250;
+			if(options.transition === "fade"){
+			    duration = 600;
+			}else if (options.transition === "flip"){
+			    duration = 200;
+			}
+			dojo.style(from, "display", ""); 
+			dojo.style(to, "display", "");
+			if (from){
+				//create animation to transit "from" out
+				var fromTransit = animation[options.transition](from, {
+				    "in": false,
+				    direction: rev,
+				    duration: duration,
+				    deferred: (options.transitionDefs && options.transitionDefs[from.id]) ? options.transitionDefs[from.id] : null
+				});
+				defs.push(fromTransit.deferred);//every animation object should have a deferred.
+				transit.push(fromTransit);
+			}
+			
+			//create animation to transit "to" in	                
+			var toTransit = animation[options.transition](to, {
+                            direction: rev,
+                            duration: duration,
+                            deferred: (options.transitionDefs && options.transitionDefs[to.id]) ? options.transitionDefs[to.id] : null
+                        });
+			defs.push(toTransit.deferred);//every animation object should have a deferred.
+			transit.push(toTransit);
+			
+			//TODO If it is flip use the chainedPlay
+			//play fromTransit and toTransit together
+			if(options.transition === "flip"){
+			    animation.chainedPlay(transit);
+			}else{
+			    animation.groupedPlay(transit);
+			}
+
+			return new dojo.DeferredList(defs);
+			
+		}
+	};
 });

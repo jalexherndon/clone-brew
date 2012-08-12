@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/atom/widget/nls/az/FeedEntryViewer", //begin v1.x content
+//begin v1.x content
 ({
 	"close" : "[çıx]",
 	"title" : "Başlıq",

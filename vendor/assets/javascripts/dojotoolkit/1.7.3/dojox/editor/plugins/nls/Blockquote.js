@@ -1,5 +1,4 @@
-//>>built
-define("dojox/editor/plugins/nls/Blockquote", { root:
+define({ root:
 //begin v1.x content
 ({
 	"blockquote": "Blockquote"

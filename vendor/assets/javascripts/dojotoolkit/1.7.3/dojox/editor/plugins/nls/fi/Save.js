@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/fi/Save", //begin v1.x content
+//begin v1.x content
 ({
 	"save": "Tallenna"
 })

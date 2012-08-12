@@ -1,5 +1,4 @@
-//>>built
-define("dojo/nls/colors", { root:
+define({ root:
 //begin v1.x content
 ({
 // local representation of all CSS3 named colors, companion to dojo.colors.  To be used where descriptive information

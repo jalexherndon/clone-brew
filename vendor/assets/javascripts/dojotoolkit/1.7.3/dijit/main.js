@@ -1,4 +1,10 @@
-//>>built
-define("dijit/main",["dojo/_base/kernel"],function(_1){
-return _1.dijit;
+define([
+	"dojo/_base/kernel"
+], function(dojo){
+	// module:
+	//		dijit
+	// summary:
+	//		The dijit package main module
+
+	return dojo.dijit;
 });

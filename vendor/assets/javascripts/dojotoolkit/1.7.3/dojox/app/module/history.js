@@ -1,51 +1,110 @@
-//>>built
-define("dojox/app/module/history",["dojo/_base/kernel","dojo/_base/lang","dojo/_base/declare","dojo/on"],function(_1,_2,_3,_4){
-return _3(null,{postCreate:function(_5,_6){
-this.inherited(arguments);
-var _7=window.location.hash;
-this._startView=((_7&&_7.charAt(0)=="#")?_7.substr(1):_7)||this.defaultView;
-_4(this.domNode,"startTransition",_1.hitch(this,"onStartTransition"));
-_4(window,"popstate",_1.hitch(this,"onPopState"));
-},startup:function(){
-this.inherited(arguments);
-},onStartTransition:function(_8){
-if(_8.preventDefault){
-_8.preventDefault();
-}
-var _9=_8.detail.target;
-var _a=/#(.+)/;
-if(!_9&&_a.test(_8.detail.href)){
-_9=_8.detail.href.match(_a)[1];
-}
-_8.cancelBubble=true;
-if(_8.stopPropagation){
-_8.stopPropagation();
-}
-_1.when(this.transition(_9,_1.mixin({reverse:false},_8.detail)),_1.hitch(this,function(){
-history.pushState(_8.detail,_8.detail.href,_8.detail.url);
-}));
-},onPopState:function(_b){
-if(this.getStatus()!==this.lifecycle.STARTED){
-return;
-}
-var _c=_b.state;
-if(!_c){
-if(!this._startView&&window.location.hash){
-_c={target:(location.hash&&location.hash.charAt(0)=="#")?location.hash.substr(1):location.hash,url:location.hash};
-}else{
-_c={};
-}
-}
-var _d=_c.target||this._startView||this.defaultView;
-if(this._startView){
-this._startView=null;
-}
-var _e=_c.title||null;
-var _f=_c.url||null;
-if(_b._sim){
-history.replaceState(_c,_e,_f);
-}
-var _10=history.state;
-this.transition(_d,_1.mixin({reverse:true},_c));
-}});
+define(["dojo/_base/kernel","dojo/_base/lang", "dojo/_base/declare", "dojo/on"],function(dojo,dlang,declare,listen){
+	return declare(null, {
+		postCreate: function(params,node){
+			this.inherited(arguments);
+			var hash=window.location.hash;
+			this._startView= ((hash && hash.charAt(0)=="#")?hash.substr(1):hash)||this.defaultView;
+
+			listen(this.domNode, "startTransition", dojo.hitch(this, "onStartTransition"));
+			listen(window,"popstate", dojo.hitch(this, "onPopState"));
+		},
+		startup: function(){
+			this.inherited(arguments);
+		},
+		
+		proceeding: false,
+		
+		waitingQueue:[],
+
+		onStartTransition: function(evt){
+			console.log("onStartTransition", evt.detail.href, history.state);
+			if (evt.preventDefault){
+				evt.preventDefault();
+			}
+
+			//prevent event from bubbling to window and being
+			//processed by dojox/mobile/ViewController
+			evt.cancelBubble = true;
+			if(evt.stopPropagation){
+			    evt.stopPropagation();
+			}
+			
+			var target = evt.detail.target;
+			var regex = /#(.+)/;
+			if(!target && regex.test(evt.detail.href)){
+				target = evt.detail.href.match(regex)[1];
+			}
+			history.pushState(evt.detail,evt.detail.href, evt.detail.url);
+			this.proceedTransition({target:target, opts: dojo.mixin({reverse: false},evt.detail)});
+		},
+		
+		proceedTransition: function(transitionEvt){
+			if(this.proceeding){
+				console.log("push event", transitionEvt);
+				this.waitingQueue.push(transitionEvt);
+				return;
+			}
+			this.proceeding = true;
+			
+			dojo.when(this.transition(transitionEvt.target, transitionEvt.opts), 
+				dojo.hitch(this, function(){
+					this.proceeding = false;
+					var nextEvt = this.waitingQueue.shift();
+					if (nextEvt){
+						this.proceedTransition(nextEvt);
+					}
+				})
+			);
+		},
+
+		/*
+		onHashChange: function(evt){
+			var target = window.location.hash.substr(1);;
+			var evt = {target: window.location.hash, url: "#" + target,title:null};
+			//this.onStartTransition(evt);
+		},
+		*/
+
+		onPopState: function(evt){
+			// Check application status, if application status not STARTED, do nothing.
+			// when clean browser's cache then refresh the current page, it will trigger popState event. 
+			// but the application not start, it will throw an error.
+			if(this.getStatus() !== this.lifecycle.STARTED ){
+				return;
+			}
+			var state = evt.state;
+			if (!state){
+
+				if(!this._startView && window.location.hash){
+					state={
+						target: (location.hash && location.hash.charAt(0)=="#")?location.hash.substr(1):location.hash,
+						url: location.hash
+					}		
+				}else{
+					state={};	
+				}
+			}
+
+			var target = state.target || this._startView || this.defaultView;
+
+			if (this._startView){
+				this._startView=null;
+			}
+			var title = state.title||null;
+			var href = state.url || null;
+
+			if (evt._sim) {
+				history.replaceState(state, title, href );
+			}
+
+			/*
+			dojo.when(this.transition(window.history.state, {rev: true}), dojo.hitch(this, function(){
+
+				console.log('done transition from onPopState');
+			}))
+			*/
+			var currentState = history.state;
+			this.proceedTransition({target:target, opts:dojo.mixin({reverse: true},state)});	
+		}
+	});	
 });

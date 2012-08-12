@@ -1,6 +1,5 @@
-//>>built
 define(
-"dijit/_editor/nls/hr/LinkDialog", ({
+({
 	createLinkTitle: "Svojstva veze",
 	insertImageTitle: "Svojstva slike",
 	url: "URL:",

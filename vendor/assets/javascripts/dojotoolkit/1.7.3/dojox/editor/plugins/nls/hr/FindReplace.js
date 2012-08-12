@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojox/editor/plugins/nls/hr/FindReplace", ({
+({
 	"findLabel": "Traži:",
 	"findTooltip": "Unesi tekst pretrage",
 	"replaceLabel": "Zamijeni s:",

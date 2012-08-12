@@ -1,6 +1,5 @@
-//>>built
 define(
-"dojo/cldr/nls/el/buddhist", //begin v1.x content
+//begin v1.x content
 {
 	"quarters-format-abbr": [
 		"Τ1",

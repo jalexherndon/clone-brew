@@ -1,4 +1,3 @@
-//>>built
-define("dojox/collections",["./collections/_base"],function(_1){
-return _1;
+define(["./collections/_base"], function(collections){
+	return collections;
 });

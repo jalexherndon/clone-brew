@@ -1,4 +1,3 @@
-//>>built
-define("dojox/fx",["./fx/_base"],function(_1){
-return _1;
+define(["./fx/_base"], function(DojoxFx){
+	return DojoxFx;
 });
