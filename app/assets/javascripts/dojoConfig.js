@@ -1,21 +1,27 @@
 var dojoConfig = {
-	baseUrl: "/assets/",
-	tlmSiblingOfDojo: false,
+    tlmSiblingOfDojo: false,
     isDebug: true,
-    parseOnLoad: true,
     async: true,
-	packages: [{
-		name: "dojo",
-		location: "dojotoolkit/1.7.3/dojo"
-	}, {
-		name: "dijit",
-		location: "dojotoolkit/1.7.3/dijit"
-	}, {
-		name: "dojox",
-		location: "dojotoolkit/1.7.3/dojox"
-	}, {
-		name: "Brew",
-		location: ".",
-		main: "App"
-	}]
+    waitSeconds: 5,
+
+    // Define packages
+    baseUrl: "/assets/",
+    packagePaths: {
+        "dojotoolkit/1.8.0/": [
+            "dojo",
+            "dijit",
+            "dojox"
+        ]
+    },
+    packages: [{
+        name: "Brew",
+        location: ".",
+        main: "App"
+    }],
+
+    // Startup the App
+    deps: ["Brew/App", "dojo/domReady!"],
+    callback: function(App) {
+        App.startup();
+    }
 };
