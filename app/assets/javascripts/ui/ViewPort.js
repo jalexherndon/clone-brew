@@ -4,7 +4,6 @@ define("Brew/ui/ViewPort", [
 ], function(declare, borderContainer){
 
     return declare("Brew.ui.ViewPort", borderContainer, {
-
         constructor: function(config) {
             this.inherited(arguments);
         }
