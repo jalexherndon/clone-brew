@@ -1,0 +1,45 @@
+.brew-login-form {
+    width: 280px !important;
+    border: 1px outset #777;
+    padding: 10px 0 6px 0;
+    text-align: center;
+
+    @include rounded-corners(5px);
+    
+    background-color: #f2f6f0; // Old browsers
+    @include filter-gradient(#f2f6f0, #ccdfc3, horizontal); // IE6-9 fallback on horizontal gradient
+    @include background-image(linear-gradient(left top,  #f2f6f0 0%,#dbe6d8 28%,#d8e4d4 56%,#d5e2d0 70%,#ccdfc3 97%));
+
+    .brew-login-message {
+        font: 22px 'LobsterTwoRegular';
+        color: $black;
+        margin-bottom: 10px;
+    }
+
+    .dijitTextBox {
+        @include rounded-corners(5px);
+        border: 1px inset $lighter-grey !important;
+        padding: 2px 4px;
+        margin-bottom: 6px;
+    }
+
+    .dijitButton > span {
+        @include rounded-corners(4px);
+        color: $white;
+        border: 1px solid #0775ea;
+
+        background-color: #53a0f3; // Old browsers
+        @include filter-gradient(#53a0f3, #0775ea, vertical); // IE6-9
+        @include background-image(linear-gradient(top,  #53a0f3 0%,#5397ef 26%,#529bea 48%,#0775ea 89%));
+
+        &:hover {
+            color: $white;
+            border: 1px solid #054d9b;
+            
+            background-color: #0e69ca; // Old browsers
+            @include filter-gradient(#0e69ca, #054d9b, vertical); // IE6-9
+            @include background-image(linear-gradient(top,  #0e69ca 0%,#125ec2 26%,#1665ba 48%,#054d9b 89%));
+
+        }
+    }
+}

@@ -15,6 +15,3 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require active_scaffold
-//
-//= require DojoSetup
-//= require dojotoolkit/1.8.0/dojo/dojo

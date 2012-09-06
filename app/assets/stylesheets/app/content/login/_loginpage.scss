@@ -1,0 +1,67 @@
+$message-margin-top: 100px;
+$message-ct-width: 493px;
+$message-ct-height: 120px;
+$message-padding-horiz: 13px;
+$message-padding-vert: 8px;
+
+.brew-login-page {
+
+    .brew-welcome-message-ct {
+        float:left;
+        clear: none;
+
+        margin-top: $message-margin-top;
+
+        width: $message-ct-width;
+        height: $message-ct-height;
+
+        border: 1px solid #0d1200;
+        background-color: #0d1200; // Old browsers
+        @include filter-gradient(#0d1200, #74a600, vertical); // IE6-9
+        @include background-image(linear-gradient(top,  #0d1200 0%,#1f2c00 17%,#314600 42%,#5b8200 81%,#74a600 100%));
+        
+        @include opacity(.7);
+        @include rounded-corners(12px);
+    }
+
+    .brew-welcome-message {
+        position: absolute;
+        left: 0;
+        top: $message-margin-top;
+
+        color: $white;
+
+        background: transparent;
+        
+        padding: $message-padding-vert $message-padding-horiz;
+        width: ($message-ct-width - $message-padding-horiz*2);
+        height: ($message-ct-height - $message-padding-vert*2);
+
+        h1 {
+            font: 40px 'LobsterTwoRegular';
+            letter-spacing: 0;
+            text-shadow: 1px 2px $black;
+        }
+
+        p {
+            @include opacity(1);
+            &.quote {
+                text-indent: 25px;
+            }
+            &.author {
+                text-indent: 50px;
+            }
+        }
+    }
+
+    .brew-login-ct {
+        overflow: hidden;
+        float: right;
+
+        .brew-login-form, .brew-register-form {
+            float: right;
+            clear: right;
+        }
+    }
+    
+}

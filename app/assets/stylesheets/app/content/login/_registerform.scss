@@ -1,0 +1,51 @@
+.brew-register-form {
+    width: 280px !important;
+    border: 1px outset #777;
+    padding: 8px 0;
+    text-align: center;
+
+    @include rounded-corners(5px);
+
+    background-color: #f2f6f0; // Old browsers
+    @include filter-gradient(#f2f6f0, #ccdfc3, horizontal); // IE6-9 fallback on horizontal gradient
+    @include background-image(linear-gradient(left top,  #f2f6f0 0%,#dbe6d8 28%,#d8e4d4 56%,#d5e2d0 70%,#ccdfc3 97%));
+
+    .brew-register-message {
+        font: 22px 'LobsterTwoRegular';
+        color: $black;
+        margin-bottom: 10px;
+    }
+
+    .dijitTextBox {
+        @include rounded-corners(5px);
+        border: 1px inset $lighter-grey !important;
+        padding: 2px 4px;
+        margin-bottom: 6px;
+
+        &.brew-register-name {
+            width: 112px;
+        }
+        &.brew-register-first-name {
+            margin-right: 5px;
+        }
+    }
+
+    .dijitButton > span {
+        @include rounded-corners(4px);
+        color: $white;
+        border: 1px solid #79b200;
+
+        background-color: #b2ff23; // Old browsers
+        @include filter-gradient(#b2ff23, #79b200, vertical); // IE6-9
+        @include background-image(linear-gradient(top,  #b2ff23 0%,#94de00 27%,#7fc900 56%,#79b200 85%));
+
+        &:hover {
+            color: $white;
+            border-color: #4d7000;
+
+            background-color: #9ff400; // Old browsers
+            @include filter-gradient(#9ff400, #669600, vertical); // IE6-9
+            @include background-image(linear-gradient(top,  #9ff400 0%,#7cba00 27%,#6caa00 56%,#669600 85%));
+        }
+    }
+}

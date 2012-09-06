@@ -1,13 +1,18 @@
 define([
     'dojo/dom-construct',
     'Brew/ui/ViewPort',
-    'dojo/_base/window'
-], function (domConstruct, ViewPort, win) {
+    'dojo/_base/window',
+    'Brew/content/login/LoginPage',
+    'Brew/content/navigation/NavigationBar'
+], function (domConstruct, ViewPort, win, LoginPage, NavigationBar) {
 
     init = function() {
         var viewPort = buildViewPort(),
+            navigationBar = buildNavBar(),
             contentPane = buildContentPane();
 
+        viewPort.addChild( navigationBar );
+        viewPort.addChild( contentPane );
         viewPort.startup();
     },
 
@@ -19,13 +24,19 @@ define([
     },
 
     buildContentPane = function() {
-        // return new ContentPane({
-        // });
+        return new LoginPage({
+            region: 'center'
+        });
+    },
+
+    buildNavBar = function() {
+        return new NavigationBar({
+            region: 'top'
+        });
     };
 
     return {
         startup: function() {
-            console.log('startup!');
             init();
         }
     };

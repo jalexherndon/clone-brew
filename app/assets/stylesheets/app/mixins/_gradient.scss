@@ -1,0 +1,5 @@
+@mixin gradient($color, $begin, $end, $direction: vertical, $align: top) {
+    background-color: $color; // Old browsers
+    @include filter-gradient($begin, $end, $direction); // IE6-9
+    @include background-image(linear-gradient($align,  $begin 0%, $end 75%));
+}
