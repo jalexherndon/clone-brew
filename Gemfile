@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'render_component_vho'
 gem 'active_scaffold_vho'
 
+gem 'devise'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

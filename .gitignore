@@ -25,3 +25,6 @@
 
 # Ignore all sublime project files
 *.sublime-*
+
+# Ignore Gemfile.lock
+Gemfile.lock
