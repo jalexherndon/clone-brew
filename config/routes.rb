@@ -1,5 +1,7 @@
 CloneBrew::Application.routes.draw do
 
+  devise_for :users
+
   resources :ingredient_details do as_routes end
   resources :ingredient_categories do as_routes end
   resources :ingredients do as_routes end
