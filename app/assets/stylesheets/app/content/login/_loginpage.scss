@@ -1,9 +1,3 @@
-$message-margin-top: 100px;
-$message-ct-width: 493px;
-$message-ct-height: 120px;
-$message-padding-horiz: 13px;
-$message-padding-vert: 8px;
-
 .brew-login-page {
 
     .brew-welcome-message-ct {
@@ -54,14 +48,13 @@ $message-padding-vert: 8px;
         }
     }
 
-    .brew-login-ct {
-        overflow: hidden;
+    .brew-login-form, .brew-register-form {
         float: right;
+        clear: right;
+    }
 
-        .brew-login-form, .brew-register-form {
-            float: right;
-            clear: right;
-        }
+    .brew-register-form {
+        margin-top: 10px;
     }
     
 }

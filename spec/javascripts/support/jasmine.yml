@@ -11,7 +11,10 @@
 #   - dist/**/*.js
 #
 src_files:
-  - assets/application.js
+  - vendor/assets/javascripts/dojotoolkit/1.8.0/dojo/**/*.js
+  - vendor/assets/javascripts/dojotoolkit/1.8.0/dijit/**/*.js
+  - vendor/assets/javascripts/dojotoolkit/1.8.0/dojox/**/*.js
+  - app/assets/javascripts/app/**/*.js
 
 # stylesheets
 #
@@ -25,7 +28,9 @@ src_files:
 #   - stylesheets/*.css
 #
 stylesheets:
-  - stylesheets/**/*.css
+  - vendor/assets/fonts/**/*.css
+  - vendor/assets/javascripts/dojotoolkit/1.8.0/dijit/themes/nihilo/nihilo.css
+  - app/assets/stylesheets/**/*.css
 
 # helpers
 #

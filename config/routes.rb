@@ -1,6 +1,6 @@
 CloneBrew::Application.routes.draw do
 
-  devise_for :users
+  devise_for :users#, :controllers => {:sessions => 'sessions'}
 
   resources :ingredient_details do as_routes end
   resources :ingredient_categories do as_routes end
@@ -10,6 +10,7 @@ CloneBrew::Application.routes.draw do
   resources :beers do as_routes end
   resources :breweries do as_routes end
 
+  get "home/index"
   get "welcome/index"
 
   # The priority is based upon order of creation:
@@ -61,7 +62,7 @@ CloneBrew::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 

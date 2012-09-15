@@ -10,9 +10,12 @@
         APP_PATH = './app',
         APP_NAMESPACE = 'Brew',
         APP_DEPENDENCIES = ["Brew/app", "dojo/domReady!"],
+        APP_SINGLETONS = ['Brew/request/Decorator'],
 
         launchApp = function(App) {
-            App.startup();
+            if (window.location.pathname === '/') {
+                App.startup();
+            }
         },
 
         isRunningInProduction = function() {
@@ -45,7 +48,7 @@
                     }],
 
                     // Startup the App
-                    deps: APP_DEPENDENCIES,
+                    deps: APP_DEPENDENCIES.concat(APP_SINGLETONS),
                     callback: launchApp
                 };
             }
