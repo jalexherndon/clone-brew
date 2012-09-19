@@ -24,7 +24,7 @@
 .project
 
 # Ignore all sublime project files
-*.sublime-*
+*.sublime-workspace
 
 # Ignore Gemfile.lock
 Gemfile.lock

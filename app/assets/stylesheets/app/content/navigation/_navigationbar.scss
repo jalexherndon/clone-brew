@@ -2,4 +2,18 @@
     height: 40px;
     background-color: $black !important;
     border: 0 !important;
+
+    .dijitMenuItem {
+        color: $white;
+        font-size: 18px;
+        line-height: 40px !important;
+        background-color: transparent;
+        padding: 0 10px !important;
+        border-left: 1px solid $dark-grey;
+
+        &.brew-logo {
+            font: 24px 'LobsterTwoRegular' bold;
+            border: 0;
+        }
+    }
 }

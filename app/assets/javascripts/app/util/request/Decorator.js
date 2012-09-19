@@ -1,12 +1,12 @@
 (function() {
-    define('Brew/request/Decorator', [
+    define('Brew/util/request/Decorator', [
         'dojo/_base/declare',
         'dojo/_base/lang',
         'dojo/request/notify',
         'dojo/_base/query'
     ], function(declare, lang, notify, query) {
 
-        var decorator = declare('Brew.request.Decorator', null, {
+        var decorator = declare('Brew.util.request.Decorator', null, {
 
             constructor: function(config) {
                 var o = this.inherited(arguments);
@@ -20,6 +20,7 @@
             }
         });
 
-        lang.setObject("Brew.request.Decorator", new decorator());
+        lang.setObject("Brew.util.request.Decorator", new decorator());
+        return decorator;
     });
 })();

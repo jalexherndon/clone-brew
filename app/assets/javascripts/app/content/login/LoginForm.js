@@ -7,24 +7,13 @@
         'dijit/form/Button',
         'dijit/_Container',
         'dojo/request',
-        'dojo/dom-construct'
-    ], function(declare, Form, TextBox, Button, _Container, request, DomConstruct){
+        'dojo/dom-construct',
+        'dojo/topic',
+        'dojo/_base/lang'
+    ], function(declare, Form, TextBox, Button, _Container, request, DomConstruct, topic, lang) {
 
         return declare('Brew.content.login.LoginForm', [Form, _Container], {
             'class': 'brew-login-form',
-
-            onSubmit: function() {
-                if (!this.validate()) {
-                    return false;
-                }
-
-                request.post('/users/sign_in.json', {
-                    handleAs: 'json',
-                    data: this.get('value')
-                }).then(this._onLoginSuccess, this._onLoginFailure);
-
-                return false;
-            },
 
             postCreate: function() {
                 var message = DomConstruct.create("div", {
@@ -56,15 +45,30 @@
                 DomConstruct.place(message, this.domNode, 0);
             },
 
+            onSubmit: function() {
+                if (!this.validate()) {
+                    return false;
+                }
+
+                request.post('/users/sign_in.json', {
+                    handleAs: 'json',
+                    data: this.get('value')
+                }).then(lang.hitch(this, this._onLoginSuccess), lang.hitch(this, this._onLoginFailure));
+
+                return false;
+            },
+
             _onLoginSuccess: function(response) {
                 // TODO: success handler
-                alert('You have logged in successfully.');
-                debugger;
+                console.log('You have logged in successfully.');
+                this.reset();
+                topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, response);
             },
 
             _onLoginFailure: function(err) {
                 // TODO: err handler
-                alert('There was an error in your login:\n\n' + err.message);
+                console.log('There was an error in your login:\n\n' + err.message);
+                this.reset();
             }
         });
     });

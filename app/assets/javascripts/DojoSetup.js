@@ -10,7 +10,10 @@
         APP_PATH = './app',
         APP_NAMESPACE = 'Brew',
         APP_DEPENDENCIES = ["Brew/app", "dojo/domReady!"],
-        APP_SINGLETONS = ['Brew/request/Decorator'],
+        APP_SINGLETONS = [
+            'Brew/util/request/Decorator',
+            'Brew/util/Messages'
+        ],
 
         launchApp = function(App) {
             if (window.location.pathname === '/') {
