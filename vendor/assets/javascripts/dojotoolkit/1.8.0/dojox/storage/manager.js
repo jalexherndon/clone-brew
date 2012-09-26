@@ -1,7 +1,7 @@
 dojo.provide("dojox.storage.manager");
 //dojo.require("dojo.AdapterRegistry");
 // FIXME: refactor this to use an AdapterRegistry
-
+console.log('storage');
 dojox.storage.manager = new function(){
 	// summary:
 	//		A singleton class in charge of the dojox.storage system

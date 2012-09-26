@@ -7,11 +7,10 @@
         'dijit/form/Button',
         'dijit/_Container',
         'dojo/dom-construct',
-        'dojo/request',
         'dojox/validate/web',
-        'dojo/_base/lang'
+        'dojo/_base/event'
         
-    ], function(declare, Form, TextBox, Button, _Container, DomConstruct, request, validate, lang){
+    ], function(declare, Form, TextBox, Button, _Container, DomConstruct, validate, event){
 
         return declare('Brew.content.login.RegisterForm', [Form, _Container], {
             'class': 'brew-register-form',
@@ -74,25 +73,10 @@
             },
 
             onSubmit: function(evt) {
-                if (!this.validate()) {
-                    return false;
+                event.stop(evt);
+                if (this.validate()) {
+                    Brew.auth.LocalProvider.regiser(this.get('value'));
                 }
-
-                request.post('/users.json', {
-                    handleAs: 'json',
-                    data: this.get('value')
-                }).then(this._onRegistrationSuccess, this._onRegistrationFailure);
-                return false;
-            },
-
-            _onRegistrationSuccess: function(data) {
-                // TODO: success handler
-                alert('You have registered successfully.');
-            },
-
-            _onRegistrationFailure: function(err) {
-                // TODO: err handler
-                alert('There was an error in your registration:\n\n' + err.message);
             },
 
             _passwordValidator: function(value, constraints) {

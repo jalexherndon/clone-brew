@@ -15,5 +15,14 @@
             font: 24px 'LobsterTwoRegular' bold;
             border: 0;
         }
+
+        &.brew-user-icon {
+            float: right;
+            border-width: 0;
+            background: transparent url('/assets/User-green128.png')  no-repeat;
+            background-size: contain;
+            width: 40px;
+            height: 100%;
+        }
     }
 }

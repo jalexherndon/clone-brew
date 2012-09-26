@@ -6,11 +6,9 @@
         'dijit/form/ValidationTextBox',
         'dijit/form/Button',
         'dijit/_Container',
-        'dojo/request',
         'dojo/dom-construct',
-        'dojo/topic',
-        'dojo/_base/lang'
-    ], function(declare, Form, TextBox, Button, _Container, request, DomConstruct, topic, lang) {
+        'dojo/_base/event'
+    ], function(declare, Form, TextBox, Button, _Container, DomConstruct, event) {
 
         return declare('Brew.content.login.LoginForm', [Form, _Container], {
             'class': 'brew-login-form',
@@ -45,31 +43,13 @@
                 DomConstruct.place(message, this.domNode, 0);
             },
 
-            onSubmit: function() {
-                if (!this.validate()) {
-                    return false;
+            onSubmit: function(evt) {
+                event.stop(evt);
+                if (this.validate()) {
+                    Brew.auth.LocalProvider.login(this.get('value'));
                 }
-
-                request.post('/users/sign_in.json', {
-                    handleAs: 'json',
-                    data: this.get('value')
-                }).then(lang.hitch(this, this._onLoginSuccess), lang.hitch(this, this._onLoginFailure));
-
-                return false;
-            },
-
-            _onLoginSuccess: function(response) {
-                // TODO: success handler
-                console.log('You have logged in successfully.');
-                this.reset();
-                topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, response);
-            },
-
-            _onLoginFailure: function(err) {
-                // TODO: err handler
-                console.log('There was an error in your login:\n\n' + err.message);
-                this.reset();
             }
+
         });
     });
 })();

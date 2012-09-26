@@ -6,17 +6,11 @@
         'dijit/PopupMenuBarItem',
         'dijit/MenuItem',
         'dijit/DropDownMenu',
-        'dojo/topic',
-        'dojo/_base/lang'
-    ], function(declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, topic, lang) {
+        'dojo/_base/array'
+    ], function(declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, array) {
 
         return declare('Brew.content.navigation.NavigationBar', MenuBar, {
             'class': 'brew-navigation-bar',
-
-            constructor: function(config) {
-                topic.subscribe(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL,
-                    lang.hitch(this, this._onAuthorizationSuccessful));
-            },
 
             postCreate: function() {
                 this.addChild(new MenuBarItem({
@@ -26,19 +20,39 @@
                 }));
             },
 
-            _onAuthorizationSuccessful: function(user) {
+            populate: function(user) {
                 this.addChild(new MenuBarItem({
-                    label: "Recipe",
+                    label: 'Recipe',
                     onClick: function() {}
                 }));
                 this.addChild(new MenuBarItem({
-                    label: "Trade",
+                    label: 'Trade',
                     onClick: function() {}
                 }));
                 this.addChild(new MenuBarItem({
-                    label: "Store",
+                    label: 'Store',
                     onClick: function() {}
                 }));
+
+                var userDropDown = new DropDownMenu({});
+                userDropDown.addChild(new MenuItem({
+                    lable: 'Profile'
+                }));
+                userDropDown.addChild(new MenuItem({
+                    lable: 'Logout'
+                }));
+                this.addChild(new PopupMenuBarItem({
+                    'class': 'brew-user-icon',
+                    popup: userDropDown
+                }));
+            },
+
+            disband: function() {
+                array.forEach(this.getChildren(), function(child, idx) {
+                    if (idx > 0) {
+                        this.removeChild(child);
+                    }
+                }, this);
             }
         });
     });

@@ -7,9 +7,9 @@
         'Brew/content/login/LoginForm',
         'Brew/content/login/RegisterForm',
         'dojo/dom-construct'
-    ], function(declare, Page, ContentPane, LoginForm, RegisterForm, DomConstruct){
+    ], function(declare, _Page, ContentPane, LoginForm, RegisterForm, DomConstruct){
 
-        return declare('Brew.content.login.LoginPage', Page, {
+        return declare('Brew.content.login.LoginPage', _Page, {
             'class': 'brew-login-page',
 
             postCreate: function() {

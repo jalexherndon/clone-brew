@@ -1,43 +1,58 @@
-define([
-    'dojo/dom-construct',
-    'Brew/ui/ViewPort',
-    'dojo/_base/window',
-    'Brew/content/login/LoginPage',
-    'Brew/content/navigation/NavigationBar'
-], function (domConstruct, ViewPort, win, LoginPage, NavigationBar) {
+(function() {
+    define([
+        'dojo/_base/declare',
+        'dojo/dom-construct',
+        'Brew/ui/ViewPort',
+        'dojo/_base/window',
+        'Brew/content/navigation/NavigationBar',
+        'dojo/topic'
+    ], function (declare, domConstruct, ViewPort, win, NavigationBar, topic) {
+        var viewPort,
+            navigationBar,
+            authProvider,
 
-    init = function() {
-        var viewPort = buildViewPort(),
-            navigationBar = buildNavBar(),
-            contentPane = buildContentPane();
+        init = function() {
+            topic.subscribe(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, _onAuthSuccess);
+            topic.subscribe(Brew.util.Messages.AUTHORIZATION_NEEDED, _onAuthNeeded);
 
-        viewPort.addChild( navigationBar );
-        viewPort.addChild( contentPane );
-        viewPort.startup();
-    },
+            viewPort = buildViewPort();
+            navigationBar = buildNavBar();
 
-    buildViewPort = function() {
-        return new ViewPort({
-            isContainer: true,
-            isLayoutContainer: true
-        }, domConstruct.create('div', {id: 'viewPort'}, win.body()));
-    },
+            viewPort.addChild( navigationBar );
 
-    buildContentPane = function() {
-        return new LoginPage({
-            region: 'center'
-        });
-    },
+            viewPort.startup();
+            Brew.util.navigation.PageManager.startup(viewPort);
+            Brew.auth.LocalProvider.startup();
+        },
 
-    buildNavBar = function() {
-        return new NavigationBar({
-            region: 'top'
-        });
-    };
+        buildViewPort = function() {
+            return new ViewPort({
+                isContainer: true,
+                isLayoutContainer: true
+            }, domConstruct.create('div', {id: 'viewPort'}, win.body()));
+        },
 
-    return {
-        startup: function() {
-            init();
-        }
-    };
-});
+        buildNavBar = function() {
+            return new NavigationBar({
+                region: 'top'
+            });
+        },
+
+        _onAuthSuccess = function() {
+            Brew.util.navigation.HashManager.setHash('home');
+            navigationBar.populate();
+        },
+
+        _onAuthNeeded = function() {
+            Brew.util.navigation.HashManager.setHash('login');
+            navigationBar.disband();
+        };
+
+        return {
+            startup: function() {
+                init();
+            }
+        };
+
+    });
+})();
