@@ -1,13 +1,13 @@
 (function() {
     var ApplicationLauncher = (function() {
         var
-        BASE_PATH = '/assets/',
+        BASE_PATH = '/js-lib/',
 
         DOJO_VERSION = '1.8.0',
         DOJO_PATH = 'dojotoolkit/' + DOJO_VERSION,
         DOJO_PACKAGES = ["dojo", "dijit", "dojox"],
 
-        APP_PATH = './app',
+        APP_PATH = '/js/app',
         APP_NAMESPACE = 'Brew',
         APP_DEPENDENCIES = ["Brew/App", "dojo/domReady!"],
         APP_SINGLETONS = [
