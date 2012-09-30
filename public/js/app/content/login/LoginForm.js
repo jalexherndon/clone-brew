@@ -7,8 +7,11 @@
         'dijit/form/Button',
         'dijit/_Container',
         'dojo/dom-construct',
-        'dojo/_base/event'
-    ], function(declare, Form, TextBox, Button, _Container, DomConstruct, event) {
+        'dojo/_base/event',
+        'dojo/_base/lang',
+        'dojo/query',
+        'dijit/registry'
+    ], function(declare, Form, TextBox, Button, _Container, DomConstruct, event, lang, query, registry) {
 
         return declare('Brew.content.login.LoginForm', [Form, _Container], {
             'class': 'brew-login-form',
@@ -46,8 +49,19 @@
             onSubmit: function(evt) {
                 event.stop(evt);
                 if (this.validate()) {
-                    Brew.auth.LocalProvider.login(this.get('value'));
+                    Brew.auth.LocalProvider.login(this.get('value'), lang.hitch(this, this._loginFailCallback));
                 }
+                this.inherited(arguments);
+            },
+
+            _loginFailCallback: function(err) {
+                var message = err.response.data.error,
+                    node = query('.brew-password', this.domNode)[0],
+                    passwordTextBox = registry.byNode(node);
+
+                passwordTextBox.focus();
+                passwordTextBox.set('value', '');
+                passwordTextBox.displayMessage(message);
             }
 
         });

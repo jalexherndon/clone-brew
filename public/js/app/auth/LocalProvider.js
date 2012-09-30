@@ -34,22 +34,22 @@
                 }
             },
 
-            login: function(data) {
+            login: function(data, failureCallback) {
                 request.post('/users/sign_in.json', {
                     handleAs: 'json',
                     data: data
-                }).then(lang.hitch(this, this._onAuthSuccess), lang.hitch(this, this._onAuthFailure));
+                }).then(lang.hitch(this, this._onAuthSuccess), failureCallback);
             },
 
             register: function(data) {
                 request.post('/users.json', {
                     handleAs: 'json',
                     data: data
-                }).then(lang.hitch(this, this._onAuthSuccess), lang.hitch(this, this._onAuthFailure));
+                }).then(lang.hitch(this, this._onAuthSuccess), lang.hitch(this, this._onAuthNeeded));
             },
 
             logout: function() {
-                request.del('/users/sign_out.json').then(lang.hitch(this, this._onAuthFailure));
+                request.del('/users/sign_out.json').then(lang.hitch(this, this._onAuthNeeded));
             },
 
             _onAuthSuccess: function(user) {
@@ -57,7 +57,7 @@
                 topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user);
             },
 
-            _onAuthFailure: function(err) {
+            _onAuthNeeded: function(err) {
                 cookie(this.cookieName, null, {expires: -1});
                 topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED);
             }
