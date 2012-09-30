@@ -39,12 +39,12 @@
         },
 
         _onAuthSuccess = function() {
-            Brew.util.navigation.HashManager.setHash('home');
+            Brew.util.navigation.HashManager.setHash('/home');
             navigationBar.populate();
         },
 
         _onAuthNeeded = function() {
-            Brew.util.navigation.HashManager.setHash('login');
+            Brew.util.navigation.HashManager.setHash('/login');
             navigationBar.disband();
         };
 

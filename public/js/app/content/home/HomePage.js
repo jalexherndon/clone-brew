@@ -10,7 +10,6 @@
 
             postCreate: function() {
                 this.inherited(arguments);
-                console.log('home page');
             }
         });
     });

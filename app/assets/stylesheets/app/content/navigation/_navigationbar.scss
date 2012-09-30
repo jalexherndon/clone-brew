@@ -18,11 +18,27 @@
 
         &.brew-user-icon {
             float: right;
+            margin-right: 20px;
             border-width: 0;
             background: transparent url('/assets/User-green128.png')  no-repeat;
             background-size: contain;
             width: 40px;
             height: 100%;
         }
+    }
+}
+
+.dijitMenuPopup > .brew-user-menu {
+    background-color: $black;
+    border: 1px solid $dark-grey;
+
+    td {
+        padding: 2px 0px 2px 10px;
+    }
+
+    .dijitMenuItemLabel {
+        color: $white;
+        font-size: 12px;
+        font-weight: normal;
     }
 }

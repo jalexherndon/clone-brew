@@ -49,7 +49,7 @@
             },
 
             logout: function() {
-                cookie(this.cookieName, null, {expires: -1});
+                request.del('/users/sign_out.json').then(lang.hitch(this, this._onAuthFailure));
             },
 
             _onAuthSuccess: function(user) {
@@ -59,7 +59,7 @@
 
             _onAuthFailure: function(err) {
                 cookie(this.cookieName, null, {expires: -1});
-                topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED, user);
+                topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED);
             }
         });
 

@@ -11,8 +11,8 @@
         var PageMapping = declare('Brew.util.navigation.PageMapping', Memory, {
             idProperty: 'hash',
             data: [
-                {hash: 'login', def: LoginPage},
-                {hash: 'home', def: HomePage}
+                {hash: '/login', def: LoginPage},
+                {hash: '/home', def: HomePage}
             ],
 
             getPage: function(hash) {

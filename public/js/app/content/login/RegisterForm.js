@@ -75,7 +75,7 @@
             onSubmit: function(evt) {
                 event.stop(evt);
                 if (this.validate()) {
-                    Brew.auth.LocalProvider.regiser(this.get('value'));
+                    Brew.auth.LocalProvider.register(this.get('value'));
                 }
             },
 

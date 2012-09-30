@@ -6,13 +6,15 @@
         'dijit/PopupMenuBarItem',
         'dijit/MenuItem',
         'dijit/DropDownMenu',
+        'dijit/MenuSeparator',
         'dojo/_base/array'
-    ], function(declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, array) {
+    ], function(declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, MenuSeparator, array) {
 
         return declare('Brew.content.navigation.NavigationBar', MenuBar, {
             'class': 'brew-navigation-bar',
 
             postCreate: function() {
+                this.inherited(arguments);
                 this.addChild(new MenuBarItem({
                     'class': 'brew-logo',
                     label:"Clone Brews",
@@ -34,12 +36,17 @@
                     onClick: function() {}
                 }));
 
-                var userDropDown = new DropDownMenu({});
+                var userDropDown = new DropDownMenu({
+                    'class': 'brew-user-menu'
+                });
                 userDropDown.addChild(new MenuItem({
-                    lable: 'Profile'
+                    label: 'Profile'
                 }));
                 userDropDown.addChild(new MenuItem({
-                    lable: 'Logout'
+                    label: 'Logout',
+                    onClick: function(evt) {
+                        Brew.auth.LocalProvider.logout();
+                    }
                 }));
                 this.addChild(new PopupMenuBarItem({
                     'class': 'brew-user-icon',
