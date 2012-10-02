@@ -5,14 +5,34 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-RecipeType.create([
-  { name: "All Grain" },
-  { name: "Mini-Mash" },
-  { name: "Extract" }
+User.create([
+    { email: "test@test.com", password: "Password" }
 ])
 
-IngredientCategory.create([
-  { name: "Grain" },
-  { name: "Fruit" },
-  { name: "Hops" }
+RecipeType.create([
+    { name: "All Grain" },
+    { name: "Mini-Mash" },
+    { name: "Extract" }
+])
+
+ingredient_categories = IngredientCategory.create([
+    { name: "Grain" },
+    { name: "Fruit" },
+    { name: "Hops" }
+])
+
+Ingredient.create([
+    { name: "Barley", ingredient_category_id: ingredient_categories.first.id },
+    { name: "Orange Peel", ingredient_category_id: ingredient_categories[1].id },
+    { name: "Hallertau", ingredient_category_id: ingredient_categories.last.id }
+])
+
+breweries = Brewery.create([
+    { name: "Breckenridge" },
+    { name: "BridgePort" }
+])
+
+Beer.create([
+    { name: "Avalanche", brewery_id: breweries.first.id },
+    { name: "Kingpin", brewery_id: breweries.last.id }
 ])
