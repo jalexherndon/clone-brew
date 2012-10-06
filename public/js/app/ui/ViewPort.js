@@ -6,10 +6,15 @@
     ], function(declare, borderContainer) {
 
         return declare("Brew.ui.ViewPort", borderContainer, {
-            baseClass: 'brew-view-port',
+            'class': 'brew-view-port',
             gutters: false,
             
             constructor: function(config) {
+                this.inherited(arguments);
+            },
+
+            addChild: function(child, insertIndex, region) {
+                child.region = region || child.region || 'center';
                 this.inherited(arguments);
             }
         });

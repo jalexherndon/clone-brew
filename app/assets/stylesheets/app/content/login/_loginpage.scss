@@ -20,8 +20,8 @@
 
     .brew-welcome-message {
         position: absolute;
-        left: 0;
-        top: $message-margin-top;
+        left: $page-padding;
+        top: $message-margin-top + $page-padding;
 
         color: $white;
 
@@ -32,8 +32,7 @@
         height: ($message-ct-height - $message-padding-vert*2);
 
         h1 {
-            font: 40px 'LobsterTwoRegular';
-            letter-spacing: 0;
+            font-size: 40px;
             text-shadow: 1px 2px $black;
         }
 

@@ -8,7 +8,7 @@
             AUTHORIZATION_SUCCESSFUL: 'authorization_successful',
             AUTHORIZATION_NEEDED: 'authorization_needed',
 
-            HASH_CHANGE: '/dojo/hashchange'
+            HASH_CHANGE: '/brew/hashchange'
         });
 
         lang.getObject('util.Messages', true, Brew);

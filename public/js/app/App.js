@@ -1,27 +1,34 @@
 (function() {
     define([
         'dojo/_base/declare',
-        'dojo/dom-construct',
         'Brew/ui/ViewPort',
+        'Brew/content/Container',
+        'dojo/dom-construct',
         'dojo/_base/window',
         'Brew/content/navigation/NavigationBar',
-        'dojo/topic'
-    ], function (declare, domConstruct, ViewPort, win, NavigationBar, topic) {
+        'dojo/topic',
+        'dojo/dom-class'
+
+    ], function (declare, ViewPort, ContentContainer, domConstruct, win, NavigationBar, topic, domClass) {
         var viewPort,
             navigationBar,
+            contentContainer,
             authProvider,
 
         init = function() {
-            topic.subscribe(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, _onAuthSuccess);
-            topic.subscribe(Brew.util.Messages.AUTHORIZATION_NEEDED, _onAuthNeeded);
+            navigationBar = buildNavBar();
+            contentContainer = new ContentContainer({region: 'center'});
 
             viewPort = buildViewPort();
-            navigationBar = buildNavBar();
-
             viewPort.addChild( navigationBar );
-
+            viewPort.addChild( contentContainer );
             viewPort.startup();
-            Brew.util.navigation.PageManager.startup(viewPort);
+
+            Brew.util.navigation.HashManager.startup();
+            Brew.util.navigation.PageManager.startup(contentContainer);
+
+            topic.subscribe(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, _onAuthSuccess);
+            topic.subscribe(Brew.util.Messages.AUTHORIZATION_NEEDED, _onAuthNeeded);
             Brew.auth.LocalProvider.startup();
         },
 
@@ -39,12 +46,14 @@
         },
 
         _onAuthSuccess = function() {
-            Brew.util.navigation.HashManager.setHash('/home');
+            Brew.util.navigation.HashManager.setHash();
+            domClass.remove(viewPort.domNode, 'login');
             navigationBar.populate();
         },
 
         _onAuthNeeded = function() {
             Brew.util.navigation.HashManager.setHash('/login');
+            domClass.add(viewPort.domNode, 'login');
             navigationBar.disband();
         };
 

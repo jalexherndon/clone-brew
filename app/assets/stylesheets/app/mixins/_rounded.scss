@@ -1,5 +1,11 @@
-@mixin rounded-corners ($radius) {
+@mixin rounded-corners ($radius: 5px) {
+    border-radius: $radius;
     -moz-border-radius: $radius;
     -webkit-border-radius: $radius;
-    border-radius: $radius;
+}
+
+@mixin rounded-corners-detail ($top, $right, $bottom, $left) {
+    border-radius: $top $right $bottom $left;
+    -moz-border-radius: $top $right $bottom $left;
+    -webkit-border-radius: $top $right $bottom $left;
 }

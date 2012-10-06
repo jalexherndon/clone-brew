@@ -18,14 +18,18 @@
                 this.addChild(new MenuBarItem({
                     'class': 'brew-logo',
                     label:"Clone Brews",
-                    onClick: function() {}
+                    onClick: function() {
+                        Brew.util.navigation.HashManager.setHash('/home');
+                    }
                 }));
             },
 
             populate: function(user) {
                 this.addChild(new MenuBarItem({
-                    label: 'Recipe',
-                    onClick: function() {}
+                    label: 'DataBase',
+                    onClick: function() {
+                        Brew.util.navigation.HashManager.setHash('/database');
+                    }
                 }));
                 this.addChild(new MenuBarItem({
                     label: 'Trade',
@@ -40,7 +44,8 @@
                     'class': 'brew-user-menu'
                 });
                 userDropDown.addChild(new MenuItem({
-                    label: 'Profile'
+                    label: 'Profile',
+                    onClick: function(evt) {}
                 }));
                 userDropDown.addChild(new MenuItem({
                     label: 'Logout',

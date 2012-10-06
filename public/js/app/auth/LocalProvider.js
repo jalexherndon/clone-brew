@@ -14,6 +14,7 @@
             CSRFToken: null,
             currentUser: null,
             cookieName: 'user',
+            _isAuthenticated: false,
 
             constructor: function(config) {
                 this.CSRFToken = query('meta[name="csrf-token"]')[0].getAttribute('content');
@@ -28,8 +29,10 @@
             startup: function() {
                 var user = cookie(this.cookieName);
                 if (user) {
+                    this._isAuthenticated = true;
                     topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user);
                 } else {
+                    this._isAuthenticated = false;
                     topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED, user);
                 }
             },
@@ -52,12 +55,18 @@
                 request.del('/users/sign_out.json').then(lang.hitch(this, this._onAuthNeeded));
             },
 
+            isAuthenticated: function() {
+                return this._isAuthenticated;
+            },
+
             _onAuthSuccess: function(user) {
+                this._isAuthenticated = true;
                 cookie(this.cookieName, user);
                 topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user);
             },
 
             _onAuthNeeded: function(err) {
+                this._isAuthenticated = false;
                 cookie(this.cookieName, null, {expires: -1});
                 topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED);
             }

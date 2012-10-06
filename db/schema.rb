@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20120912041609) do
 
   create_table "beers", :force => true do |t|
     t.string   "name"
-    t.text     "description"
+    t.text     "    "
     t.integer  "brewery_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false

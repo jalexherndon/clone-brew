@@ -5,22 +5,11 @@ body, html {
     padding: 0;
 }
 
-#viewPort {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-
-    background: $black url('/assets/hops_background.jpeg') no-repeat bottom;
-    background-size: cover;
-
-    min-width: 960px;
-}
-
 h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0 0 4px;
+    font: 22px 'LobsterTwoRegular';
+    letter-spacing: 0;
+    padding: 0;
+    margin: 0;
 }
 
 p {
