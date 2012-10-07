@@ -15,9 +15,9 @@
                 hash: '/home',
                 content: 'Brew/content/home/HomePage'
             },{
-                hash: '/database',
-                content: 'Brew/content/database/DataBasePage',
-                left: 'Brew/content/database/LeftNavigation'
+                hash: '/library',
+                content: 'Brew/content/library/LibraryPage',
+                left: 'Brew/content/library/LeftNavigation'
             },{
                 hash: '/404',
                 content: 'Brew/content/error/404'

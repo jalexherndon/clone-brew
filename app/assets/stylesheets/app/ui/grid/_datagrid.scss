@@ -5,9 +5,11 @@
     border: 1px solid $dark-grey;
 
     .dojoxGridMasterHeader,
-    .dojoxGridMasterHeader div,
-    .dojoxGridMasterHeader div table,
-    .dojoxGridMasterHeader div table tbody {
+    .dojoxGridMasterHeader .dojoxGridHeader,
+    .dojoxGridMasterHeader .dojoxGridHeader > div,
+    .dojoxGridMasterHeader .dojoxGridHeader > div > div,
+    .dojoxGridMasterHeader .dojoxGridHeader table,
+    .dojoxGridMasterHeader .dojoxGridHeader table tbody {
         background: transparent;
 
         tr {

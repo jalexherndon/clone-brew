@@ -26,13 +26,13 @@
 
             populate: function(user) {
                 this.addChild(new MenuBarItem({
-                    label: 'DataBase',
+                    label: 'The Library',
                     onClick: function() {
-                        Brew.util.navigation.HashManager.setHash('/database');
+                        Brew.util.navigation.HashManager.setHash('/library');
                     }
                 }));
                 this.addChild(new MenuBarItem({
-                    label: 'Trade',
+                    label: 'Trading Post',
                     onClick: function() {}
                 }));
                 this.addChild(new MenuBarItem({
