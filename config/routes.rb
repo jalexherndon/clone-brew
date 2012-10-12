@@ -1,17 +1,16 @@
 CloneBrew::Application.routes.draw do
 
-  devise_for :users#, :controllers => {:sessions => 'sessions'}
+  devise_for :users
 
-  resources :ingredient_details do as_routes end
-  resources :ingredient_categories do as_routes end
-  resources :ingredients do as_routes end
-  resources :recipes do as_routes end
-  resources :recipe_types do as_routes end
-  resources :beers do as_routes end
-  resources :breweries do as_routes end
+  resources :ingredient_details
+  resources :ingredient_categories
+  resources :ingredients
+  resources :recipes
+  resources :recipe_types
+  resources :beers
+  resources :breweries
 
   get "home/index"
-  get "welcome/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

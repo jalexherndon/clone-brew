@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
 gem 'pg'
-gem 'jquery-rails'
-gem 'render_component_vho'
-gem 'active_scaffold_vho'
 gem 'devise'
 
 # Gems used only for assets and not required
