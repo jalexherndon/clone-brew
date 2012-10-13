@@ -4,6 +4,10 @@ gem 'rails', '3.2.6'
 gem 'pg'
 gem 'devise'
 
+# CoffeeScript support
+gem 'therubyracer'
+gem 'barista'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
