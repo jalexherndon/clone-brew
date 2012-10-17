@@ -1,40 +1,21 @@
 (function() {
 
-  define("Brew/content/library/LibraryPage", ["dojo/_base/declare", "Brew/ui/_Page", "dojox/data/RailsStore", "dojox/grid/DataGrid", "dojo/query"], function(declare, _Page, RailsStore, DataGrid, query) {
-    return declare("Brew.content.library.LibraryPage", _Page, {
+  define('Brew/content/library/LibraryPage', ['dojo/_base/declare', 'Brew/ui/_Page', 'Brew/data/Store', 'dojox/grid/DataGrid', 'dojo/query'], function(declare, _Page, BrewStore, DataGrid, query) {
+    return declare('Brew.content.library.LibraryPage', _Page, {
       postCreate: function() {
-        var grid, layout, store;
+        var grid;
         this.inherited(arguments);
-        store = new RailsStore({
-          target: "/beers/"
-        });
-        layout = [
-          {
-            name: "Name",
-            field: "name",
-            width: "100px"
-          }, {
-            name: "Brewery",
-            field: "brewery",
-            width: "125px",
-            formatter: this._nameFormatter
-          }, {
-            name: "Description",
-            field: "description",
-            width: "400px"
-          }
-        ];
         grid = new DataGrid({
-          id: "brew-grid",
-          store: store,
-          structure: layout,
+          id: 'brew-grid',
+          store: new BrewStore({
+            target: '/beers/'
+          }),
+          cellOverClass: '',
+          structure: Brew.ui.grid.StructureFactory.structureFor('beers'),
           autoWidth: true,
           autoHeight: true
         });
         return this.addChild(grid);
-      },
-      _nameFormatter: function(value, rowIdx) {
-        return value.name;
       }
     });
   });

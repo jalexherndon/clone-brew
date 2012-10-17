@@ -4,8 +4,6 @@ class Recipe < ActiveRecord::Base
   has_many    :ingredient_details
   has_many    :ingredients, :through => :ingredient_details
 
-  #has_and_belongs_to_many :ingredients, :join_table => "recipes_ingredients"
-
   accepts_nested_attributes_for :ingredient_details, :allow_destroy => true
   attr_accessible :directions, :beer_id, :recipe_type_id, :ingredient_ids, :ingredient_detail_ids
   validates :beer_id, :presence => true

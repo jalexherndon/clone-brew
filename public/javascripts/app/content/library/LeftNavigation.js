@@ -19,7 +19,6 @@
         }
       ],
       constructor: function(config) {
-        this._buildByBreweryItem();
         this.content = this._buildHtmlFromItems();
         return this.inherited(arguments);
       },
@@ -34,18 +33,6 @@
         });
         html.push("</div>");
         return html.join("\n");
-      },
-      _buildByBreweryItem: function() {
-        return this.items.push({
-          name: "By Brewery",
-          children: [
-            {
-              name: "Brewery 1 (3)"
-            }, {
-              name: "Brewery 2 (1)"
-            }
-          ]
-        });
       }
     });
   });

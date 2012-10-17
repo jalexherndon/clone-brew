@@ -1,4 +1,3 @@
-debugger;
 define 'Brew/ui/_Page', [
     "dojo/_base/declare",
     "dijit/layout/ContentPane",

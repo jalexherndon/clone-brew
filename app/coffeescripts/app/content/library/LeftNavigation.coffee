@@ -12,14 +12,13 @@ define "Brew/content/library/LeftNavigation", [
         items: [
             name: "All Recipes"
             children: [
-                { name: "Clone Brews &copy;" },
-                { name: "Brewery Certified" },
+                { name: "Clone Brews &copy;" }
+                { name: "Brewery Certified" }
                 { name: "User Submitted" }
             ]
         ]
 
         constructor: (config) ->
-            @_buildByBreweryItem()
             @content = @_buildHtmlFromItems()
             @inherited arguments
 
@@ -33,12 +32,3 @@ define "Brew/content/library/LeftNavigation", [
 
             html.push "</div>"
             html.join "\n"
-
-        _buildByBreweryItem: ->
-            @items.push {
-                name: "By Brewery"
-                children: [
-                    { name: "Brewery 1 (3)" },
-                    { name: "Brewery 2 (1)" }
-                ]
-            }

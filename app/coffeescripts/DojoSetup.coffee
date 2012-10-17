@@ -5,7 +5,14 @@ class ApplicationLauncher
     APP_PATH: "/javascripts/app"
     APP_NAMESPACE: "Brew"
     APP_DEPENDENCIES: ["Brew/App", "dojo/domReady!"]
-    APP_SINGLETONS: ["Brew/util/Messages", "Brew/auth/LocalProvider", "Brew/util/navigation/PageManager", "Brew/util/navigation/PageMapping", "Brew/util/navigation/HashManager"]
+    APP_SINGLETONS: [
+        'Brew/util/Messages',
+        'Brew/auth/LocalProvider',
+        'Brew/util/navigation/PageManager',
+        'Brew/util/navigation/PageMapping',
+        'Brew/util/navigation/HashManager',
+        'Brew/ui/grid/StructureFactory'
+    ]
 
     instance = null    
     @init: ->

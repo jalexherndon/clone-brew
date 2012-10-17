@@ -7,10 +7,11 @@ class Beer < ActiveRecord::Base
     validates :brewery_id, :presence => true
 
     def as_json(options={})
-      super(:only => [:name, :description, :id],
+        super((options || {}).merge({
+            :only => [:name, :description, :id],
             :include => {
-              :brewery => {:only => [:name]}
+                :brewery => {:only => [:name]}
             }
-      )
+        }))
     end
 end

@@ -518,7 +518,7 @@ define([
 			this.scroller.setContentNodes(this.views.getContentNodes());
 		},
 
-		_setStructureAttr: function(structure){
+		_setStructureAttr: function(structure) {
 			var s = structure;
 			if(s && lang.isString(s)){
 				dojo.deprecated("dojox.grid._Grid.set('structure', 'objVar')", "use dojox.grid._Grid.set('structure', objVar) instead", "2.0");

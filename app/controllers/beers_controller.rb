@@ -1,11 +1,12 @@
 class BeersController < ApplicationController
+    include QueryHelper
+
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.all
+    @beers = build_list_query Beer, params['sortBy'], params['sortDir']
 
     respond_to do |format|
-      format.html # index.html.erb
       format.json { render json: @beers }
     end
   end
@@ -16,7 +17,6 @@ class BeersController < ApplicationController
     @beer = Beer.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @beer }
     end
   end
@@ -27,7 +27,6 @@ class BeersController < ApplicationController
     @beer = Beer.new
 
     respond_to do |format|
-      format.html # new.html.erb
       format.json { render json: @beer }
     end
   end
@@ -44,10 +43,8 @@ class BeersController < ApplicationController
 
     respond_to do |format|
       if @beer.save
-        format.html { redirect_to @beer, notice: 'Beer was successfully created.' }
         format.json { render json: @beer, status: :created, location: @beer }
       else
-        format.html { render action: "new" }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end
@@ -60,10 +57,8 @@ class BeersController < ApplicationController
 
     respond_to do |format|
       if @beer.update_attributes(params[:beer])
-        format.html { redirect_to @beer, notice: 'Beer was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end
@@ -76,7 +71,6 @@ class BeersController < ApplicationController
     @beer.destroy
 
     respond_to do |format|
-      format.html { redirect_to beers_url }
       format.json { head :no_content }
     end
   end

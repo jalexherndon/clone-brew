@@ -18,7 +18,7 @@
 
     ApplicationLauncher.prototype.APP_DEPENDENCIES = ["Brew/App", "dojo/domReady!"];
 
-    ApplicationLauncher.prototype.APP_SINGLETONS = ["Brew/util/Messages", "Brew/auth/LocalProvider", "Brew/util/navigation/PageManager", "Brew/util/navigation/PageMapping", "Brew/util/navigation/HashManager"];
+    ApplicationLauncher.prototype.APP_SINGLETONS = ['Brew/util/Messages', 'Brew/auth/LocalProvider', 'Brew/util/navigation/PageManager', 'Brew/util/navigation/PageMapping', 'Brew/util/navigation/HashManager', 'Brew/ui/grid/StructureFactory'];
 
     instance = null;
 
