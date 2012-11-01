@@ -1,14 +1,15 @@
 class BeersController < ApplicationController
-    include QueryHelper
+  require "net/http"
+  require "uri"
+  
+  include BreweryDbHelper
+
 
   # GET /beers
   # GET /beers.json
   def index
-    @beers = build_list_query Beer, params['sortBy'], params['sortDir']
-
-    respond_to do |format|
-      format.json { render json: @beers }
-    end
+    response = queryBreweryDBFor(params[:controller], request.query_string)
+    render json: response
   end
 
   # GET /beers/1

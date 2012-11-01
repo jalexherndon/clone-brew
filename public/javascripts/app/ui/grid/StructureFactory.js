@@ -12,17 +12,44 @@
         ],
         beers: [
           {
+            name: ' ',
+            field: 'labels',
+            width: '70px',
+            disableSort: true,
+            formatter: function(labels) {
+              if ((labels != null ? labels.icon : void 0) != null) {
+                return '<img src="' + labels.icon + '" />';
+              }
+            }
+          }, {
             name: 'Name',
             field: 'name',
             width: '150px'
           }, {
             name: 'Brewery',
-            field: 'brewery.name',
+            field: 'breweries.name',
+            disableSort: true,
             width: '150px'
           }, {
-            name: 'Description',
-            field: 'description',
-            width: '400px'
+            name: 'Style',
+            field: 'style',
+            sortField: 'styleId',
+            width: '150px',
+            formatter: function(style) {
+              return style != null ? style.name : void 0;
+            }
+          }, {
+            name: 'IBU',
+            field: 'ibu',
+            width: '50px'
+          }, {
+            name: 'ABV',
+            field: 'abv',
+            width: '50px'
+          }, {
+            name: 'SRM',
+            field: 'srmId',
+            width: '50px'
           }
         ]
       },

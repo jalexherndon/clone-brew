@@ -18,7 +18,7 @@ define 'Brew/auth/LocalProvider', [
         constructor: (config) ->
             @CSRFToken = query("meta[name='csrf-token']")[0].getAttribute('content')
             notify 'send', (response, cancel) =>
-                response.xhr.setRequestHeader 'X-CSRF-Token', @CSRFToken
+                response.xhr?.setRequestHeader 'X-CSRF-Token', @CSRFToken
 
         startup: ->
             user = cookie(@cookieName)

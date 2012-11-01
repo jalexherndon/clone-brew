@@ -1,24 +1,23 @@
 define 'Brew/content/library/LibraryPage', [
-    'dojo/_base/declare',
-    'Brew/ui/_Page',
-    'Brew/data/Store',
-    'dojox/grid/DataGrid',
-    'dojo/query'
+  'dojo/_base/declare',
+  'Brew/ui/_Page',
+  'Brew/data/BreweryDBStore',
+  'Brew/ui/grid/Grid'
 
-], (declare, _Page, BrewStore, DataGrid, query) ->
+  ], (declare, _Page, BreweryDBStore, DataGrid) ->
 
-    declare 'Brew.content.library.LibraryPage', _Page,
+    declare 'Brew/content/library/LibraryPage', _Page,
 
-        postCreate: ->
-            @inherited arguments
-            
-            grid = new DataGrid {
-                id: 'brew-grid'
-                store: new BrewStore(target: '/beers/')
-                cellOverClass: ''
-                structure: Brew.ui.grid.StructureFactory.structureFor('beers')
-                autoWidth: true
-                autoHeight: true
-            }
+    postCreate: ->
+      @inherited arguments
 
-            @addChild grid
+      @addChild new DataGrid {
+        id: 'brew-grid'
+        store: new BreweryDBStore {target: '/beers/'}
+        rowsPerPage: 50
+        cellOverClass: ''
+        fetchText: 'fetch'
+        structure: Brew.ui.grid.StructureFactory.structureFor('beers')
+        autoWidth: true
+        autoHeight: true
+      }

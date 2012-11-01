@@ -11,7 +11,8 @@
         var _this = this;
         this.CSRFToken = query("meta[name='csrf-token']")[0].getAttribute('content');
         return notify('send', function(response, cancel) {
-          return response.xhr.setRequestHeader('X-CSRF-Token', _this.CSRFToken);
+          var _ref;
+          return (_ref = response.xhr) != null ? _ref.setRequestHeader('X-CSRF-Token', _this.CSRFToken) : void 0;
         });
       },
       startup: function() {
