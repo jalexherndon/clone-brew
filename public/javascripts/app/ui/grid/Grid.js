@@ -6,10 +6,10 @@
         return !this.getCell(sortColumnIndex - 1).disableSort && this.inherited(arguments);
       },
       getSortProps: function() {
-        var c, props;
+        var cell, props;
         props = this.inherited(arguments);
-        c = this.getCell(this.getSortIndex());
-        if (c != null ? c.sortField : void 0) {
+        cell = this.getCell(this.getSortIndex());
+        if (cell != null ? cell.sortField : void 0) {
           props[0].attribute = c.sortField;
         }
         return props;

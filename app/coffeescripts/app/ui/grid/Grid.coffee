@@ -10,9 +10,9 @@ define 'Brew/ui/grid/Grid', [
 
     getSortProps: ->
       props = @inherited arguments
-      c = this.getCell this.getSortIndex()
+      cell = @getCell @getSortIndex()
 
-      if c?.sortField
+      if cell?.sortField
         props[0].attribute = c.sortField
 
       props

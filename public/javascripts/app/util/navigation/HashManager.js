@@ -23,10 +23,10 @@
         newHash = authenticated ? newHash : this.loginHash;
         this._silent = silent;
         if (newHash !== hash()) {
-          hash(newHash, replace);
+          return hash(newHash, replace);
         } else if (allowSame || this._isFirstPageLoad) {
           delete this._isFirstPageLoad;
-          this._onHashChange(newHash);
+          return this._onHashChange(newHash);
         }
       },
       getHash: function() {
