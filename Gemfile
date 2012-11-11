@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.6'
 gem 'pg'
 gem 'devise'
+gem 'httparty'
 
 # CoffeeScript support
 gem 'therubyracer'

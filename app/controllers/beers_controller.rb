@@ -2,20 +2,19 @@ class BeersController < ApplicationController
   require "net/http"
   require "uri"
   
-  include BreweryDbHelper
-
+  # include BreweryDbHelper
 
   # GET /beers
   # GET /beers.json
   def index
-    response = queryBreweryDBFor(params[:controller], request.query_string)
-    render json: response
+    @beer = BreweryDB.get(:beers, params)
+    render json: @beer
   end
 
   # GET /beers/1
   # GET /beers/1.json
   def show
-    @beer = Beer.find(params[:id])
+    @beer = BreweryDB.get(:beer, params)
 
     respond_to do |format|
       format.json { render json: @beer }
