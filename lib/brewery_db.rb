@@ -11,10 +11,7 @@ class BreweryDB
   @@apikey = nil
 
   def self.search( options={} )
-    options.merge! :key => apikey
-
-    response = get( '/search', :query => options )
-    response.fetch("data") if response.code == 200
+    get( :search, options )
   end
 
   def self.get( endPoint=:beers, options={} )
