@@ -20,10 +20,16 @@ define 'Brew/ui/grid/StructureFactory', [
                   formatter: (labels) ->
                     if labels?.icon?
                       '<img src="' + labels.icon + '" />'
+                    else
+                      '<img src="http://www.brewerydb.com/img/beer.png" />'
                 },{
                     name: 'Name'
                     field: 'name'
+                    sortField: 'name'
                     width: '150px'
+                    styles: 'cursor: pointer;'
+                    action: (beer) ->
+                      Brew.util.navigation.HashManager.setHash '/beers/' + beer.id
                 },{
                     name: 'Brewery'
                     field: 'breweries.name'

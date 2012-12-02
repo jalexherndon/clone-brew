@@ -1,14 +1,8 @@
 .brew-view-port > .brew-content-container {
     margin: 20px 40px;
-
-    border: 1px solid $black;
-    @include rounded-corners();
+    border: 0;
 
     >.dijitAlignLeft {
         padding: 20px 20px 0;
     }
-}
-
-.brew-view-port.login > .brew-content-container {
-    border-width: 0;
 }

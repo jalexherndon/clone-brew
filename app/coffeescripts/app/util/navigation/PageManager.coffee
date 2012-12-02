@@ -14,10 +14,10 @@ define 'Brew/util/navigation/PageManager', [
       topic.subscribe Brew.util.Messages.HASH_CHANGE, lang.hitch this, @_loadPage
 
     _loadPage: (hash) ->
-      Brew.util.navigation.PageMapping.getPage hash, (Page, Left) =>
+      Brew.util.navigation.PageMapping.getPage hash, (page, left) =>
         @contentContainer.removeAllChildren()
-        @contentContainer.addChild new Page()
-        @contentContainer.addChild new Left(), "left"  if Left
+        @contentContainer.addChild page
+        @contentContainer.addChild left, "left"  if left
 
   lang.getObject "util.navigation.PageManager", true, Brew
   Brew.util.navigation.PageManager = new pageManager()

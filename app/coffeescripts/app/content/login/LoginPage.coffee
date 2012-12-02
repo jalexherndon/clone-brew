@@ -19,7 +19,12 @@ define 'Brew/content/login/LoginPage', [
                 class: 'brew-welcome-message'
                 content: "<h1>Welcome to Clone Brews.</h1>" + "<p class=\"quote\">\"Beer is proof that God loves us and wants us to be happy.\"</p>" + "<p class=\"author\">- Benjamin Franklin</p>"
             }
+            photoCredit = new ContentPane {
+                class: 'brew-login-photo-credit'
+                content: '<a href="http://www.sxc.hu/profile/nutto" target="blank">photo by Dušan Gavenda<br />www.sxc.hu/profile/nutto</a>'
+            }
             @addChild welcomeMessageCt
             @addChild welcomeMessage
+            @addChild photoCredit
             @addChild new LoginForm()
             @addChild new RegisterForm()

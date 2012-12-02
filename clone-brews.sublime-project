@@ -7,7 +7,8 @@
             "*.sublime-*"
         ],
         "folder_exclude_patterns": [
-            "tmp"
+            "tmp",
+            "node_modules"
         ]
 	}]
 }

@@ -19,10 +19,13 @@ define 'Brew/util/navigation/PageMapping', [
     },{
       hash: '/404'
       content: 'Brew/content/error/404'
+    },{
+      hash: '/beers/:id'
+      content: 'Brew/content/detail/beer/BeerPage'
     }]
 
     getPage: (hash, callback) ->
-      page = @get hash
+      [page, id] = @get hash
       pageClasses = []
 
       unless dojo.isObject page
@@ -31,7 +34,32 @@ define 'Brew/util/navigation/PageMapping', [
 
       pageClasses.push page.content
       pageClasses.push page.left if page.left
-      require pageClasses, callback
+      require pageClasses, (Content, Left) ->
+        left = new Left() if left?
+        callback(new Content(pageAction: id), left)
+
+    get: (hash, id) ->
+      page = @inherited arguments
+
+      if page?
+        return [page, id]
+      else
+        [key, id] = @_getHashWithAction hash
+        @get key, id if key?
+
+
+    _getHashWithAction: (hash) ->
+      for key of @index
+        if @_keyHasAction(key)
+          array = key.split ":"
+          if hash.indexOf array[0] >= 0
+            id = hash.split(array[0])[1]
+            return [key, id]
+
+      return null
+
+    _keyHasAction: (key) ->
+      key.indexOf(":") >= 0
 
   lang.getObject 'util.navigation.PageMapping', true, Brew
   Brew.util.navigation.PageMapping = new PageMapping()

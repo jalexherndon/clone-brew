@@ -7,8 +7,6 @@ define 'Brew/data/BreweryDBStore', [
 
     declare 'Brew.data.BreweryDBStore', BrewStore,
       defaultParams: {
-        # TODO: remove availableId from default params once we have a premium sub with BreweryDb
-        availableId: 1
         withBreweries: 'Y'
       }
 

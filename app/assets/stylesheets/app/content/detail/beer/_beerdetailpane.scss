@@ -1,0 +1,64 @@
+.beer_detail_pane {
+    background-color: $pistachio-brown;
+    @include rounded-corners();
+    overflow: auto;
+    opacity: .9;
+
+    .beer_detail_pane_header {
+        @include rounded-corners-detail(5px, 5px, 0px, 0px);
+        padding: 4px 0;
+        width: 100%;
+        line-height: 30px;
+        background-color: $pistachio-off-white;
+        overflow: auto;
+
+        font-weight: bold;
+        font-family: 'LobsterTwoRegular';
+        color: $pistachio-brown;
+
+        >div {
+            float: left;
+            margin: 0;
+            padding: 0 8px;
+        }
+
+        .beer_detail_pane_name {
+            font-size: 24px;
+        }
+
+        .beer_detail_pane_brewery {
+            margin-left: 8px;
+            border-left: 1px solid $pistachio-brown;
+            font-size: 16px;
+        }
+    }
+
+    .beer_detail_pane_content {
+        overflow: hidden;
+
+        .beer_detail_pane_label {
+            margin: 10px;
+            padding: 4px;
+            background-color: $white;
+            width: 256px;
+            @include rounded-corners();
+
+            float: left;
+        }
+
+        .beer_detail_pane_info {
+            margin: 0 4px;
+
+            .beer_detail_pane_description {
+            }
+
+            .beer_detail_pane_stats {
+                margin: 10px 0 4px 0;
+                td {
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+        
+}

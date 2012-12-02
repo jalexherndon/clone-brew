@@ -25,6 +25,7 @@ class BreweryDB
     end
 
     response = super( endPoint, :query => options )
+    puts response if response.code != 200
     response.fetch("data") if response.code == 200
   end
 

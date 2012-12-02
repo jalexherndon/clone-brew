@@ -18,11 +18,14 @@
         }, {
           hash: '/404',
           content: 'Brew/content/error/404'
+        }, {
+          hash: '/beers/:id',
+          content: 'Brew/content/detail/beer/BeerPage'
         }
       ],
       getPage: function(hash, callback) {
-        var page, pageClasses;
-        page = this.get(hash);
+        var id, page, pageClasses, _ref;
+        _ref = this.get(hash), page = _ref[0], id = _ref[1];
         pageClasses = [];
         if (!dojo.isObject(page)) {
           Brew.util.navigation.HashManager.setHash('/404');
@@ -32,7 +35,43 @@
         if (page.left) {
           pageClasses.push(page.left);
         }
-        return require(pageClasses, callback);
+        return require(pageClasses, function(Content, Left) {
+          var left;
+          if (typeof left !== "undefined" && left !== null) {
+            left = new Left();
+          }
+          return callback(new Content({
+            pageAction: id
+          }), left);
+        });
+      },
+      get: function(hash, id) {
+        var key, page, _ref;
+        page = this.inherited(arguments);
+        if (page != null) {
+          return [page, id];
+        } else {
+          _ref = this._getHashWithAction(hash), key = _ref[0], id = _ref[1];
+          if (key != null) {
+            return this.get(key, id);
+          }
+        }
+      },
+      _getHashWithAction: function(hash) {
+        var array, id, key;
+        for (key in this.index) {
+          if (this._keyHasAction(key)) {
+            array = key.split(":");
+            if (hash.indexOf(array[0] >= 0)) {
+              id = hash.split(array[0])[1];
+              return [key, id];
+            }
+          }
+        }
+        return null;
+      },
+      _keyHasAction: function(key) {
+        return key.indexOf(":") >= 0;
       }
     });
     lang.getObject('util.navigation.PageMapping', true, Brew);

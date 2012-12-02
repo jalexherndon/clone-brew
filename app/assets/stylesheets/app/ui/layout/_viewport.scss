@@ -4,14 +4,19 @@
     margin: 0;
     padding: 0;
     min-width: 960px;
+    min-height: 504px;
     text-align: center;
 
     background-size: cover;
     background-color: $white;
     background-image: none;
 
+    background: $black url('/assets/cellar_background.jpg') no-repeat center;
+    background-size: cover;
+
     &.login {
         background: $black url('/assets/hops_background.jpeg') no-repeat bottom;
+        background-size: cover;
     }
 
     .dijitBorderContainerNoGutter-child {

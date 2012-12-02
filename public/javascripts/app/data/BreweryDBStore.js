@@ -3,7 +3,6 @@
   define('Brew/data/BreweryDBStore', ['dojo/_base/declare', 'Brew/data/Store', 'dojo/_base/lang'], function(declare, BrewStore, lang) {
     return declare('Brew.data.BreweryDBStore', BrewStore, {
       defaultParams: {
-        availableId: 1,
         withBreweries: 'Y'
       },
       fetch: function(args) {

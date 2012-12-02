@@ -11,11 +11,11 @@
       },
       _loadPage: function(hash) {
         var _this = this;
-        return Brew.util.navigation.PageMapping.getPage(hash, function(Page, Left) {
+        return Brew.util.navigation.PageMapping.getPage(hash, function(page, left) {
           _this.contentContainer.removeAllChildren();
-          _this.contentContainer.addChild(new Page());
-          if (Left) {
-            return _this.contentContainer.addChild(new Left(), "left");
+          _this.contentContainer.addChild(page);
+          if (left) {
+            return _this.contentContainer.addChild(left, "left");
           }
         });
       }

@@ -19,12 +19,19 @@
             formatter: function(labels) {
               if ((labels != null ? labels.icon : void 0) != null) {
                 return '<img src="' + labels.icon + '" />';
+              } else {
+                return '<img src="http://www.brewerydb.com/img/beer.png" />';
               }
             }
           }, {
             name: 'Name',
             field: 'name',
-            width: '150px'
+            sortField: 'name',
+            width: '150px',
+            styles: 'cursor: pointer;',
+            action: function(beer) {
+              return Brew.util.navigation.HashManager.setHash('/beers/' + beer.id);
+            }
           }, {
             name: 'Brewery',
             field: 'breweries.name',
