@@ -1,14 +1,23 @@
 {
-	"folders": [{
-    	"path": "/Users/jacob/projects/clone-brew",
-        "file_exclude_patterns": [
-            "*.scssc",
-            "Gemfile.lock",
-            "*.sublime-*"
-        ],
-        "folder_exclude_patterns": [
-            "tmp",
-            "node_modules"
-        ]
-	}]
+ "folders": [
+  {
+   "folder_exclude_patterns": [
+    "tmp", 
+    "node_modules"
+   ], 
+   "path": "/Users/jacob/projects/clone-brew", 
+   "file_exclude_patterns": [
+    "*.scssc", 
+    "Gemfile.lock", 
+    "*.sublime-*", 
+    "clone-brew.iml", 
+    "clone-brew.ipr", 
+    "clone-brew.iws", 
+    "clone-brew.iml", 
+    "clone-brew.ipr", 
+    "clone-brew.iws", 
+    "clone-brew.iws"
+   ]
+  }
+ ]
 }
