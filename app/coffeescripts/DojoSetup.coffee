@@ -1,7 +1,7 @@
 class ApplicationLauncher
     BASE_PATH: "/js-lib/"
     DOJO_PATH: "dojotoolkit/1.8.0"
-    DOJO_PACKAGES: ["dojo", "dijit", "dojox"]
+    DOJO_PACKAGES: ["dojo", "dijit", "dojox", "dgrid", "xstyle", "put-selector"]
     APP_PATH: "/javascripts/app"
     APP_NAMESPACE: "Brew"
     APP_DEPENDENCIES: ["Brew/App", "dojo/domReady!"]

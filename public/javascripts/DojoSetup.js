@@ -10,7 +10,7 @@
 
     ApplicationLauncher.prototype.DOJO_PATH = "dojotoolkit/1.8.0";
 
-    ApplicationLauncher.prototype.DOJO_PACKAGES = ["dojo", "dijit", "dojox"];
+    ApplicationLauncher.prototype.DOJO_PACKAGES = ["dojo", "dijit", "dojox", "dgrid", "xstyle", "put-selector"];
 
     ApplicationLauncher.prototype.APP_PATH = "/javascripts/app";
 

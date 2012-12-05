@@ -1,7 +1,7 @@
 (function() {
 
-  define('Brew/data/Store', ['dojo/_base/declare', 'dojox/data/RailsStore'], function(declare, RailsStore) {
-    return declare('Brew.data.Store', RailsStore, {
+  define('Brew/data/Store', ['dojo/_base/declare', 'dojox/data/JsonRestStore'], function(declare, JsonRestStore) {
+    return declare('Brew.data.Store', JsonRestStore, {
       getValue: function(item, property, defaultValue) {
         var nested_props, value;
         value = this.inherited(arguments);

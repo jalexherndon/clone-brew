@@ -4,68 +4,66 @@
     var factory;
     factory = declare('Brew.ui.grid.StructureFactory', null, {
       structures: {
-        "default": [
-          {
-            name: 'Name',
-            field: 'name'
-          }
-        ],
-        beers: [
-          {
-            name: ' ',
-            field: 'labels',
-            width: '70px',
-            disableSort: true,
-            formatter: function(labels) {
-              if ((labels != null ? labels.icon : void 0) != null) {
-                return '<img src="' + labels.icon + '" />';
+        beers: {
+          label: {
+            label: ' ',
+            get: function(beer) {
+              var _ref;
+              return (_ref = beer.labels) != null ? _ref.icon : void 0;
+            },
+            formatter: function(img) {
+              if (img != null) {
+                return '<img src="' + img + '" />';
               } else {
                 return '<img src="http://www.brewerydb.com/img/beer.png" />';
               }
             }
-          }, {
-            name: 'Name',
-            field: 'name',
-            sortField: 'name',
-            width: '150px',
-            styles: 'cursor: pointer;',
-            action: function(beer) {
-              return Brew.util.navigation.HashManager.setHash('/beers/' + beer.id);
+          },
+          name: {
+            label: 'Name',
+            className: 'clickable'
+          },
+          brewery: {
+            label: 'Brewery',
+            get: function(beer) {
+              var brewery, breweryName, _fn, _i, _len, _ref;
+              breweryName = [];
+              if (beer.breweries != null) {
+                _ref = beer.breweries;
+                _fn = function(brewery) {
+                  return breweryName.push(brewery.name);
+                };
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                  brewery = _ref[_i];
+                  _fn(brewery);
+                }
+              }
+              if (breweryName.length !== 0) {
+                return breweryName.join(', ');
+              }
             }
-          }, {
-            name: 'Brewery',
-            field: 'breweries.name',
-            disableSort: true,
-            width: '150px'
-          }, {
-            name: 'Style',
-            field: 'style',
-            sortField: 'styleId',
-            width: '150px',
-            formatter: function(style) {
-              return style != null ? style.name : void 0;
+          },
+          style: {
+            label: 'Style',
+            get: function(beer) {
+              var _ref;
+              return (_ref = beer.style) != null ? _ref.name : void 0;
             }
-          }, {
-            name: 'IBU',
-            field: 'ibu',
-            width: '50px'
-          }, {
-            name: 'ABV',
-            field: 'abv',
-            width: '50px'
-          }, {
-            name: 'SRM',
-            field: 'srmId',
-            width: '50px'
+          },
+          ibu: 'IBU',
+          abv: 'ABV',
+          srm: {
+            label: 'SRM',
+            width: 40,
+            get: function(beer) {
+              var _ref;
+              return (_ref = beer.srm) != null ? _ref.name : void 0;
+            }
           }
-        ]
+        }
       },
       structureFor: function(modelName) {
-        if (this.structures[modelName]) {
-          return this.structures[modelName];
-        } else {
-          return this.structures["default"];
-        }
+        return this.structures[modelName];
       }
     });
     lang.getObject('ui.grid.StructureFactory', true, Brew);

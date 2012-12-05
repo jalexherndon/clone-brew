@@ -7,60 +7,48 @@ define 'Brew/ui/grid/StructureFactory', [
     factory = declare 'Brew.ui.grid.StructureFactory', null,
 
         structures:
-            default: [{
-                    name: 'Name'
-                    field: 'name'
-                }]
+          beers: {
+            label:
+              label: ' '
+              get: (beer) ->
+                beer.labels?.icon
+              formatter: (img) ->
+                if img?
+                  '<img src="' + img + '" />'
+                else
+                  '<img src="http://www.brewerydb.com/img/beer.png" />'
 
-            beers: [{
-                  name: ' '
-                  field: 'labels'
-                  width: '70px'
-                  disableSort: true
-                  formatter: (labels) ->
-                    if labels?.icon?
-                      '<img src="' + labels.icon + '" />'
-                    else
-                      '<img src="http://www.brewerydb.com/img/beer.png" />'
-                },{
-                    name: 'Name'
-                    field: 'name'
-                    sortField: 'name'
-                    width: '150px'
-                    styles: 'cursor: pointer;'
-                    action: (beer) ->
-                      Brew.util.navigation.HashManager.setHash '/beers/' + beer.id
-                },{
-                    name: 'Brewery'
-                    field: 'breweries.name'
-                    disableSort: true
-                    width: '150px'
-                },{
-                    name: 'Style'
-                    field: 'style'
-                    sortField: 'styleId'
-                    width: '150px'
-                    formatter: (style) ->
-                      style?.name
-                },{
-                    name: 'IBU'
-                    field: 'ibu'
-                    width: '50px'
-                },{
-                    name: 'ABV'
-                    field: 'abv'
-                    width: '50px'
-                },{
-                    name: 'SRM'
-                    field: 'srmId'
-                    width: '50px'
-                }]
+            name: 
+              label: 'Name'
+              className: 'clickable'
+
+            brewery:
+              label: 'Brewery'
+              get: (beer) ->
+                breweryName = []
+                if beer.breweries?
+                  for brewery in beer.breweries
+                    do (brewery) ->
+                      breweryName.push brewery.name
+                return breweryName.join ', ' unless breweryName.length is 0
+
+            style:
+              label: 'Style'
+              get: (beer) ->
+                return beer.style?.name
+
+            ibu: 'IBU'
+            abv: 'ABV'
+            srm:
+              label: 'SRM'
+              width: 40
+              get: (beer) ->
+                beer.srm?.name
+          }
 
         structureFor: (modelName) ->
-            if @structures[modelName]
-                @structures[modelName]
-            else
-                @structures.default
+          @structures[modelName]
+                
 
     lang.getObject 'ui.grid.StructureFactory', true, Brew
     Brew.ui.grid.StructureFactory = new factory()

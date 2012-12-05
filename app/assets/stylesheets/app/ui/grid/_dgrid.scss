@@ -1,0 +1,25 @@
+.dgrid-grid {
+    @include rounded-corners();
+
+    .dgrid-header {
+        @include rounded-corners();
+        right: 0;
+    }
+
+    .dgrid-scroller {
+        margin-top: 33px;
+    }
+
+    .dgrid-content {
+        @include rounded-corners-detail(0, 0, 5px, 5px);
+
+        height: 100%;
+        .dgrid-cell {
+            vertical-align: middle;
+        }
+
+        .dgrid-row-even {
+            background-color: $white;
+        }
+    }
+}

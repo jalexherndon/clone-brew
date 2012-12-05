@@ -1,18 +1,34 @@
 define 'Brew/ui/grid/Grid', [
   'dojo/_base/declare',
-  'dojox/grid/DataGrid'
-], (declare, DataGrid) ->
+  'dgrid/OnDemandGrid',
+  'dojox/widget/Standby',
+  'dojo/_base/window'
 
-  declare 'Brew.ui.grid.Grid', DataGrid,
+], (declare, OnDemandGrid, Standby, win) ->
 
-    canSort: (sortColumnIndex) ->
-      !@getCell(sortColumnIndex-1).disableSort and @inherited arguments
+  declare 'Brew.ui.grid.Grid', OnDemandGrid,
 
-    getSortProps: ->
-      props = @inherited arguments
-      cell = @getCell @getSortIndex()
+    postCreate: () ->
+      grid = @
+      @on ".dgrid-cell.clickable:click", (e) ->
+        beerId = grid.row(e).id
+        Brew.util.navigation.HashManager.setHash '/beers/' + beerId
 
-      if cell?.sortField
-        props[0].attribute = c.sortField
+      @inherited arguments
 
-      props
+    refresh: ->
+      @getStandBy().show()
+      @inherited arguments
+
+    _processScroll: (evt) ->
+      ret = @inherited arguments
+      @getStandBy().hide()
+      ret
+
+    getStandBy: ->
+      if not @standby?
+        @standby = new Standby {target: @domNode}
+        win.body().appendChild(@standby.domNode)
+        @standby.startup()
+
+      @standby

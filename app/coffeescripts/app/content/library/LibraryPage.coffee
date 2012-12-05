@@ -1,28 +1,26 @@
 define 'Brew/content/library/LibraryPage', [
   'dojo/_base/declare',
   'Brew/ui/_Page',
+  'dojo/store/JsonRest',
   'Brew/data/BreweryDBStore',
-  'Brew/ui/grid/Grid'
+  'Brew/ui/grid/Grid',
+  'dojo/dom-class'
 
-  ], (declare, _Page, BreweryDBStore, Grid) ->
+  ], (declare, _Page, JsonRest, BreweryDBStore, Grid, domClass) ->
 
     declare 'Brew/content/library/LibraryPage', _Page,
+
+    pageClass: 'brew-library-page'
+    gridClass: 'sage'
 
     postCreate: ->
       @inherited arguments
 
-      @addChild new Grid {
-        id: 'brew-grid'
+      domClass.add @domNode, @gridClass
+      grid = new Grid
         store: new BreweryDBStore {target: '/beers/'}
-        rowsPerPage: 50
-        cellOverClass: ''
-        fetchText: 'fetch'
-        structure: Brew.ui.grid.StructureFactory.structureFor('beers')
-        autoWidth: true
-        autoHeight: true
-        onRowClick: (e) ->
-          beer = e.grid.getItem(e.rowIndex)
-          e.cell.action?(beer)
-        # onStyleRow: (row) ->
-        #   debugger
-      }
+        count: 50
+        columns: Brew.ui.grid.StructureFactory.structureFor('beers')
+
+      @addChild grid
+      grid.refresh()

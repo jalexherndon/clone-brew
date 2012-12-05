@@ -1,18 +1,36 @@
 (function() {
 
-  define('Brew/ui/grid/Grid', ['dojo/_base/declare', 'dojox/grid/DataGrid'], function(declare, DataGrid) {
-    return declare('Brew.ui.grid.Grid', DataGrid, {
-      canSort: function(sortColumnIndex) {
-        return !this.getCell(sortColumnIndex - 1).disableSort && this.inherited(arguments);
+  define('Brew/ui/grid/Grid', ['dojo/_base/declare', 'dgrid/OnDemandGrid', 'dojox/widget/Standby', 'dojo/_base/window'], function(declare, OnDemandGrid, Standby, win) {
+    return declare('Brew.ui.grid.Grid', OnDemandGrid, {
+      postCreate: function() {
+        var grid;
+        grid = this;
+        this.on(".dgrid-cell.clickable:click", function(e) {
+          var beerId;
+          beerId = grid.row(e).id;
+          return Brew.util.navigation.HashManager.setHash('/beers/' + beerId);
+        });
+        return this.inherited(arguments);
       },
-      getSortProps: function() {
-        var cell, props;
-        props = this.inherited(arguments);
-        cell = this.getCell(this.getSortIndex());
-        if (cell != null ? cell.sortField : void 0) {
-          props[0].attribute = c.sortField;
+      refresh: function() {
+        this.getStandBy().show();
+        return this.inherited(arguments);
+      },
+      _processScroll: function(evt) {
+        var ret;
+        ret = this.inherited(arguments);
+        this.getStandBy().hide();
+        return ret;
+      },
+      getStandBy: function() {
+        if (!(this.standby != null)) {
+          this.standby = new Standby({
+            target: this.domNode
+          });
+          win.body().appendChild(this.standby.domNode);
+          this.standby.startup();
         }
-        return props;
+        return this.standby;
       }
     });
   });

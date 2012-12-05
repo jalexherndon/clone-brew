@@ -1,26 +1,22 @@
 (function() {
 
-  define('Brew/content/library/LibraryPage', ['dojo/_base/declare', 'Brew/ui/_Page', 'Brew/data/BreweryDBStore', 'Brew/ui/grid/Grid'], function(declare, _Page, BreweryDBStore, Grid) {
+  define('Brew/content/library/LibraryPage', ['dojo/_base/declare', 'Brew/ui/_Page', 'dojo/store/JsonRest', 'Brew/data/BreweryDBStore', 'Brew/ui/grid/Grid', 'dojo/dom-class'], function(declare, _Page, JsonRest, BreweryDBStore, Grid, domClass) {
     return declare('Brew/content/library/LibraryPage', _Page, {
+      pageClass: 'brew-library-page',
+      gridClass: 'sage',
       postCreate: function() {
+        var grid;
         this.inherited(arguments);
-        return this.addChild(new Grid({
-          id: 'brew-grid',
+        domClass.add(this.domNode, this.gridClass);
+        grid = new Grid({
           store: new BreweryDBStore({
             target: '/beers/'
           }),
-          rowsPerPage: 50,
-          cellOverClass: '',
-          fetchText: 'fetch',
-          structure: Brew.ui.grid.StructureFactory.structureFor('beers'),
-          autoWidth: true,
-          autoHeight: true,
-          onRowClick: function(e) {
-            var beer, _base;
-            beer = e.grid.getItem(e.rowIndex);
-            return typeof (_base = e.cell).action === "function" ? _base.action(beer) : void 0;
-          }
-        }));
+          count: 50,
+          columns: Brew.ui.grid.StructureFactory.structureFor('beers')
+        });
+        this.addChild(grid);
+        return grid.refresh();
       }
     });
   });

@@ -1,10 +1,10 @@
 define 'Brew/data/Store', [
   'dojo/_base/declare',
-  'dojox/data/RailsStore'
+  'dojox/data/JsonRestStore'
 
-  ], (declare, RailsStore) ->
+  ], (declare, JsonRestStore) ->
 
-    declare 'Brew.data.Store', RailsStore,
+    declare 'Brew.data.Store', JsonRestStore,
 
       getValue: (item, property, defaultValue) ->
         value = @inherited arguments
