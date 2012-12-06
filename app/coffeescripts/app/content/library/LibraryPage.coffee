@@ -21,6 +21,7 @@ define 'Brew/content/library/LibraryPage', [
         store: new BreweryDBStore {target: '/beers/'}
         columns: Brew.ui.grid.StructureFactory.structureFor('beers')
         rowsPerPage: 50
+        pagingTextBox: true
 
       @addChild grid
       grid.refresh()

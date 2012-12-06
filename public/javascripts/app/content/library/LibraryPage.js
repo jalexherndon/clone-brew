@@ -13,7 +13,8 @@
             target: '/beers/'
           }),
           columns: Brew.ui.grid.StructureFactory.structureFor('beers'),
-          rowsPerPage: 50
+          rowsPerPage: 50,
+          pagingTextBox: true
         });
         this.addChild(grid);
         return grid.refresh();
