@@ -1,5 +1,6 @@
 .dgrid-grid {
     @include rounded-corners();
+    border-color: $black !important;
 
     .dgrid-header {
         @include rounded-corners();
@@ -17,6 +18,7 @@
 
     .dgrid-content {
         height: 100%;
+
         .dgrid-cell {
             vertical-align: middle;
 
