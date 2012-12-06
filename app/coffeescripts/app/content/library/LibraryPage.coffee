@@ -19,8 +19,8 @@ define 'Brew/content/library/LibraryPage', [
       domClass.add @domNode, @gridClass
       grid = new Grid
         store: new BreweryDBStore {target: '/beers/'}
-        count: 50
         columns: Brew.ui.grid.StructureFactory.structureFor('beers')
+        rowsPerPage: 50
 
       @addChild grid
       grid.refresh()

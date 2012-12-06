@@ -7,6 +7,9 @@
       },
       query: function(query, options) {
         lang.mixin(query, this.defaultParams);
+        if ((options.start != null) && options.count === 50) {
+          query.p = (options.start / options.count) + 1;
+        }
         return this.inherited(arguments);
       }
     });

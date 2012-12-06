@@ -25,6 +25,7 @@
           },
           brewery: {
             label: 'Brewery',
+            sortable: false,
             get: function(beer) {
               var brewery, breweryName, _fn, _i, _len, _ref;
               breweryName = [];
@@ -44,6 +45,7 @@
             }
           },
           style: {
+            sortable: false,
             label: 'Style',
             get: function(beer) {
               var _ref;
@@ -55,6 +57,7 @@
           srm: {
             label: 'SRM',
             width: 40,
+            sortable: false,
             get: function(beer) {
               var _ref;
               return (_ref = beer.srm) != null ? _ref.name : void 0;

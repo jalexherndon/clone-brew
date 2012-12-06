@@ -6,16 +6,23 @@
         right: 0;
     }
 
+    .dgrid-footer {
+        @include rounded-corners-detail(0, 0, 5px, 5px);
+    }
+
     .dgrid-scroller {
         margin-top: 33px;
+        margin-bottom: 24px;
     }
 
     .dgrid-content {
-        @include rounded-corners-detail(0, 0, 5px, 5px);
-
         height: 100%;
         .dgrid-cell {
             vertical-align: middle;
+
+            &.clickable {
+                cursor: pointer;
+            }
         }
 
         .dgrid-row-even {

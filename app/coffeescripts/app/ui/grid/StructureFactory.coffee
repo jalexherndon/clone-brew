@@ -24,6 +24,7 @@ define 'Brew/ui/grid/StructureFactory', [
 
             brewery:
               label: 'Brewery'
+              sortable: false
               get: (beer) ->
                 breweryName = []
                 if beer.breweries?
@@ -33,6 +34,7 @@ define 'Brew/ui/grid/StructureFactory', [
                 return breweryName.join ', ' unless breweryName.length is 0
 
             style:
+              sortable: false
               label: 'Style'
               get: (beer) ->
                 return beer.style?.name
@@ -42,6 +44,7 @@ define 'Brew/ui/grid/StructureFactory', [
             srm:
               label: 'SRM'
               width: 40
+              sortable: false
               get: (beer) ->
                 beer.srm?.name
           }

@@ -10,23 +10,22 @@ class BreweryDB
 
   @@apikey = nil
 
+  PAGE_SIZE = 50
+
   def self.search( options={} )
     get( :search, options )
   end
 
-  def self.get( endPoint=:beers, options={} )
+  def self.get( endpoint="", options={}, response={} )
     options.merge! :key => apikey
 
-    endPoint = "/#{endPoint}" unless endPoint.is_a? String
+    isGet = options.has_key? :id
+    endpoint = get_endpoint(endpoint, options)
+    resp = super( endpoint, :query => options )
 
-    if options.has_key? :id
-      endPoint = endPoint + "/#{options[:id]}"
-      options.delete :id
-    end
-
-    response = super( endPoint, :query => options )
-    puts response if response.code != 200
-    response.fetch("data") if response.code == 200
+    handle_error(resp)
+    add_list_response_headers(resp, response) unless isGet
+    get_data_from_response(resp)
   end
 
   def self.apikey
@@ -39,5 +38,33 @@ class BreweryDB
 
   def self.configure
     yield self
+  end
+
+  private
+  def self.add_list_response_headers( data={}, response={} )
+    startItem = data.fetch("currentPage") * PAGE_SIZE
+    endItem = startItem + PAGE_SIZE
+    totalResults = data.fetch("totalResults")
+
+    return unless startItem && endItem && totalResults
+    response.headers["Content-Range"] = "items #{startItem}-#{endItem}/#{totalResults}"
+  end
+
+  def self.get_endpoint( endpoint, options )
+    endpoint = "/#{endpoint}" unless endpoint.is_a? String
+
+    if options.has_key? :id
+      endpoint = endpoint + "/#{options[:id]}"
+      options.delete :id
+    end
+
+    endpoint
+  end
+
+  def self.handle_error(response)
+  end
+
+  def self.get_data_from_response(response)
+    response.fetch("data") if response.code == 200
   end
 end

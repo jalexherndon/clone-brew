@@ -12,8 +12,8 @@
           store: new BreweryDBStore({
             target: '/beers/'
           }),
-          count: 50,
-          columns: Brew.ui.grid.StructureFactory.structureFor('beers')
+          columns: Brew.ui.grid.StructureFactory.structureFor('beers'),
+          rowsPerPage: 50
         });
         this.addChild(grid);
         return grid.refresh();

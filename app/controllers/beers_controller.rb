@@ -7,18 +7,17 @@ class BeersController < ApplicationController
   # GET /beers
   # GET /beers.json
   def index
-    @beer = BreweryDB.get(:beers, params)
+    @beer = BreweryDB.get(:beers, params, response)
     render json: @beer
   end
 
   # GET /beers/1
   # GET /beers/1.json
   def show
+    puts "Show"
+    puts params
     @beer = BreweryDB.get(:beer, params)
-
-    respond_to do |format|
-      format.json { render json: @beer }
-    end
+    render json: @beer
   end
 
   # GET /beers/new
