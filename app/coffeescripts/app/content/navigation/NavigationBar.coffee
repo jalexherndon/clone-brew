@@ -5,9 +5,9 @@ define 'Brew/content/navigation/NavigationBar', [
     'dijit/PopupMenuBarItem',
     'dijit/MenuItem',
     'dijit/DropDownMenu',
-    'dijit/MenuSeparator'
+    'Brew/content/navigation/UserNavigationMenu'
 
-], (declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, MenuSeparator) ->
+], (declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, UserNavigationMenu) ->
 
     declare 'Brew.content.navigation.NavigationBar', MenuBar,
         class: 'brew-navigation-bar'
@@ -39,21 +39,7 @@ define 'Brew/content/navigation/NavigationBar', [
                 onClick: ->
             }
 
-            userDropDown = new DropDownMenu {class: 'brew-user-menu'}
-            userDropDown.addChild new MenuItem {
-                label: 'Profile'
-                onClick: (evt) ->
-            }
-            userDropDown.addChild new MenuItem {
-                label: 'Logout'
-                onClick: (evt) ->
-                    Brew.auth.LocalProvider.logout()
-            }
-
-            @addChild new PopupMenuBarItem {
-                class: 'brew-user-icon'
-                popup: userDropDown
-            }
+            @addChild new UserNavigationMenu({})
 
         disband: ->
             @removeChild child for child, idx in @getChildren() when idx > 0

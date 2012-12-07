@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/content/navigation/NavigationBar', ['dojo/_base/declare', 'dijit/MenuBar', 'dijit/MenuBarItem', 'dijit/PopupMenuBarItem', 'dijit/MenuItem', 'dijit/DropDownMenu', 'dijit/MenuSeparator'], function(declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, MenuSeparator) {
+  define('Brew/content/navigation/NavigationBar', ['dojo/_base/declare', 'dijit/MenuBar', 'dijit/MenuBarItem', 'dijit/PopupMenuBarItem', 'dijit/MenuItem', 'dijit/DropDownMenu', 'Brew/content/navigation/UserNavigationMenu'], function(declare, MenuBar, MenuBarItem, PopupMenuBarItem, MenuItem, DropDownMenu, UserNavigationMenu) {
     return declare('Brew.content.navigation.NavigationBar', MenuBar, {
       "class": 'brew-navigation-bar',
       postCreate: function() {
@@ -14,7 +14,6 @@
         }));
       },
       populate: function(user) {
-        var userDropDown;
         this.addChild(new MenuBarItem({
           label: 'The Library',
           onClick: function() {
@@ -29,23 +28,9 @@
           label: 'Store',
           onClick: function() {}
         }));
-        userDropDown = new DropDownMenu({
-          "class": 'brew-user-menu'
-        });
-        userDropDown.addChild(new MenuItem({
-          label: 'Profile',
-          onClick: function(evt) {}
-        }));
-        userDropDown.addChild(new MenuItem({
-          label: 'Logout',
-          onClick: function(evt) {
-            return Brew.auth.LocalProvider.logout();
-          }
-        }));
-        return this.addChild(new PopupMenuBarItem({
-          "class": 'brew-user-icon',
-          popup: userDropDown
-        }));
+        debugger;
+        this.addChild(new UserNavigationMenu({}));
+        debugger;
       },
       disband: function() {
         var child, idx, _i, _len, _ref, _results;
