@@ -28,9 +28,7 @@
           label: 'Store',
           onClick: function() {}
         }));
-        debugger;
-        this.addChild(new UserNavigationMenu({}));
-        debugger;
+        return this.addChild(new UserNavigationMenu({}));
       },
       disband: function() {
         var child, idx, _i, _len, _ref, _results;

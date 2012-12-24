@@ -10,9 +10,6 @@
           beerId = grid.row(e).id;
           return Brew.util.navigation.HashManager.setHash('/beers/' + beerId);
         });
-        this.on("dgrid-error", function(error, b, c) {
-          debugger;
-        });
         return this.inherited(arguments);
       },
       gotoPage: function() {

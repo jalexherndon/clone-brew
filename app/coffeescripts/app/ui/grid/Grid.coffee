@@ -14,8 +14,6 @@ define 'Brew/ui/grid/Grid', [
       @on ".dgrid-cell.clickable:click", (e) ->
         beerId = grid.row(e).id
         Brew.util.navigation.HashManager.setHash '/beers/' + beerId
-      @on "dgrid-error", (error, b, c) ->
-        debugger
 
       @inherited arguments
 

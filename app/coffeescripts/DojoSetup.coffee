@@ -7,6 +7,7 @@ class ApplicationLauncher
     APP_DEPENDENCIES: ["Brew/App", "dojo/domReady!"]
     APP_SINGLETONS: [
         'Brew/util/Messages',
+        'Brew/util/Errors',
         'Brew/auth/LocalProvider',
         'Brew/util/navigation/PageManager',
         'Brew/util/navigation/PageMapping',
