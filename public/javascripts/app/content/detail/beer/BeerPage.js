@@ -1,6 +1,6 @@
 (function() {
 
-  define("Brew/content/detail/beer/BeerPage", ["dojo/_base/declare", "Brew/ui/_Page", "dojo/request/xhr", "Brew/content/detail/beer/BeerDetailPane"], function(declare, _Page, xhr, BeerDetailPane) {
+  define("Brew/content/detail/beer/BeerPage", ["dojo/_base/declare", "Brew/contnent/_Page", "dojo/request/xhr", "Brew/content/detail/beer/BeerDetailPane"], function(declare, _Page, xhr, BeerDetailPane) {
     return declare("Brew.content.detail.beer.BeerPage", _Page, {
       pageAction: null,
       postCreate: function(config) {

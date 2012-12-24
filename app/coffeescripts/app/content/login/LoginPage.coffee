@@ -1,6 +1,6 @@
 define 'Brew/content/login/LoginPage', [
     'dojo/_base/declare',
-    'Brew/ui/_Page',
+    'Brew/contnent/_Page',
     'dijit/layout/ContentPane',
     'Brew/content/login/LoginForm',
     'Brew/content/login/RegisterForm',

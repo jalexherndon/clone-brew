@@ -1,4 +1,4 @@
-define 'Brew/ui/_Page', [
+define 'Brew/contnent/_Page', [
   'dojo/_base/declare',
   'dijit/layout/ContentPane',
   'dojo/dom-class',
@@ -6,7 +6,7 @@ define 'Brew/ui/_Page', [
 
 ], (declare, ContentPane, domClass, topic) ->
 
-  declare 'Brew.ui._Page', ContentPane,
+  declare 'Brew.contnent._Page', ContentPane,
     region: 'center'
     pageClass: null
 

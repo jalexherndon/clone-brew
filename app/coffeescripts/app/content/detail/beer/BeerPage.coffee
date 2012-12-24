@@ -1,6 +1,6 @@
 define "Brew/content/detail/beer/BeerPage", [
   "dojo/_base/declare",
-  "Brew/ui/_Page",
+  "Brew/contnent/_Page",
   "dojo/request/xhr",
   "Brew/content/detail/beer/BeerDetailPane"
 

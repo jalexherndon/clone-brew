@@ -13,7 +13,7 @@
           content: 'Brew/content/home/HomePage'
         }, {
           hash: '/library',
-          content: 'Brew/content/library/LibraryPage',
+          content: 'Brew/content/library/BeerPage',
           left: 'Brew/content/library/LeftNavigation'
         }, {
           hash: '/404',
