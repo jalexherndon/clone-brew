@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/content/library/_LibraryPage', ['dojo/_base/declare', 'Brew/ui/_Page', 'dojo/dom-class'], function(declare, _Page, domClass) {
+  define('Brew/content/library/_LibraryPage', ['dojo/_base/declare', 'Brew/content/_Page', 'dojo/dom-class'], function(declare, _Page, domClass) {
     return declare('Brew.content.library._LibraryPage', _Page, {
       pageClass: 'brew-library-page',
       gridClass: 'sage',

@@ -15,8 +15,8 @@
       viewPort.addChild(navigationBar);
       viewPort.addChild(contentContainer);
       viewPort.startup();
-      Brew.util.navigation.HashManager.startup();
       Brew.util.navigation.PageManager.startup(contentContainer);
+      Brew.util.navigation.HashManager.startup();
       topic.subscribe(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, _onAuthSuccess);
       topic.subscribe(Brew.util.Messages.AUTHORIZATION_NEEDED, _onAuthNeeded);
       return Brew.auth.LocalProvider.startup();

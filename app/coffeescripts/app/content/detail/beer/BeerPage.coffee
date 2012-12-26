@@ -1,19 +1,22 @@
 define "Brew/content/detail/beer/BeerPage", [
   "dojo/_base/declare",
-  "Brew/contnent/_Page",
+  "Brew/content/_Page",
   "dojo/request/xhr",
   "Brew/content/detail/beer/BeerDetailPane"
 
 ], (declare, _Page, xhr, BeerDetailPane) ->
 
   declare "Brew.content.detail.beer.BeerPage", _Page,
-    pageAction: null
+    beerId: null
 
-    postCreate: (config) ->
+    constructor: (config) ->
+      config.beerId = config?.id
+
+    postCreate: () ->
       @inherited arguments
       me = this
 
-      xhr("/beers/" + @pageAction, {
+      xhr("/beers/" + @beerId, {
         handleAs: "json"
         query: {
           withBreweries: 'Y'

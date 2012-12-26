@@ -6,9 +6,9 @@ define 'Brew/content/library/BeerPage', [
   'Brew/ui/grid/Grid',
   'dojo/dom-class'
 
-  ], (declare, _LibraryPage, JsonRest, BreweryDBStore, Grid, domClass) ->
+], (declare, _LibraryPage, JsonRest, BreweryDBStore, Grid, domClass) ->
 
-    declare 'Brew.content.library.BeerPage', _LibraryPage,
+  declare 'Brew.content.library.BeerPage', _LibraryPage,
 
     getGrid: () ->
       new Grid

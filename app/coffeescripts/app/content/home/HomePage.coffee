@@ -1,6 +1,6 @@
 define 'Brew/content/home/HomePage', [
     'dojo/_base/declare',
-    'Brew/contnent/_Page'
+    'Brew/content/_Page'
 ], (declare, _Page) ->
 
     declare 'Brew.content.home.HomePage', _Page,

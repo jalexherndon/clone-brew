@@ -1,7 +1,7 @@
 (function() {
 
-  define('Brew/contnent/_Page', ['dojo/_base/declare', 'dijit/layout/ContentPane', 'dojo/dom-class', 'dojo/topic'], function(declare, ContentPane, domClass, topic) {
-    return declare('Brew.contnent._Page', ContentPane, {
+  define('Brew/content/_Page', ['dojo/_base/declare', 'dijit/layout/ContentPane', 'dojo/dom-class', 'dojo/topic'], function(declare, ContentPane, domClass, topic) {
+    return declare('Brew.content._Page', ContentPane, {
       region: 'center',
       pageClass: null,
       postCreate: function() {

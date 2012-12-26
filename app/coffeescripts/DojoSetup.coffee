@@ -9,8 +9,8 @@ class ApplicationLauncher
         'Brew/util/Messages',
         'Brew/util/Errors',
         'Brew/auth/LocalProvider',
+        'Brew/util/navigation/PageList',
         'Brew/util/navigation/PageManager',
-        'Brew/util/navigation/PageMapping',
         'Brew/util/navigation/HashManager',
         'Brew/ui/grid/StructureFactory'
     ]

@@ -8,7 +8,7 @@
         this.on(".dgrid-cell.clickable:click", function(e) {
           var beerId;
           beerId = grid.row(e).id;
-          return Brew.util.navigation.HashManager.setHash('/beers/' + beerId);
+          return Brew.util.navigation.HashManager.setHash('/beer/detail/' + beerId);
         });
         return this.inherited(arguments);
       },

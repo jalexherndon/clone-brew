@@ -1,11 +1,11 @@
 define 'Brew/content/library/_LibraryPage', [
   'dojo/_base/declare',
-  'Brew/ui/_Page',
+  'Brew/content/_Page',
   'dojo/dom-class'
 
-  ], (declare, _Page, domClass) ->
+], (declare, _Page, domClass) ->
 
-    declare 'Brew.content.library._LibraryPage', _Page,
+  declare 'Brew.content.library._LibraryPage', _Page,
 
     pageClass: 'brew-library-page'
     gridClass: 'sage'

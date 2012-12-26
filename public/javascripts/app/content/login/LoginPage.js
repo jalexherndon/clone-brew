@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/content/login/LoginPage', ['dojo/_base/declare', 'Brew/contnent/_Page', 'dijit/layout/ContentPane', 'Brew/content/login/LoginForm', 'Brew/content/login/RegisterForm', 'dojo/dom-construct'], function(declare, _Page, ContentPane, LoginForm, RegisterForm, DomConstruct) {
+  define('Brew/content/login/LoginPage', ['dojo/_base/declare', 'Brew/content/_Page', 'dijit/layout/ContentPane', 'Brew/content/login/LoginForm', 'Brew/content/login/RegisterForm', 'dojo/dom-construct'], function(declare, _Page, ContentPane, LoginForm, RegisterForm, DomConstruct) {
     return declare('Brew.content.login.LoginPage', _Page, {
       "class": 'brew-login-page',
       postCreate: function() {

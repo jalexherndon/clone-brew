@@ -1,23 +1,53 @@
 define 'Brew/util/navigation/PageManager', [
   'dojo/_base/declare',
+  'dojo/router',
   'dojo/topic',
   'dojo/_base/lang',
   'dojo/query'
-], (declare, topic, lang, query) ->
+], (declare, router, topic, lang, query) ->
+
+  loadNavigationPage = (page, evt) ->
+    Brew.util.navigation.PageManager.loadPage(page, evt.params)
+
+  loadDetailPage = (page, evt) ->
+    page.view = page.view.replace /_TYPE_/g, evt.params.type
+
+    page.view = (page.view.split('/').map (word) ->
+      return word unless word.indexOf('Page') > -1
+      word[0].toUpperCase() + word[1..-1]
+    ).join '/'
+
+    Brew.util.navigation.PageManager.loadPage(page, evt.params)
+
+  registerNavigationPage = (page) ->
+    router.register page.hash, lang.hitch(@, loadNavigationPage, page)
+
+  registerDetailPage = (page) ->
+    router.register page.hash, lang.hitch(@, loadDetailPage, page)
+
+  registerAllPages = ->
+    pageList = Brew.util.navigation.PageList.getPages()
+    registerNavigationPage page for page in pageList.navigation
+    registerDetailPage page for page in pageList.detail
+
 
   pageManager = declare "Brew.util.navigation.PageManager", null,
-    contentContainer: null
+    pageContainer: null
     pageCls: "brew-page"
 
-    startup: (contentContainer) ->
-      @contentContainer = contentContainer
-      topic.subscribe Brew.util.Messages.HASH_CHANGE, lang.hitch this, @_loadPage
+    baseViewPath: 'Brew/content/'
 
-    _loadPage: (hash) ->
-      Brew.util.navigation.PageMapping.getPage hash, (page, left) =>
-        @contentContainer.removeAllChildren()
-        @contentContainer.addChild page
-        @contentContainer.addChild left, "left"  if left
+    startup: (pageContainer) ->
+      @pageContainer = pageContainer
+      registerAllPages()
+      router.startup()
+
+    loadPage: (page, params) ->
+      pageClass = @baseViewPath + page.view
+
+      require [pageClass], (Page) =>
+        @pageContainer.removeAllChildren()
+        @pageContainer.addChild new Page(params)
 
   lang.getObject "util.navigation.PageManager", true, Brew
   Brew.util.navigation.PageManager = new pageManager()

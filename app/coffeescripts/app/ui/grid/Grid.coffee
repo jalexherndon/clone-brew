@@ -13,7 +13,7 @@ define 'Brew/ui/grid/Grid', [
       grid = @
       @on ".dgrid-cell.clickable:click", (e) ->
         beerId = grid.row(e).id
-        Brew.util.navigation.HashManager.setHash '/beers/' + beerId
+        Brew.util.navigation.HashManager.setHash '/beer/detail/' + beerId
 
       @inherited arguments
 
