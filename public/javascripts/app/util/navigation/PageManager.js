@@ -51,8 +51,19 @@
           _this = this;
         pageClass = this.baseViewPath + page.view;
         return require([pageClass], function(Page) {
-          _this.pageContainer.removeAllChildren();
-          return _this.pageContainer.addChild(new Page(params));
+          var child, _i, _len, _ref, _results;
+          _this.pageContainer.destroyDescendants();
+          page = new Page(params);
+          _this.pageContainer.addChild(page);
+          _ref = page.getChildren();
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            child = _ref[_i];
+            _results.push((function(child) {
+              return typeof child.resize === "function" ? child.resize() : void 0;
+            })(child));
+          }
+          return _results;
         });
       }
     });

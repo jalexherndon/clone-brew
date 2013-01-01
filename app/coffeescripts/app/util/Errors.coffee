@@ -5,7 +5,8 @@ define 'Brew/util/Errors', [
 ], (declare, lang) ->
 
   errors = declare 'Brew.util.Errors', null,
-      UNIMPLEMENTED_METHOD: "Unimplemented abstract method"
+      UNIMPLEMENTED_METHOD: (callee) ->
+        new Error("Unimplemented abstract method:\t#{callee.nom}")
   
   lang.getObject 'util.Errors', true, Brew
   Brew.util.Errors = new errors()

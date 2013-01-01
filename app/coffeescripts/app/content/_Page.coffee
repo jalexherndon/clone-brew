@@ -1,19 +1,17 @@
 define 'Brew/content/_Page', [
   'dojo/_base/declare',
-  'dijit/layout/ContentPane',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_Container',
   'dojo/dom-class',
   'dojo/topic'
 
-], (declare, ContentPane, domClass, topic) ->
+], (declare, _WidgetBase, _TemplatedMixin, _Container, domClass, topic) ->
 
-  declare 'Brew.content._Page', ContentPane,
-    region: 'center'
+  declare 'Brew.content._Page', [_WidgetBase, _TemplatedMixin, _Container],
+    baseClass: 'brew-page'
     pageClass: null
 
-    postCreate: ->
-      @inherited arguments
-      domClass.add @domNode, 'brew-page'
-      domClass.add(@domNode, @pageClass) if @pageClass?
-
-    onShow: ->
-      topic.publish Brew.util.Messages.PAGE_LOAD
+    templateString: "
+      <div class=\"${baseClass} ${pageClass}\"></div>
+    "

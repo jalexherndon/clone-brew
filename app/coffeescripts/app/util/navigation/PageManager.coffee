@@ -46,8 +46,14 @@ define 'Brew/util/navigation/PageManager', [
       pageClass = @baseViewPath + page.view
 
       require [pageClass], (Page) =>
-        @pageContainer.removeAllChildren()
-        @pageContainer.addChild new Page(params)
+        @pageContainer.destroyDescendants()
+
+        page = new Page(params)
+        @pageContainer.addChild page
+
+        for child in page.getChildren()
+          do (child) ->
+            child.resize?()
 
   lang.getObject "util.navigation.PageManager", true, Brew
   Brew.util.navigation.PageManager = new pageManager()

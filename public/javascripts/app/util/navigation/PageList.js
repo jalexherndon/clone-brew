@@ -13,7 +13,7 @@
             view: 'home/HomePage'
           }, {
             hash: '/library',
-            view: 'library/BeerPage'
+            view: 'library/LibraryPage'
           }, {
             hash: '/404',
             view: 'error/404'

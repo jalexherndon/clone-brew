@@ -10,13 +10,13 @@ define 'Brew/data/BreweryDBStore', [
         withBreweries: 'Y'
       }
 
-      query: (query, options) ->
+      query: (query, options={}) ->
         lang.mixin query, @defaultParams
 
         # Paging
         if options.start? and options.count is 50
           query.p = ((options.start / options.count) + 1)
-          # delete options.start
-          # delete options.count
+          delete options.start
+          delete options.count
 
         @inherited arguments

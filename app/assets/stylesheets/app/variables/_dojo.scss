@@ -1,4 +1,5 @@
 $dojo-version: '1.8.0';
-$dojo-root: '/public/js-lib/dojotoolkit';
+$dojo-root: '/js-lib/dojotoolkit';
 $dojo-theme: 'nihilo';
-$dojo-path: $dojo-root + "/" + $dojo-version;
+// $dojo-theme: 'claro';
+$dojo-path: $dojo-root + "/" + $dojo-version + "/";

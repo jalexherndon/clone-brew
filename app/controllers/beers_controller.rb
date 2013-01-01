@@ -2,21 +2,17 @@ class BeersController < ApplicationController
   require "net/http"
   require "uri"
   
-  # include BreweryDbHelper
-
   # GET /beers
   # GET /beers.json
   def index
-    @beer = BreweryDB.get(:beers, params, response)
+    @beer = BreweryDb.get(:beers, params, response)
     render json: @beer
   end
 
   # GET /beers/1
   # GET /beers/1.json
   def show
-    puts "Show"
-    puts params
-    @beer = BreweryDB.get(:beer, params)
+    @beer = BreweryDb.get(:beer, params)
     render json: @beer
   end
 

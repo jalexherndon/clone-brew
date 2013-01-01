@@ -1,19 +1,10 @@
 (function() {
 
-  define('Brew/content/_Page', ['dojo/_base/declare', 'dijit/layout/ContentPane', 'dojo/dom-class', 'dojo/topic'], function(declare, ContentPane, domClass, topic) {
-    return declare('Brew.content._Page', ContentPane, {
-      region: 'center',
+  define('Brew/content/_Page', ['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dijit/_Container', 'dojo/dom-class', 'dojo/topic'], function(declare, _WidgetBase, _TemplatedMixin, _Container, domClass, topic) {
+    return declare('Brew.content._Page', [_WidgetBase, _TemplatedMixin, _Container], {
+      baseClass: 'brew-page',
       pageClass: null,
-      postCreate: function() {
-        this.inherited(arguments);
-        domClass.add(this.domNode, 'brew-page');
-        if (this.pageClass != null) {
-          return domClass.add(this.domNode, this.pageClass);
-        }
-      },
-      onShow: function() {
-        return topic.publish(Brew.util.Messages.PAGE_LOAD);
-      }
+      templateString: "      <div class=\"${baseClass} ${pageClass}\"></div>    "
     });
   });
 

@@ -1,0 +1,13 @@
+.brew-list-view {
+    height: 100%;
+
+    .left-column, .grid-ct {
+        height: 98%;
+        margin: 4px;
+    }
+
+    .left-column {
+        float: left;
+        padding-right: 4px;
+    }
+}

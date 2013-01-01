@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'httparty'
 
-class BreweryDB
+class BreweryDb
   include HTTParty
 
   base_uri 'http://api.brewerydb.com/v2/'
@@ -12,32 +12,34 @@ class BreweryDB
 
   PAGE_SIZE = 50
 
-  def self.search( options={} )
-    get( :search, options )
-  end
+  class << self
+    def search( options={}, response={} )
+      get( :search, options, response )
+    end
 
-  def self.get( endpoint="", options={}, response={} )
-    options.merge! :key => apikey
+    def get( endpoint="", options={}, response={} )
+      options.merge! :key => apikey
 
-    isGet = options.has_key? :id
-    endpoint = get_endpoint(endpoint, options)
-    resp = super( endpoint, :query => options )
+      isGet = options.has_key? :id
+      endpoint = get_endpoint(endpoint, options)
+      resp = super( endpoint, :query => options )
 
-    handle_error(resp)
-    add_list_response_headers(resp, response) unless isGet
-    get_data_from_response(resp)
-  end
+      handle_error(resp)
+      add_list_response_headers(resp, response) unless isGet
+      get_data_from_response(resp)
+    end
 
-  def self.apikey
-    @@apikey
-  end
+    def apikey
+      @@apikey
+    end
 
-  def self.apikey=(apikey)
-    @@apikey = apikey
-  end
+    def apikey=(apikey)
+      @@apikey = apikey
+    end
 
-  def self.configure
-    yield self
+    def configure
+      yield self
+    end
   end
 
   private

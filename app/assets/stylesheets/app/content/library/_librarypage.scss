@@ -1,5 +1,3 @@
-.brew-page.brew-library-page {
-    .dgrid-grid {
-        height: 99% !important;
-    }
+.dijitTabPaneWrapper {
+    @include rounded-corners-detail(0, 0, 5px, 5px)
 }

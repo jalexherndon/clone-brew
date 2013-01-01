@@ -1,5 +1,6 @@
 CloneBrew::Application.routes.draw do
 
+
   devise_for :users
 
   resources :ingredient_details
@@ -10,6 +11,7 @@ CloneBrew::Application.routes.draw do
   resources :beers
   resources :breweries
 
+  get "brewery_db/search"
   get "home/index"
 
   # The priority is based upon order of creation:
