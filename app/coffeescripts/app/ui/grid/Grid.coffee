@@ -12,25 +12,22 @@ define 'Brew/ui/grid/Grid', [
   declare 'Brew.ui.grid.Grid', [Grid, Pagination, DijitRegistry],
 
     postCreate: () ->
+      @inherited arguments
       @on ".dgrid-cell.clickable:click", (e) =>
         beerId = @row(e).id
         Brew.util.navigation.HashManager.setHash '/beer/detail/' + beerId
 
-      @inherited arguments
+      @store?.on "beforequery", () =>
+        @getStandBy().show()
 
-    gotoPage: ->
-      @getStandBy().show()
-      @inherited arguments
+      @store?.on "load", () =>
+        @getStandBy().hide()
 
     searchFor: (queryString, type) -> 
       @store.target = 'brewery_db/search'
+      queryString = queryString.replace(/\s/, "+")
       @query = lang.mixin(@query, {type: type, q: queryString})
-      @.refresh()
-
-    _updateNavigation: ->
-      ret = @inherited arguments
-      @getStandBy().hide()
-      ret
+      @refresh()
 
     getStandBy: ->
       if not @standby?

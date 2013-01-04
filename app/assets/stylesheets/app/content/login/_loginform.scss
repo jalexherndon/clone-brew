@@ -16,30 +16,13 @@
         margin-bottom: 10px;
     }
 
-    .dijitTextBox {
-        @include rounded-corners(5px);
-        border: 1px inset $lighter-grey !important;
-        padding: 2px 4px;
-        margin-bottom: 6px;
-    }
-
     .dijitButton > span {
-        @include rounded-corners(4px);
         color: $white;
-        border: 1px solid #0775ea;
-
-        background-color: #53a0f3; // Old browsers
-        @include filter-gradient(#53a0f3, #0775ea, vertical); // IE6-9
-        @include background-image(linear-gradient(top,  #53a0f3 0%,#5397ef 26%,#529bea 48%,#0775ea 89%));
+        @include light-blue-gradient();
 
         &:hover {
             color: $white;
-            border: 1px solid #054d9b;
-            
-            background-color: #0e69ca; // Old browsers
-            @include filter-gradient(#0e69ca, #054d9b, vertical); // IE6-9
-            @include background-image(linear-gradient(top,  #0e69ca 0%,#125ec2 26%,#1665ba 48%,#054d9b 89%));
-
+            @include dark-blue-gradient();
         }
     }
 }
@@ -49,8 +32,4 @@
     position: absolute;
     left: 200px;
     top: 400px;
-    
-    &:hover {
-
-    }
 }

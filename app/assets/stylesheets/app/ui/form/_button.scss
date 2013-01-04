@@ -1,0 +1,8 @@
+.dijitButton > span {
+    @include rounded-corners(4px);
+    border: 1px solid #0775ea;
+
+    &:hover {
+        border: 1px solid #054d9b;
+    }
+}

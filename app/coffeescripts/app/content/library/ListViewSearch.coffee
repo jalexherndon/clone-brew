@@ -29,7 +29,8 @@ define 'Brew/content/library/ListViewSearch', [
 
       searchButtonSrcNodeRef = dojo.query(".#{SEARCH_BUTTON_CLASS}", this.domNode)[0];
       new Button({
-        label: 'Search'
+        iconClass: 'dijitIconSearch'
+        showLabel: false
         onClick: (e) =>
           @searchGrid(search.get('value'))
       }, searchButtonSrcNodeRef)

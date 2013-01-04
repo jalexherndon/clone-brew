@@ -7,7 +7,7 @@ define 'Brew/content/library/BeerListView', [
 
   declare 'Brew.content.library.BeerListView', _ListView,
     getGridConfig: () ->
-      store: new BreweryDBStore {target: '/beers/'}
+      store: new BreweryDBStore {target: '/beers'}
       columns: Brew.ui.grid.StructureFactory.structureFor('beers')
       rowsPerPage: 50
       pagingTextBox: true

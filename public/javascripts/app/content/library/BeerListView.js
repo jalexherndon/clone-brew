@@ -5,7 +5,7 @@
       getGridConfig: function() {
         return {
           store: new BreweryDBStore({
-            target: '/beers/'
+            target: '/beers'
           }),
           columns: Brew.ui.grid.StructureFactory.structureFor('beers'),
           rowsPerPage: 50,

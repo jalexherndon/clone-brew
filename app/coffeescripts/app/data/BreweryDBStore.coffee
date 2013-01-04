@@ -1,11 +1,13 @@
 define 'Brew/data/BreweryDBStore', [
   'dojo/_base/declare',
   'dojo/store/JsonRest',
+  'dojo/Evented',
+  'dojo/when',
   'dojo/_base/lang'
 
-  ], (declare, JsonRest, lang) ->
+  ], (declare, JsonRest, Evented, When, lang) ->
 
-    declare 'Brew.data.BreweryDBStore', JsonRest,
+    declare 'Brew.data.BreweryDBStore', [JsonRest, Evented],
       defaultParams: {
         withBreweries: 'Y'
       }
@@ -19,4 +21,9 @@ define 'Brew/data/BreweryDBStore', [
           delete options.start
           delete options.count
 
-        @inherited arguments
+        @emit "beforequery"
+        results = @inherited arguments
+        results.then (total) =>
+          @emit "load"
+
+        results
