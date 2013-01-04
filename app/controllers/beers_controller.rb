@@ -5,14 +5,14 @@ class BeersController < ApplicationController
   # GET /beers
   # GET /beers.json
   def index
-    @beer = BreweryDb.get(:beers, params, response)
+    @beer = BreweryDb.get(:beers, params, response, request)
     render json: @beer
   end
 
   # GET /beers/1
   # GET /beers/1.json
   def show
-    @beer = BreweryDb.get(:beer, params)
+    @beer = BreweryDb.get(:beer, params, response, request)
     render json: @beer
   end
 

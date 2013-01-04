@@ -9,24 +9,40 @@ class BreweryDb
   default_params :format => 'JSON'
 
   @@apikey = nil
+  @@cache = Hash.new()
 
   PAGE_SIZE = 50
 
   class << self
-    def search( options={}, response={} )
-      get( :search, options, response )
+    def search( options={}, response={}, request )
+      get( :search, options, response, request )
     end
 
-    def get( endpoint="", options={}, response={} )
+    def get( endpoint="", options={}, response={}, request)
       options.merge! :key => apikey
 
       isGet = options.has_key? :id
       endpoint = get_endpoint(endpoint, options)
-      resp = super( endpoint, :query => options )
 
-      handle_error(resp)
-      add_list_response_headers(resp, response) unless isGet
-      get_data_from_response(resp)
+      request_uri = request.original_fullpath()
+      brewery_db_response = nil
+      if queryIsCached?(request_uri)
+        brewery_db_response = serverFromCache(request_uri)
+      else
+        brewery_db_response = super( endpoint, :query => options )
+        @@cache[request_uri] = brewery_db_response
+      end
+
+      add_list_response_headers(brewery_db_response, response) unless isGet
+      get_data_from_response(brewery_db_response)
+    end
+
+    def queryIsCached?(key)
+      @@cache.has_key?(key)
+    end
+
+    def serverFromCache(key)
+      @@cache[key]
     end
 
     def apikey
@@ -61,9 +77,6 @@ class BreweryDb
     end
 
     endpoint
-  end
-
-  def self.handle_error(response)
   end
 
   def self.get_data_from_response(response)
