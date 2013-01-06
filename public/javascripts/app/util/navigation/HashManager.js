@@ -7,7 +7,7 @@
       loginHash: "/login",
       startup: function() {
         var currentHash;
-        currentHash = hash();
+        currentHash = this.getHash;
         if (currentHash.length && currentHash !== this.loginHash) {
           this._returnHash = currentHash;
         }
@@ -15,14 +15,14 @@
         return topic.subscribe("/dojo/hashchange", lang.hitch(this, this._onHashChange));
       },
       setHash: function(newHash, replace, allowSame, silent) {
-        var authenticated;
-        authenticated = Brew.auth.LocalProvider.isAuthenticated();
+        if (newHash !== this.loginHash ? !Brew.auth.LocalProvider.isAuthenticated(true) : void 0) {
+          return;
+        }
         if (!newHash) {
           newHash = this._returnHash || this.defaultHash;
         }
-        newHash = authenticated ? newHash : this.loginHash;
         this._silent = silent;
-        if (newHash !== hash()) {
+        if (newHash !== this.getHash()) {
           return hash(newHash, replace);
         } else if (allowSame || this._isFirstPageLoad) {
           delete this._isFirstPageLoad;

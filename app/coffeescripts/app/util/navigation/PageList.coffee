@@ -8,6 +8,7 @@ define 'Brew/util/navigation/PageList', [
     pagesList: {
       navigation: [{
         hash: '/login'
+        noAuth: true
         view: 'login/LoginPage'
       },{
         hash: '/home'

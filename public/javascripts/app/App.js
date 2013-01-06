@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/App', ["dojo/_base/declare", "Brew/ui/ViewPort", "Brew/content/Container", "dojo/dom-construct", "dojo/_base/window", "Brew/content/navigation/NavigationBar", "dojo/topic", "dojo/dom-class"], function(declare, ViewPort, ContentContainer, domConstruct, win, NavigationBar, topic, domClass) {
+  define('Brew/App', ["dojo/_base/declare", "Brew/util/navigation/HashManager", "Brew/util/Messages", "Brew/ui/ViewPort", "Brew/content/Container", "dojo/dom-construct", "dojo/_base/window", "Brew/content/navigation/NavigationBar", "dojo/topic", "dojo/dom-class"], function(declare, HashManager, Messages, ViewPort, ContentContainer, domConstruct, win, NavigationBar, topic, domClass) {
     var authProvider, buildNavBar, buildViewPort, contentContainer, init, navigationBar, viewPort, _onAuthNeeded, _onAuthSuccess;
     viewPort = void 0;
     navigationBar = void 0;
@@ -16,9 +16,9 @@
       viewPort.addChild(contentContainer);
       viewPort.startup();
       Brew.util.navigation.PageManager.startup(contentContainer);
-      Brew.util.navigation.HashManager.startup();
-      topic.subscribe(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, _onAuthSuccess);
-      topic.subscribe(Brew.util.Messages.AUTHORIZATION_NEEDED, _onAuthNeeded);
+      HashManager.startup();
+      topic.subscribe(Messages.AUTHORIZATION_SUCCESSFUL, _onAuthSuccess);
+      topic.subscribe(Messages.AUTHORIZATION_NEEDED, _onAuthNeeded);
       return Brew.auth.LocalProvider.startup();
     };
     buildViewPort = function() {
@@ -35,12 +35,12 @@
       });
     };
     _onAuthSuccess = function() {
-      Brew.util.navigation.HashManager.setHash();
+      HashManager.setHash();
       domClass.remove(viewPort.domNode, "login");
       return navigationBar.populate();
     };
     _onAuthNeeded = function() {
-      Brew.util.navigation.HashManager.setHash("/login");
+      HashManager.setHash("/login");
       domClass.add(viewPort.domNode, "login");
       return navigationBar.disband();
     };

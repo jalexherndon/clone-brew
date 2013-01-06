@@ -1,10 +1,11 @@
 define 'Brew/util/navigation/PageManager', [
   'dojo/_base/declare',
+  'Brew/auth/LocalProvider'
   'dojo/router',
   'dojo/topic',
   'dojo/_base/lang',
   'dojo/query'
-], (declare, router, topic, lang, query) ->
+], (declare, LocalProvider, router, topic, lang, query) ->
 
   loadNavigationPage = (page, evt) ->
     Brew.util.navigation.PageManager.loadPage(page, evt.params)
@@ -43,17 +44,21 @@ define 'Brew/util/navigation/PageManager', [
       router.startup()
 
     loadPage: (page, params) ->
+      return if not LocalProvider.isAuthenticated() unless page.noAuth
       pageClass = @baseViewPath + page.view
+      require [pageClass], lang.hitch(this, @_switchPage, params)
 
-      require [pageClass], (Page) =>
-        @pageContainer.destroyDescendants()
+    _switchPage: (params, Page) ->
+      page = new Page(params)
+      @pageContainer.destroyDescendants()
+      @pageContainer.addChild page
 
-        page = new Page(params)
-        @pageContainer.addChild page
-
-        for child in page.getChildren()
-          do (child) ->
-            child.resize?()
+      # I'm not exactely sure why we need to do this, but sometimes 
+      # a page will not render correctely unless we call resize on 
+      # all its children directely. Can we get rid of this somehow?
+      for child in page.getChildren()
+        do (child) ->
+          child.resize?()
 
   lang.getObject "util.navigation.PageManager", true, Brew
   Brew.util.navigation.PageManager = new pageManager()

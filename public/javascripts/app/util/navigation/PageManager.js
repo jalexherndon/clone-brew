@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/util/navigation/PageManager', ['dojo/_base/declare', 'dojo/router', 'dojo/topic', 'dojo/_base/lang', 'dojo/query'], function(declare, router, topic, lang, query) {
+  define('Brew/util/navigation/PageManager', ['dojo/_base/declare', 'Brew/auth/LocalProvider', 'dojo/router', 'dojo/topic', 'dojo/_base/lang', 'dojo/query'], function(declare, LocalProvider, router, topic, lang, query) {
     var loadDetailPage, loadNavigationPage, pageManager, registerAllPages, registerDetailPage, registerNavigationPage;
     loadNavigationPage = function(page, evt) {
       return Brew.util.navigation.PageManager.loadPage(page, evt.params);
@@ -47,24 +47,27 @@
         return router.startup();
       },
       loadPage: function(page, params) {
-        var pageClass,
-          _this = this;
+        var pageClass;
+        if (!page.noAuth ? !LocalProvider.isAuthenticated() : void 0) {
+          return;
+        }
         pageClass = this.baseViewPath + page.view;
-        return require([pageClass], function(Page) {
-          var child, _i, _len, _ref, _results;
-          _this.pageContainer.destroyDescendants();
-          page = new Page(params);
-          _this.pageContainer.addChild(page);
-          _ref = page.getChildren();
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            child = _ref[_i];
-            _results.push((function(child) {
-              return typeof child.resize === "function" ? child.resize() : void 0;
-            })(child));
-          }
-          return _results;
-        });
+        return require([pageClass], lang.hitch(this, this._switchPage, params));
+      },
+      _switchPage: function(params, Page) {
+        var child, page, _i, _len, _ref, _results;
+        page = new Page(params);
+        this.pageContainer.destroyDescendants();
+        this.pageContainer.addChild(page);
+        _ref = page.getChildren();
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          child = _ref[_i];
+          _results.push((function(child) {
+            return typeof child.resize === "function" ? child.resize() : void 0;
+          })(child));
+        }
+        return _results;
       }
     });
     lang.getObject("util.navigation.PageManager", true, Brew);

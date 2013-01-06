@@ -11,18 +11,17 @@ define "Brew/util/navigation/HashManager", [
     loginHash: "/login"
 
     startup: ->
-      currentHash = hash()
+      currentHash = @getHash
       @_returnHash = currentHash if currentHash.length and currentHash isnt @loginHash
       @_isFirstPageLoad = true
       topic.subscribe "/dojo/hashchange", lang.hitch(this, @_onHashChange)
 
     setHash: (newHash, replace, allowSame, silent) ->
-      authenticated = Brew.auth.LocalProvider.isAuthenticated()
+      return if !Brew.auth.LocalProvider.isAuthenticated(true) unless newHash is @loginHash
       newHash = @_returnHash or @defaultHash  unless newHash
-      newHash = if authenticated then newHash else @loginHash
       @_silent = silent
 
-      if newHash isnt hash()
+      if newHash isnt @getHash()
         hash newHash, replace
       else if allowSame or @_isFirstPageLoad
         delete @_isFirstPageLoad

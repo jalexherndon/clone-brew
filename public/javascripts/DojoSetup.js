@@ -2,7 +2,6 @@
   var ApplicationLauncher;
 
   ApplicationLauncher = (function() {
-    var instance;
 
     function ApplicationLauncher() {}
 
@@ -20,9 +19,10 @@
 
     ApplicationLauncher.prototype.APP_SINGLETONS = ['Brew/util/Messages', 'Brew/util/Errors', 'Brew/auth/LocalProvider', 'Brew/util/navigation/PageList', 'Brew/util/navigation/PageManager', 'Brew/util/navigation/HashManager', 'Brew/ui/grid/StructureFactory'];
 
-    instance = null;
+    ApplicationLauncher.prototype.instance = null;
 
     ApplicationLauncher.init = function() {
+      var instance;
       if (!(this.instance != null)) {
         instance = new this;
         window.dojoConfig = instance._buildDojoConfig();

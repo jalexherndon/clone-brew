@@ -1,4 +1,6 @@
 class BreweriesController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /breweries
   # GET /breweries.json
   def index

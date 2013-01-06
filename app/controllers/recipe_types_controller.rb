@@ -1,4 +1,6 @@
 class RecipeTypesController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /recipe_types
   # GET /recipe_types.json
   def index

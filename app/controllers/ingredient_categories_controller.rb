@@ -1,4 +1,6 @@
 class IngredientCategoriesController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /ingredient_categories
   # GET /ingredient_categories.json
   def index

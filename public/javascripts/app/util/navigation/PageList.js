@@ -7,6 +7,7 @@
         navigation: [
           {
             hash: '/login',
+            noAuth: true,
             view: 'login/LoginPage'
           }, {
             hash: '/home',
