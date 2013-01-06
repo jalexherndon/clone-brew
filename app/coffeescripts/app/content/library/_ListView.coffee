@@ -4,9 +4,11 @@ define 'Brew/content/library/_ListView', [
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'Brew/ui/grid/Grid',
-  'Brew/content/library/ListViewSearch'
+  'Brew/content/library/ListViewSearch',
+  'dojox/widget/Standby',
+  'dojo/_base/window'
 
-], (declare, lang, _WidgetBase, _TemplatedMixin, Grid, ListViewSearch) ->
+], (declare, lang, _WidgetBase, _TemplatedMixin, Grid, ListViewSearch, Standby, win) ->
   GRID_CT_CLASS = "grid-ct"
   FILTER_CT_CLASS = "filter-ct"
   SEARCH_CT_CLASS = "search-ct"
@@ -49,5 +51,21 @@ define 'Brew/content/library/_ListView', [
     _attachGrid: () ->
       srcNodeRef = dojo.query(".#{GRID_CT_CLASS}", this.domNode)[0]
       grid = new Grid(@getGridConfig(), srcNodeRef)
+
+      grid.store?.on "beforequery", () =>
+        @_getStandBy().show()
+
+      grid.store?.on "load", () =>
+        @_getStandBy().hide()
+
       grid.refresh()
       grid
+
+    _getStandBy: ()->
+      if not @standby?
+        @standby = new Standby {target: @domNode}
+        win.body().appendChild(@standby.domNode)
+        @standby.startup()
+
+      @standby
+

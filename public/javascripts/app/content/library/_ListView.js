@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/content/library/_ListView', ['dojo/_base/declare', 'dojo/_base/lang', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'Brew/ui/grid/Grid', 'Brew/content/library/ListViewSearch'], function(declare, lang, _WidgetBase, _TemplatedMixin, Grid, ListViewSearch) {
+  define('Brew/content/library/_ListView', ['dojo/_base/declare', 'dojo/_base/lang', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'Brew/ui/grid/Grid', 'Brew/content/library/ListViewSearch', 'dojox/widget/Standby', 'dojo/_base/window'], function(declare, lang, _WidgetBase, _TemplatedMixin, Grid, ListViewSearch, Standby, win) {
     var FILTER_CT_CLASS, GRID_CT_CLASS, SEARCH_CT_CLASS;
     GRID_CT_CLASS = "grid-ct";
     FILTER_CT_CLASS = "filter-ct";
@@ -32,11 +32,32 @@
         }, this.getSearchBarConfig()), srcNodeRef);
       },
       _attachGrid: function() {
-        var grid, srcNodeRef;
+        var grid, srcNodeRef, _ref, _ref1,
+          _this = this;
         srcNodeRef = dojo.query("." + GRID_CT_CLASS, this.domNode)[0];
         grid = new Grid(this.getGridConfig(), srcNodeRef);
+        if ((_ref = grid.store) != null) {
+          _ref.on("beforequery", function() {
+            return _this._getStandBy().show();
+          });
+        }
+        if ((_ref1 = grid.store) != null) {
+          _ref1.on("load", function() {
+            return _this._getStandBy().hide();
+          });
+        }
         grid.refresh();
         return grid;
+      },
+      _getStandBy: function() {
+        if (!(this.standby != null)) {
+          this.standby = new Standby({
+            target: this.domNode
+          });
+          win.body().appendChild(this.standby.domNode);
+          this.standby.startup();
+        }
+        return this.standby;
       }
     });
   });
