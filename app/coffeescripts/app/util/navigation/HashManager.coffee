@@ -7,7 +7,7 @@ define "Brew/util/navigation/HashManager", [
 ], (declare, lang, hash, topic) ->
 
   HashManager = declare "Brew.util.navigation.HashManager", null,
-    defaultHash: "/home"
+    defaultHash: "/library"
     loginHash: "/login"
 
     startup: ->

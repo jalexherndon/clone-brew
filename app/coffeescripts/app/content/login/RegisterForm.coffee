@@ -7,7 +7,7 @@ define "Brew/content/login/RegisterForm", [
     "dojo/dom-construct",
     "dojox/validate/web",
     "dojo/_base/event"
-], (declare, Form, TextBox, Button, _Container, DomConstruct, validate, event) ->
+], (declare, Form, ValidationTextBox, Button, _Container, DomConstruct, validate, event) ->
 
     declare "Brew.content.login.RegisterForm", [Form, _Container],
         class: "brew-register-form"
@@ -17,17 +17,17 @@ define "Brew/content/login/RegisterForm", [
                 class: "brew-register-message"
                 innerHTML: "New? Join for free."
             }
-            firstName = new TextBox {
+            firstName = new ValidationTextBox {
                 class: "brew-register-name brew-register-first-name"
-                name: "firstName"
+                name: "user[first_name]"
                 placeHolder: "first name"
             }
-            lastName = new TextBox {
+            lastName = new ValidationTextBox {
                 class: "brew-register-name"
-                name: "lastName"
+                name: "user[last_name]"
                 placeHolder: "last name"
             }
-            email = new TextBox {
+            email = new ValidationTextBox {
                 class: "brew-user-name"
                 name: "user[email]"
                 placeHolder: "email"
@@ -35,7 +35,7 @@ define "Brew/content/login/RegisterForm", [
                 validator: validate.isEmailAddress
                 invalidMessage: "Must be a valid email."
             }
-            password = new TextBox {
+            password = new ValidationTextBox {
                 class: "brew-password"
                 name: "user[password]"
                 type: "password"
@@ -45,7 +45,7 @@ define "Brew/content/login/RegisterForm", [
                 constraints:
                     min: 8
             }
-            passwordConf = new TextBox {
+            passwordConf = new ValidationTextBox {
                 class: "brew-password"
                 name: "user[password_confirmation]"
                 type: "password"
@@ -53,6 +53,13 @@ define "Brew/content/login/RegisterForm", [
                 validator: @_passwordConfValidator
                 constraints:
                     match: password
+            }
+            betaKey = new ValidationTextBox {
+                class: "brew-password"
+                name: "brew_beta_key"
+                type: "password"
+                placeHolder: "beta key"
+                required: true
             }
             submitButton = new Button {
                 class: "brew-button"
@@ -65,12 +72,22 @@ define "Brew/content/login/RegisterForm", [
             @addChild email
             @addChild password
             @addChild passwordConf
+            @addChild betaKey
             @addChild submitButton
             DomConstruct.place message, @domNode, "first"
 
         onSubmit: (evt) ->
             event.stop evt
-            Brew.auth.LocalProvider.register @get("value")  if @validate()
+            if @validate()
+              Brew.auth.LocalProvider.register @get("value"), {
+                failure: (err) =>
+                  if err.response?.data?.invalid_field is "brew_beta_key"
+                    betaKeyTextBox = @getChildren()[5]
+                    betaKeyTextBox.set("value", "")
+                    betaKeyTextBox.focus()
+                    betaKeyTextBox.set("state", "Error")
+                    betaKeyTextBox.set("message", err.response.data.message)
+              }
 
         _passwordValidator: (value, constraints) ->
             if value.length < constraints.min

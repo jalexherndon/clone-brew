@@ -45,14 +45,17 @@
       },
       onSubmit: function(evt) {
         event.stop(evt);
-        if (this.validate()) {
-          Brew.auth.LocalProvider.login(this.get('value'), lang.hitch(this, this._loginFailCallback));
+        if (!this.validate()) {
+          return;
         }
+        Brew.auth.LocalProvider.login(this.get('value'), {
+          failure: lang.hitch(this, this._loginFailCallback)
+        });
         return this.inherited(arguments);
       },
       _loginFailCallback: function(err) {
         var message, node, passwordTextBox;
-        message = err.response.data.error;
+        message = err.response.data.message;
         node = query('.brew-password', this.domNode)[0];
         passwordTextBox = registry.byNode(node);
         passwordTextBox.focus();

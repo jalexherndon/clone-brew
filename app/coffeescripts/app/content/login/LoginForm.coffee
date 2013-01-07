@@ -57,11 +57,14 @@ define 'Brew/content/login/LoginForm', [
 
     onSubmit: (evt) ->
       event.stop evt
-      Brew.auth.LocalProvider.login @get('value'), lang.hitch(this, @_loginFailCallback)  if @validate()
+      return unless @validate()
+      Brew.auth.LocalProvider.login(@get('value'), {
+        failure: lang.hitch(this, @_loginFailCallback)
+      })
       @inherited arguments
 
     _loginFailCallback: (err) ->
-      message = err.response.data.error
+      message = err.response.data.message
       node = query('.brew-password', @domNode)[0]
       passwordTextBox = registry.byNode(node)
 

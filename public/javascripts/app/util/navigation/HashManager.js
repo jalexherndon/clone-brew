@@ -3,7 +3,7 @@
   define("Brew/util/navigation/HashManager", ["dojo/_base/declare", "dojo/_base/lang", "dojo/hash", "dojo/topic"], function(declare, lang, hash, topic) {
     var HashManager;
     HashManager = declare("Brew.util.navigation.HashManager", null, {
-      defaultHash: "/home",
+      defaultHash: "/library",
       loginHash: "/login",
       startup: function() {
         var currentHash;

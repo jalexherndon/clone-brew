@@ -5,9 +5,10 @@ define 'Brew/auth/LocalProvider', [
   'dojo/_base/query',
   'dojo/request',
   'dojo/cookie',
+  'dojo/json',
   'dojo/topic'
 
-], (declare, lang, notify, query, request, cookie, topic) ->
+], (declare, lang, notify, query, request, cookie, json, topic) ->
 
   LocalProvider = declare 'Brew.auth.LocalProvider', null,
     CSRFToken: null
@@ -26,20 +27,25 @@ define 'Brew/auth/LocalProvider', [
       else
         topic.publish Brew.util.Messages.AUTHORIZATION_NEEDED, user
 
-    login: (data, failureCallback) ->
-      request.post('/users/sign_in.json',
-        handleAs: 'json'
-        data: data
-      ).then lang.hitch(this, @_onAuthSuccess), failureCallback
-
-    register: (data) ->
+    register: (data, opts) ->
       request.post('/users.json',
         handleAs: 'json'
         data: data
-      ).then lang.hitch(this, @_onAuthSuccess), lang.hitch(this, @_onAuthNeeded)
+      ).then lang.hitch(this, @_onAuthSuccess, opts), lang.hitch(this, @_onAuthNeeded, opts)
+
+    login: (data, opts) ->
+      request.post('/users/sign_in.json',
+        handleAs: 'json'
+        data: data
+      ).then lang.hitch(this, @_onAuthSuccess, opts), opts?.failure
 
     logout: ->
-      request.del('/users/sign_out.json').then lang.hitch(this, @_onAuthNeeded)
+      request.del('/users/sign_out.json', {
+        handleAs: 'json'
+        data: {
+          user: json.stringify(@currentUser)
+        }
+      }).then lang.hitch(this, @_onAuthNeeded)
 
     isAuthenticated: (fireAuthEvent) ->
       authenticated = cookie(@cookieName)?
@@ -51,15 +57,18 @@ define 'Brew/auth/LocalProvider', [
     getCurrentUser: () ->
       cookie(@cookieName)
 
-    _onAuthSuccess: (user) ->
+    _onAuthSuccess: (opts, user) ->
+      @currentUser = user
       cookie @cookieName, user
       topic.publish Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user
+      opts?.success?(user)
 
-    _onAuthNeeded: (err) ->
+    _onAuthNeeded: (opts, err) ->
       cookie @cookieName, null,
         expires: -1
 
       topic.publish Brew.util.Messages.AUTHORIZATION_NEEDED
+      opts?.failure?(err)
 
 
   lang.getObject 'auth.LocalProvider', true, Brew

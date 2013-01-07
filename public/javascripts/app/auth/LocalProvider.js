@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/auth/LocalProvider', ['dojo/_base/declare', 'dojo/_base/lang', 'dojo/request/notify', 'dojo/_base/query', 'dojo/request', 'dojo/cookie', 'dojo/topic'], function(declare, lang, notify, query, request, cookie, topic) {
+  define('Brew/auth/LocalProvider', ['dojo/_base/declare', 'dojo/_base/lang', 'dojo/request/notify', 'dojo/_base/query', 'dojo/request', 'dojo/cookie', 'dojo/json', 'dojo/topic'], function(declare, lang, notify, query, request, cookie, json, topic) {
     var LocalProvider;
     LocalProvider = declare('Brew.auth.LocalProvider', null, {
       CSRFToken: null,
@@ -23,20 +23,25 @@
           return topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED, user);
         }
       },
-      login: function(data, failureCallback) {
-        return request.post('/users/sign_in.json', {
-          handleAs: 'json',
-          data: data
-        }).then(lang.hitch(this, this._onAuthSuccess), failureCallback);
-      },
-      register: function(data) {
+      register: function(data, opts) {
         return request.post('/users.json', {
           handleAs: 'json',
           data: data
-        }).then(lang.hitch(this, this._onAuthSuccess), lang.hitch(this, this._onAuthNeeded));
+        }).then(lang.hitch(this, this._onAuthSuccess, opts), lang.hitch(this, this._onAuthNeeded, opts));
+      },
+      login: function(data, opts) {
+        return request.post('/users/sign_in.json', {
+          handleAs: 'json',
+          data: data
+        }).then(lang.hitch(this, this._onAuthSuccess, opts), opts != null ? opts.failure : void 0);
       },
       logout: function() {
-        return request.del('/users/sign_out.json').then(lang.hitch(this, this._onAuthNeeded));
+        return request.del('/users/sign_out.json', {
+          handleAs: 'json',
+          data: {
+            user: json.stringify(this.currentUser)
+          }
+        }).then(lang.hitch(this, this._onAuthNeeded));
       },
       isAuthenticated: function(fireAuthEvent) {
         var authenticated;
@@ -49,15 +54,18 @@
       getCurrentUser: function() {
         return cookie(this.cookieName);
       },
-      _onAuthSuccess: function(user) {
+      _onAuthSuccess: function(opts, user) {
+        this.currentUser = user;
         cookie(this.cookieName, user);
-        return topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user);
+        topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user);
+        return opts != null ? typeof opts.success === "function" ? opts.success(user) : void 0 : void 0;
       },
-      _onAuthNeeded: function(err) {
+      _onAuthNeeded: function(opts, err) {
         cookie(this.cookieName, null, {
           expires: -1
         });
-        return topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED);
+        topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED);
+        return opts != null ? typeof opts.failure === "function" ? opts.failure(err) : void 0 : void 0;
       }
     });
     lang.getObject('auth.LocalProvider', true, Brew);
