@@ -7,11 +7,12 @@ class Recipe < ActiveRecord::Base
   accepts_nested_attributes_for :ingredient_details, :allow_destroy => true
   attr_accessible :directions,
                   :mash_temperature,
+                  :boil_time,
                   :beer_id,
                   :recipe_type_id,
                   :ingredient_ids,
                   :ingredient_detail_ids
-                  
+
   validates :beer_id, :presence => true
   validates :recipe_type_id, :presence => true
 
