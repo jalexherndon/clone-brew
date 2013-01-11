@@ -21,7 +21,6 @@ class BreweryDb
     def get( endpoint="", options={}, response={}, request)
       options.merge! :key => apikey
 
-      isGet = options.has_key? :id
       endpoint = get_endpoint(endpoint, options)
 
       request_uri = request.original_fullpath()
@@ -33,16 +32,8 @@ class BreweryDb
         @@cache[request_uri] = brewery_db_response
       end
 
-      add_list_response_headers(brewery_db_response, response) unless isGet
+      add_list_response_headers(brewery_db_response, response)
       get_data_from_response(brewery_db_response)
-    end
-
-    def queryIsCached?(key)
-      @@cache.has_key?(key)
-    end
-
-    def serverFromCache(key)
-      @@cache[key]
     end
 
     def apikey
@@ -56,30 +47,42 @@ class BreweryDb
     def configure
       yield self
     end
-  end
 
-  private
-  def self.add_list_response_headers( data={}, response={} )
-    startItem = data.fetch("currentPage") * PAGE_SIZE
-    endItem = startItem + PAGE_SIZE
-    totalResults = data.fetch("totalResults")
 
-    return unless startItem && endItem && totalResults
-    response.headers["Content-Range"] = "items #{startItem}-#{endItem}/#{totalResults}"
-  end
-
-  def self.get_endpoint( endpoint, options )
-    endpoint = "/#{endpoint}" unless endpoint.is_a? String
-
-    if options.has_key? :id
-      endpoint = endpoint + "/#{options[:id]}"
-      options.delete :id
+    private
+    def queryIsCached?(key)
+      @@cache.has_key?(key)
     end
 
-    endpoint
+    def serverFromCache(key)
+      @@cache[key]
+    end
+
+    def add_list_response_headers( data={}, response={} )
+      return unless (data.has_key?("currentPage") && data.has_key?("totalResults"))
+
+      startItem = data.fetch("currentPage") * PAGE_SIZE
+      endItem = startItem + PAGE_SIZE
+      totalResults = data.fetch("totalResults")
+
+      return unless startItem && endItem && totalResults
+      response.headers["Content-Range"] = "items #{startItem}-#{endItem}/#{totalResults}"
+    end
+
+    def get_endpoint( endpoint, options )
+      endpoint = "/#{endpoint}" unless endpoint.is_a? String
+
+      if options.has_key? :id
+        endpoint = endpoint + "/#{options[:id]}"
+        options.delete :id
+      end
+
+      endpoint
+    end
+
+    def get_data_from_response(response)
+      response.fetch("data") if response.code == 200
+    end
   end
 
-  def self.get_data_from_response(response)
-    response.fetch("data") if response.code == 200
-  end
 end
