@@ -1,0 +1,24 @@
+.brew-recipe-builder {
+    .brew-recipe-builder-info {
+        margin: 6px;
+
+        .header {
+            @include rounded-corners();
+            padding: 4px;
+            margin-bottom: 4px;
+            background-color: $pistachio-off-white;
+            overflow: auto;
+
+            font-size: 14px;
+            font-weight: bold;
+            font-family: 'LobsterTwoRegular';
+            color: $pistachio-brown;
+        }
+
+        .table {
+            .label {
+                padding-right: 8px;
+            }
+        }
+    }
+}

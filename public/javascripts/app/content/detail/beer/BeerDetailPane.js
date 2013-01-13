@@ -1,6 +1,6 @@
 (function() {
 
-  define('Brew/content/detail/beer/BeerDetailPane', ['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/dom-style', 'dojo/query', 'dojo/_base/window', 'dojo/NodeList-traverse'], function(declare, _WidgetBase, _TemplatedMixin, domStyle, query, win) {
+  define('Brew/content/detail/beer/BeerDetailPane', ['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/dom-style', 'dojo/_base/window', 'dojo/NodeList-traverse'], function(declare, _WidgetBase, _TemplatedMixin, domStyle, win) {
     return declare('Brew.content.beer.BeerDetailPane', [_WidgetBase, _TemplatedMixin], {
       baseClass: 'beer_detail_pane',
       templateString: "      <div class=\"${baseClass}\">        <div class=\"${baseClass}_header\">          <div class=\"${baseClass}_name\">${beer.name}</div>          <div class=\"${baseClass}_brewery\" data-dojo-attach-point=\"breweryNode\">${brewery}</div>        </div>        <div class=\"${baseClass}_content\">          <img class=\"${baseClass}_label\" src=\"\" data-dojo-attach-point=\"labelNode\">          <div class=\"${baseClass}_info\">            <div class=\"${baseClass}_stats\">${stats}</div>            <div class=\"${baseClass}_description\">${beer.description}</div>          </div>        </div>      </div>    ",

@@ -5,33 +5,21 @@ class RecipesController < ApplicationController
   # GET /recipes.json
   def index
     @recipes = Recipe.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @recipes }
-    end
+    render :json => @recipes
   end
 
   # GET /recipes/1
   # GET /recipes/1.json
   def show
     @recipe = Recipe.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @recipe }
-    end
+    render :json => @recipe
   end
 
   # GET /recipes/new
   # GET /recipes/new.json
   def new
     @recipe = Recipe.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @recipe }
-    end
+    render :json => @recipe
   end
 
   # GET /recipes/1/edit
@@ -46,11 +34,9 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
-        format.json { render json: @recipe, status: :created, location: @recipe }
+        render :json => @recipe, :status => :created
       else
-        format.html { render action: "new" }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
+        render :json => @recipe.errors, :status => :unprocessable_entity
       end
     end
   end

@@ -3,11 +3,10 @@ define 'Brew/content/detail/beer/BeerDetailPane', [
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'dojo/dom-style',
-  'dojo/query',
   'dojo/_base/window',
   'dojo/NodeList-traverse'
 
-], (declare, _WidgetBase, _TemplatedMixin, domStyle, query, win) ->
+], (declare, _WidgetBase, _TemplatedMixin, domStyle, win) ->
 
   declare 'Brew.content.beer.BeerDetailPane', [_WidgetBase, _TemplatedMixin],
     baseClass: 'beer_detail_pane'

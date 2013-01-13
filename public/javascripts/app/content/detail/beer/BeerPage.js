@@ -1,6 +1,6 @@
 (function() {
 
-  define("Brew/content/detail/beer/BeerPage", ["dojo/_base/declare", "Brew/content/_Page", "dojo/request/xhr", "Brew/content/detail/beer/BeerDetailPane"], function(declare, _Page, xhr, BeerDetailPane) {
+  define("Brew/content/detail/beer/BeerPage", ["dojo/_base/declare", "Brew/content/_Page", "dojo/request/xhr", "Brew/content/detail/beer/BeerDetailPane", "Brew/content/recipe/RecipeBuilder"], function(declare, _Page, xhr, BeerDetailPane, RecipeBuilder) {
     return declare("Brew.content.detail.beer.BeerPage", _Page, {
       beerId: null,
       constructor: function(config) {
@@ -17,7 +17,10 @@
             withBreweries: 'Y'
           }
         }).then(function(beer) {
-          return me.addChild(new BeerDetailPane({
+          me.addChild(new BeerDetailPane({
+            beer: beer
+          }));
+          return me.addChild(new RecipeBuilder({
             beer: beer
           }));
         });
