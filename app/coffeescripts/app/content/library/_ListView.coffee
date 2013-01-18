@@ -10,6 +10,7 @@ define 'Brew/content/library/_ListView', [
 
 ], (declare, lang, _WidgetBase, _TemplatedMixin, Grid, ListViewSearch, Standby, win) ->
   GRID_CT_CLASS = "grid-ct"
+  GRID_DIV_CLASS = "grid-div"
   FILTER_CT_CLASS = "filter-ct"
   SEARCH_CT_CLASS = "search-ct"
 
@@ -18,12 +19,14 @@ define 'Brew/content/library/_ListView', [
     gridClass: 'sage'
 
     templateString: "
-      <div class=\"${baseClass} ${gridClass}\">
+      <div class=\"${gridClass}\">
         <div class=\"left-column\">
           <div class=\"#{SEARCH_CT_CLASS}\"></div>
           <div class=\"#{FILTER_CT_CLASS}\"></div>
         </div>
-        <div class=\"#{GRID_CT_CLASS}\"></div>
+        <div class=\"#{GRID_CT_CLASS}\">
+          <div class=\"#{GRID_DIV_CLASS}\"></div>
+        </div>
       </div>
     "
 
@@ -49,7 +52,7 @@ define 'Brew/content/library/_ListView', [
       new ListViewSearch(lang.mixin({grid: grid}, @getSearchBarConfig()), srcNodeRef)
 
     _attachGrid: () ->
-      srcNodeRef = dojo.query(".#{GRID_CT_CLASS}", this.domNode)[0]
+      srcNodeRef = dojo.query(".#{GRID_DIV_CLASS}", this.domNode)[0]
       grid = new Grid(@getGridConfig(), srcNodeRef)
 
       grid.store?.on "beforequery", () =>

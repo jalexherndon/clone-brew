@@ -1,10 +1,11 @@
-.dgrid-grid {
+.dgrid {
     @include rounded-corners();
     border-color: $black !important;
-    height: auto;
+    height: auto !important;
 
     .dgrid-header {
         @include rounded-corners-detail(5px, 5px, 0, 0);
+        height: 29px;
         right: 0;
     }
 
@@ -13,13 +14,16 @@
     }
 
     .dgrid-scroller {
-        margin-top: 33px;
-        margin-bottom: 24px;
+        margin-top: 29px;
+        position:relative;
     }
 
     .dgrid-content {
+        height: 100%;
+
         .dgrid-cell {
             vertical-align: middle;
+            padding: 6px 4px;
 
             &.clickable {
                 cursor: pointer;

@@ -1,3 +1,4 @@
 .dijitTabPaneWrapper {
-    @include rounded-corners-detail(0, 0, 5px, 5px)
+    @include rounded-corners-detail(0, 0, 5px, 5px);
+    min-height: 400px;
 }

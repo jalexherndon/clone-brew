@@ -1,14 +1,15 @@
 (function() {
 
   define('Brew/content/library/_ListView', ['dojo/_base/declare', 'dojo/_base/lang', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'Brew/ui/grid/Grid', 'Brew/content/library/ListViewSearch', 'dojox/widget/Standby', 'dojo/_base/window'], function(declare, lang, _WidgetBase, _TemplatedMixin, Grid, ListViewSearch, Standby, win) {
-    var FILTER_CT_CLASS, GRID_CT_CLASS, SEARCH_CT_CLASS;
+    var FILTER_CT_CLASS, GRID_CT_CLASS, GRID_DIV_CLASS, SEARCH_CT_CLASS;
     GRID_CT_CLASS = "grid-ct";
+    GRID_DIV_CLASS = "grid-div";
     FILTER_CT_CLASS = "filter-ct";
     SEARCH_CT_CLASS = "search-ct";
     return declare('Brew.content.library._ListView', [_WidgetBase, _TemplatedMixin], {
       baseClass: 'brew-list-view',
       gridClass: 'sage',
-      templateString: "      <div class=\"${baseClass} ${gridClass}\">        <div class=\"left-column\">          <div class=\"" + SEARCH_CT_CLASS + "\"></div>          <div class=\"" + FILTER_CT_CLASS + "\"></div>        </div>        <div class=\"" + GRID_CT_CLASS + "\"></div>      </div>    ",
+      templateString: "      <div class=\"${gridClass}\">        <div class=\"left-column\">          <div class=\"" + SEARCH_CT_CLASS + "\"></div>          <div class=\"" + FILTER_CT_CLASS + "\"></div>        </div>        <div class=\"" + GRID_CT_CLASS + "\">          <div class=\"" + GRID_DIV_CLASS + "\"></div>        </div>      </div>    ",
       postCreate: function() {
         var grid;
         this.inherited(arguments);
@@ -34,7 +35,7 @@
       _attachGrid: function() {
         var grid, srcNodeRef, _ref, _ref1,
           _this = this;
-        srcNodeRef = dojo.query("." + GRID_CT_CLASS, this.domNode)[0];
+        srcNodeRef = dojo.query("." + GRID_DIV_CLASS, this.domNode)[0];
         grid = new Grid(this.getGridConfig(), srcNodeRef);
         if ((_ref = grid.store) != null) {
           _ref.on("beforequery", function() {
