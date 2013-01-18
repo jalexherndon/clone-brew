@@ -21,6 +21,7 @@
         border: 1px inset $lighter-grey !important;
         padding: 2px 4px;
         margin-bottom: 6px;
+        width: 240px;
 
         &.brew-register-name {
             width: 112px;
@@ -32,6 +33,7 @@
 
     .dijitButton > span {
         @include rounded-corners(4px);
+        font-size: 13px;
         color: $white;
         border: 1px solid #79b200;
 

@@ -16,8 +16,13 @@
         margin-bottom: 10px;
     }
 
+    .dijitTextBox {
+        width: 240px;
+    }
+
     .dijitButton > span {
         color: $white;
+        font-size: 13px;
         @include light-blue-gradient();
 
         &:hover {
