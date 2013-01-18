@@ -11,7 +11,7 @@ define "Brew/util/navigation/HashManager", [
     loginHash: "/login"
 
     startup: ->
-      currentHash = @getHash
+      currentHash = @getHash()
       @_returnHash = currentHash if currentHash.length and currentHash isnt @loginHash
       @_isFirstPageLoad = true
       topic.subscribe "/dojo/hashchange", lang.hitch(this, @_onHashChange)
