@@ -4,12 +4,16 @@ class IngredientsController < ApplicationController
   # GET /ingredients
   # GET /ingredients.json
   def index
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @ingredients }
+    if params.has_key? :name
+      @ingredients = @ingredients.where("upper(name) LIKE upper(?)", "%#{params[:name]}%")
     end
+    if params.has_key? :order
+      @ingredients = @ingredients.order(params[:order])
+    end
+
+    render :json => @ingredients.all
   end
 
   # GET /ingredients/1
@@ -17,10 +21,7 @@ class IngredientsController < ApplicationController
   def show
     @ingredient = Ingredient.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @ingredient }
-    end
+    render :json => @ingredient
   end
 
   # GET /ingredients/new
@@ -28,10 +29,7 @@ class IngredientsController < ApplicationController
   def new
     @ingredient = Ingredient.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @ingredient }
-    end
+    render :json => @ingredient
   end
 
   # GET /ingredients/1/edit

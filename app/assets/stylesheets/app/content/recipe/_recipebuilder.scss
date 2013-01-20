@@ -3,11 +3,13 @@
  
     width: 100%;
     margin-top: 8px;
+    padding-bottom: 4px;
 
     background-color: $pistachio-brown;
 
     .brew-recipe-builder-title {
         @include rounded-corners-detail(5px, 5px, 0px, 0px);
+        margin: 0;
         padding: 4px;
         margin-bottom: 4px;
         line-height: 30px;
@@ -18,5 +20,21 @@
         font-weight: bold;
         font-family: 'LobsterTwoRegular';
         color: $pistachio-brown;
+    }
+
+    >div {
+        margin: 6px 6px 8px;
+        .header {
+            @include rounded-corners();
+            padding: 4px;
+            margin-bottom: 4px;
+            background-color: $pistachio-off-white;
+            overflow: auto;
+
+            font-size: 14px;
+            font-weight: bold;
+            font-family: 'LobsterTwoRegular';
+            color: $pistachio-brown;
+        }
     }
 }

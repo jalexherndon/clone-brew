@@ -1,9 +1,8 @@
-define [
-  'dojo/_base/declare'
+# define [
+#   'dojo/_base/declare'
 
-], (declare) ->
+# ], (declare) ->
 
-  declare [],
+#   declare [],
 
-    constructor: (config) ->
-      debugger
+#     constructor: (config) ->

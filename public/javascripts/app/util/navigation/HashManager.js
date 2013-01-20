@@ -7,7 +7,7 @@
       loginHash: "/login",
       startup: function() {
         var currentHash;
-        currentHash = this.getHash;
+        currentHash = this.getHash();
         if (currentHash.length && currentHash !== this.loginHash) {
           this._returnHash = currentHash;
         }
