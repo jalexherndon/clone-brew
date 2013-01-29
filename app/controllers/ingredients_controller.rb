@@ -12,6 +12,12 @@ class IngredientsController < ApplicationController
     if params.has_key? :order
       @ingredients = @ingredients.order(params[:order])
     end
+    if params.has_key? :category
+      category = IngredientCategory.where("upper(name) = upper(?)", params[:category])
+      child_categories = IngredientCategory.where(:parent_ingredient_category_id => category)
+
+      @ingredients = @ingredients.where(:ingredient_category_id => child_categories.concat(category))
+    end
 
     render :json => @ingredients.all
   end
