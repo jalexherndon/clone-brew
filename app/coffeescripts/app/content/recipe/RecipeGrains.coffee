@@ -11,15 +11,14 @@ define [
   'dijit/form/NumberSpinner',
   'dijit/form/ValidationTextBox',
   'dijit/form/FilteringSelect',
-  'dijit/form/Button'
+  'dijit/form/Button',
+  'dojo/_base/lang'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) ->
 
   defaultNew = () ->
     {
-      ingredient:
-        id: ""
-        name: ""
+      ingredient: null
       amount: 0
       notes: ""
     }
@@ -43,8 +42,9 @@ define [
       
       @grid = new grid({
         store: new Memory()
+        defaultFocusColumn: "ingredient"
         columns:
-          name: editor({
+          ingredient: editor({
             label: "Ingredient"
             get: (object) ->
               if object.ingredient?
@@ -56,9 +56,11 @@ define [
               store: new JsonRest(target: '/ingredients/')
               style: "width: 180px"
               queryExpr: "${0}"
-              autoComplete: false
-              ignoreCase: true
+              scrollOnFocus: true
+              highlightMatch: "first"
               trim: true
+              _getValueAttr: () ->
+                return @item
 
           }, FilteringSelect, 'click')
 
@@ -87,14 +89,13 @@ define [
         onClick: (a,b,c) =>
           rowId = @grid.store.add(defaultNew())
           @grid.refresh()
-
           @grid.editRow(rowId)
       }, query(".#{@baseClass}-add-button", @domNode)[0])
 
       @grid.refresh()
 
-      @grid.on('dgrid-datachange', (event) =>
-        if event.cell.column.editorInstance?.item?
-          event.cell.row.data.ingredient = event.cell.column.editorInstance.item
-          @grid.refresh()
+      @grid.on('dgrid-datachange', (evt) =>
+        column = @grid.column(evt)
+        if column.editorInstance?.item?
+          @grid.row(evt).data?.ingredient = column.editorInstance.item
       )

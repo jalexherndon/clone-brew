@@ -1,13 +1,10 @@
 (function() {
 
-  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'dojo/store/Memory', 'dojo/store/JsonRest', 'dgrid/OnDemandGrid', 'Brew/ui/grid/RowEditingMixin', 'dgrid/editor', 'dijit/form/NumberSpinner', 'dijit/form/ValidationTextBox', 'dijit/form/FilteringSelect', 'dijit/form/Button'], function(declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button) {
+  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'dojo/store/Memory', 'dojo/store/JsonRest', 'dgrid/OnDemandGrid', 'Brew/ui/grid/RowEditingMixin', 'dgrid/editor', 'dijit/form/NumberSpinner', 'dijit/form/ValidationTextBox', 'dijit/form/FilteringSelect', 'dijit/form/Button', 'dojo/_base/lang'], function(declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) {
     var defaultNew;
     defaultNew = function() {
       return {
-        ingredient: {
-          id: "",
-          name: ""
-        },
+        ingredient: null,
         amount: 0,
         notes: ""
       };
@@ -22,8 +19,9 @@
         grid = declare([OnDemandGrid, RowEditingMixin], {});
         this.grid = new grid({
           store: new Memory(),
+          defaultFocusColumn: "ingredient",
           columns: {
-            name: editor({
+            ingredient: editor({
               label: "Ingredient",
               get: function(object) {
                 var _ref;
@@ -39,9 +37,12 @@
                 }),
                 style: "width: 180px",
                 queryExpr: "${0}",
-                autoComplete: false,
-                ignoreCase: true,
-                trim: true
+                scrollOnFocus: true,
+                highlightMatch: "first",
+                trim: true,
+                _getValueAttr: function() {
+                  return this.item;
+                }
               }
             }, FilteringSelect, 'click'),
             amount: editor({
@@ -73,11 +74,11 @@
           }
         }, query("." + this.baseClass + "-add-button", this.domNode)[0]);
         this.grid.refresh();
-        return this.grid.on('dgrid-datachange', function(event) {
-          var _ref;
-          if (((_ref = event.cell.column.editorInstance) != null ? _ref.item : void 0) != null) {
-            event.cell.row.data.ingredient = event.cell.column.editorInstance.item;
-            return _this.grid.refresh();
+        return this.grid.on('dgrid-datachange', function(evt) {
+          var column, _ref, _ref1;
+          column = _this.grid.column(evt);
+          if (((_ref = column.editorInstance) != null ? _ref.item : void 0) != null) {
+            return (_ref1 = _this.grid.row(evt).data) != null ? _ref1.ingredient = column.editorInstance.item : void 0;
           }
         });
       }

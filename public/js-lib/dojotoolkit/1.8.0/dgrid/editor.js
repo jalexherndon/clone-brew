@@ -363,12 +363,14 @@ return function(column, editor, editOn){
 	aspect.after(column, "init", editOn ? function(){
 		var grid = column.grid;
 		if(!grid.edit){ grid.edit = edit; }
+        if(!grid.showEditor){ grid.showEditor = showEditor; }
 		
 		// Create one shared widget/input to be swapped into the active cell.
 		column.editorInstance = createSharedEditor(column, originalRenderCell);
 	} : function(){
 		var grid = column.grid;
 		if(!grid.edit){ grid.edit = edit; }
+        if(!grid.showEditor){ grid.showEditor = showEditor; }
 		
 		if(isWidget){
 			// add advice for cleaning up widgets in this column

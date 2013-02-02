@@ -22,38 +22,52 @@ define [
 
     renderHeader: () ->
       @inherited(arguments)
-
       domClass.remove(subRow[0].headerNode, 'dijitIconDelete') for subRow in @subRows
 
     postCreate: () ->
       @on(".dgrid-cell.dgrid-column-deleterow:click", (evt) =>
         row = @row(evt)
         @store.remove(row.id)
+        delete @dirty[row.id]
         @refresh()
       )
 
       @inherited(arguments)
 
-    editRow: (rowId) ->
-      _focusFns = []
-      for field, column of @columns
-        column._editorBlurHandle.pause()
-        _focusFns.push(column.editorInstance.focus)
-        column.editorInstance.focus = false
+    edit: (cell) ->
+      @editRow(cell)
 
-      cells = @row(rowId).element.children[0].children
-      editors = []
-      for cell, i in cells
-        do (cell, i) =>
-          unless i is 0
-            editors.push(@edit(cell))
-      
-      _focusFns.reverse()
-      for editor, i in editors
-        do (editor, i) ->
-          editor.then((cmp) ->
-            cmp.focus = _focusFns.pop()
-            cmp.focus() if i is 0
-          )
+    editRow: (rowHandle) ->
+      row = @row(rowHandle)
+      rowId = row.id
+      return if @_activeRow?.toString() is rowId.toString()
+      @_activeRow = rowId
 
-      column._editorBlurHandle?.resume() for name, column of @columns
+      if @_isDirty()
+        @save().then () =>
+          @refresh()
+          @_beginEditRow(rowId)
+      else
+        @_beginEditRow(rowId)
+
+    _isDirty: () ->
+      dirtyCount = 0
+      for key, value of @dirty
+        dirtyCount++
+
+      dirtyCount > 0
+
+    _beginEditRow: (rowId) ->
+      row = @row(rowId)
+
+      cells = row.element.children[0].children
+      for cellEl, i in cells
+        do (cellEl) =>
+          column = @column(cellEl)
+          if column?.editorInstance
+            value = @store.get(rowId)[column.field]
+            @showEditor(column.editorInstance, column, cellEl, if value? and value.id? then value.id else value)
+            column._editorBlurHandle.remove()
+
+            if @defaultFocusColumn is column.field
+              column.editorInstance.focus()
