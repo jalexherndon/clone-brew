@@ -37,4 +37,22 @@
             color: $pistachio-brown;
         }
     }
+
+    .dgrid {
+        .dgrid-column-ingredient {
+            width: 200px;
+        }
+
+        .dgrid-column-amount {
+            width: 120px;
+        }
+        
+        .dgrid-column-time {
+            width: 120px;
+        }
+
+        .dgrid-column-notes {
+            width: auto;
+        }
+    }
 }

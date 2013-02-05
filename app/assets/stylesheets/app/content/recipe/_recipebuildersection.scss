@@ -1,11 +1,15 @@
-.brew-recipe-builder .brew-recipe-builder-grains {
+.brew-recipe-builder .brew-recipe-builder-section {
     .dgrid {
         .dgrid-column-ingredient {
             width: 200px;
         }
 
         .dgrid-column-amount {
-            width: 200px;
+            width: 120px;
+        }
+        
+        .dgrid-column-time {
+            width: 120px;
         }
 
         .dgrid-column-notes {
