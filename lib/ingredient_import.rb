@@ -18,7 +18,7 @@ module IngredientImport
       Ingredient.create(
         :name => node.xpath("./NAME").inner_text,
         :description => node.xpath("./NOTES").inner_text,
-        :ingredient_category_id => category
+        :ingredient_category_id => category.id
       )
 
     end
