@@ -1,9 +1,10 @@
 define [
   'dojo/_base/declare',
   'dojo/_base/lang',
-  'dojo/dom-class'
+  'dojo/dom-class',
+  'dojo/keys'
 
-], (declare, lang, domClass) ->
+], (declare, lang, domClass, keys) ->
 
   declare [],
 
@@ -31,6 +32,16 @@ define [
         delete @dirty[row.id]
         @refresh()
       )
+
+      for field, column of @columns
+        column.editorInstance.on('keydown', (evt) =>
+          return unless evt.keyCode is keys.ENTER
+          col = @column(evt)
+          @updateDirty(@row(evt).id, col.field, col.editorInstance.get("value"));
+
+          @save().then () =>
+            @refresh()
+        )
 
       @inherited(arguments)
 
@@ -67,7 +78,7 @@ define [
           if column?.editorInstance
             value = @store.get(rowId)[column.field]
             @showEditor(column.editorInstance, column, cellEl, if value? and value.id? then value.id else value)
-            column._editorBlurHandle.remove()
+            column._editorBlurHandle.pause()
 
             if @defaultFocusColumn is column.field
               column.editorInstance.focus()

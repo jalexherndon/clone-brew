@@ -2,6 +2,10 @@
     .dgrid {
         .dgrid-column-ingredient {
             width: 200px;
+
+            &.dgrid-cell-padding {
+                padding-left: 8px;
+            }
         }
 
         .dgrid-column-amount {

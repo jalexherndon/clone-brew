@@ -1,6 +1,6 @@
 (function() {
 
-  define(['dojo/_base/declare', 'dojo/_base/lang', 'dojo/dom-class'], function(declare, lang, domClass) {
+  define(['dojo/_base/declare', 'dojo/_base/lang', 'dojo/dom-class', 'dojo/keys'], function(declare, lang, domClass, keys) {
     return declare([], {
       _configColumns: function(prefix, rowColumns) {
         var deleteRowColumn;
@@ -29,7 +29,8 @@
         return _results;
       },
       postCreate: function() {
-        var _this = this;
+        var column, field, _ref,
+          _this = this;
         this.on(".dgrid-cell.dgrid-column-deleterow:click", function(evt) {
           var row;
           row = _this.row(evt);
@@ -37,6 +38,21 @@
           delete _this.dirty[row.id];
           return _this.refresh();
         });
+        _ref = this.columns;
+        for (field in _ref) {
+          column = _ref[field];
+          column.editorInstance.on('keydown', function(evt) {
+            var col;
+            if (evt.keyCode !== keys.ENTER) {
+              return;
+            }
+            col = _this.column(evt);
+            _this.updateDirty(_this.row(evt).id, col.field, col.editorInstance.get("value"));
+            return _this.save().then(function() {
+              return _this.refresh();
+            });
+          });
+        }
         return this.inherited(arguments);
       },
       edit: function(cell) {
@@ -84,7 +100,7 @@
             if (column != null ? column.editorInstance : void 0) {
               value = _this.store.get(rowId)[column.field];
               _this.showEditor(column.editorInstance, column, cellEl, (value != null) && (value.id != null) ? value.id : value);
-              column._editorBlurHandle.remove();
+              column._editorBlurHandle.pause();
               if (_this.defaultFocusColumn === column.field) {
                 return column.editorInstance.focus();
               }

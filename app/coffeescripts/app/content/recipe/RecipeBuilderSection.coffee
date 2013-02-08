@@ -80,7 +80,7 @@ define [
 
           editorArgs:
             store: new JsonRest(target: '/ingredients/')
-            style: "width: 180px"
+            style: "width: 174px"
             queryExpr: "${0}"
             query:
               category: @ingredient_category

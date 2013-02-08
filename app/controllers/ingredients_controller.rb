@@ -7,7 +7,7 @@ class IngredientsController < ApplicationController
     @ingredients = Ingredient
 
     if params.has_key? :name
-      @ingredients = @ingredients.where("upper(name) LIKE upper(?)", "%#{params[:name]}%")
+      @ingredients = @ingredients.where("upper(name) LIKE upper(?)", "#{params[:name]}%")
     end
     if params.has_key? :order
       @ingredients = @ingredients.order(params[:order])
