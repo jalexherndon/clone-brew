@@ -4,7 +4,7 @@
     return declare("Brew.content.login.RegisterForm", [Form, _Container], {
       "class": "brew-register-form",
       postCreate: function() {
-        var betaKey, email, firstName, lastName, message, password, passwordConf, submitButton;
+        var betaKey, email, firstName, lastName, message, password, submitButton;
         message = DomConstruct.create("div", {
           "class": "brew-register-message",
           innerHTML: "New? Join for free."
@@ -38,16 +38,6 @@
             min: 8
           }
         });
-        passwordConf = new ValidationTextBox({
-          "class": "brew-password",
-          name: "user[password_confirmation]",
-          type: "password",
-          placeHolder: "confirm password",
-          validator: this._passwordConfValidator,
-          constraints: {
-            match: password
-          }
-        });
         betaKey = new ValidationTextBox({
           "class": "brew-password",
           name: "brew_beta_key",
@@ -64,7 +54,6 @@
         this.addChild(lastName);
         this.addChild(email);
         this.addChild(password);
-        this.addChild(passwordConf);
         this.addChild(betaKey);
         this.addChild(submitButton);
         return DomConstruct.place(message, this.domNode, "first");
@@ -90,13 +79,6 @@
       _passwordValidator: function(value, constraints) {
         if (value.length < constraints.min) {
           this.invalidMessage = "Must be at least 8 characters.";
-          return false;
-        }
-        return true;
-      },
-      _passwordConfValidator: function(value, constraints) {
-        if (value !== constraints.match.get("value")) {
-          this.invalidMessage = "Must match your password.";
           return false;
         }
         return true;

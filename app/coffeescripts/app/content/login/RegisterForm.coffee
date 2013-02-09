@@ -45,15 +45,6 @@ define "Brew/content/login/RegisterForm", [
                 constraints:
                     min: 8
             }
-            passwordConf = new ValidationTextBox {
-                class: "brew-password"
-                name: "user[password_confirmation]"
-                type: "password"
-                placeHolder: "confirm password"
-                validator: @_passwordConfValidator
-                constraints:
-                    match: password
-            }
             betaKey = new ValidationTextBox {
                 class: "brew-password"
                 name: "brew_beta_key"
@@ -71,7 +62,6 @@ define "Brew/content/login/RegisterForm", [
             @addChild lastName
             @addChild email
             @addChild password
-            @addChild passwordConf
             @addChild betaKey
             @addChild submitButton
             DomConstruct.place message, @domNode, "first"
@@ -92,11 +82,5 @@ define "Brew/content/login/RegisterForm", [
         _passwordValidator: (value, constraints) ->
             if value.length < constraints.min
                 @invalidMessage = "Must be at least 8 characters."
-                return false
-            true
-
-        _passwordConfValidator: (value, constraints) ->
-            if value isnt constraints.match.get("value")
-                @invalidMessage = "Must match your password."
                 return false
             true
