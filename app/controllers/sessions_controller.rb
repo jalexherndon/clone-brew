@@ -7,15 +7,15 @@ class SessionsController < Devise::SessionsController
   def create
     build_resource
     user = User.find_for_database_authentication(:email=>params[:user][:email])
-    return invalid_login_attempt unless user
+    return invalid_login_attempt if user.nil?
  
     if user.valid_password?(params[:user][:password])
       sign_in("user", user)
       render :json =>  user.as_json(
-        :success => true,
-        :email => user.email,
-        :first_name => user.first_name,
-        :last_name => user.last_name
+        :successfull  => true,
+        :email        => user.email,
+        :first_name   => user.first_name,
+        :last_name    => user.last_name
       )
       return
     end
