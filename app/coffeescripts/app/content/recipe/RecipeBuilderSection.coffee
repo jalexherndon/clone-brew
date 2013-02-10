@@ -7,6 +7,7 @@ define [
   'dojo/store/JsonRest',
   'dgrid/OnDemandGrid',
   'Brew/ui/grid/RowEditingMixin',
+  'dgrid/Keyboard',
   'dgrid/editor',
   'dijit/form/NumberSpinner',
   'dijit/form/ValidationTextBox',
@@ -14,7 +15,7 @@ define [
   'dijit/form/Button',
   'dojo/_base/lang'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, Keyboard, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) ->
 
   defaultNew = () ->
     {
@@ -42,20 +43,26 @@ define [
       new Button({
         label: "+ Add " + @ingredient_category
         onClick: (a,b,c) =>
-          grid = @_getGrid()
+          grid = @_getGrid(true)
           rowId = grid.store.add(defaultNew())
           grid.refresh()
           grid.editRow(rowId)
       }, query(".#{@baseClass}-add-button", @domNode)[0])
 
-    _getGrid: () ->
+    getData: () ->
+      return @_getGrid()?.store.data
+
+    _getGrid: (create) ->
       return @grid if @grid?
 
-      grid = declare [OnDemandGrid, RowEditingMixin]
+      return null unless create
+
+      grid = declare [OnDemandGrid, Keyboard, RowEditingMixin]
       @grid = new grid({
         store: new Memory()
         defaultFocusColumn: "ingredient"
         columns: @_getColumnConfig()
+        selectionMode: "single"
       }, query(".#{@baseClass}-grid", @domNode)[0])
 
       @grid.refresh()

@@ -17,7 +17,15 @@
 }
 
 @mixin light-green-gradient() {
+    border: 1px solid #79b200;
+    background-color: #b2ff23; // Old browsers
+    @include filter-gradient(#b2ff23, #79b200, vertical); // IE6-9
+    @include background-image(linear-gradient(top,  #b2ff23 0%,#94de00 27%,#7fc900 56%,#79b200 85%));
 }
 
 @mixin dark-green-gradient() {
+    border: 1px solid #4d7000;
+    background-color: #9ff400; // Old browsers
+    @include filter-gradient(#9ff400, #669600, vertical); // IE6-9
+    @include background-image(linear-gradient(top,  #9ff400 0%,#7cba00 27%,#6caa00 56%,#669600 85%));
 }

@@ -1,6 +1,6 @@
 .brew-recipe-builder {
     @include rounded-corners();
- 
+
     width: 100%;
     margin-top: 8px;
     padding-bottom: 4px;
@@ -20,6 +20,26 @@
         font-weight: bold;
         font-family: 'LobsterTwoRegular';
         color: $pistachio-brown;
+    }
+
+    .brew-recipe-builder-create-recipe.dijitButton {
+        width: 200px;
+        height: 25px;
+        text-align: center;
+        margin: 12px 6px 10px;
+
+        > span {
+            width: 100%;
+            height: 100%;
+            color: $white;
+            font-size: 18px;
+            @include light-green-gradient();
+
+            &:hover {
+                color: $white;
+                @include dark-green-gradient();
+            }
+        }
     }
 
     >div {
@@ -46,7 +66,7 @@
         .dgrid-column-amount {
             width: 120px;
         }
-        
+
         .dgrid-column-time {
             width: 120px;
         }

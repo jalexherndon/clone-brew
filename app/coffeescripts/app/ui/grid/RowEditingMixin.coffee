@@ -2,9 +2,12 @@ define [
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/dom-class',
-  'dojo/keys'
+  'dojo/keys',
+  'dojo/topic',
+  'dijit/focus',
+  'dojo/on'
 
-], (declare, lang, domClass, keys) ->
+], (declare, lang, domClass, keys, topic, focusUtil, On) ->
 
   declare [],
 
@@ -33,33 +36,54 @@ define [
         @refresh()
       )
 
+      topic.subscribe('dgrid-rowedit-start', (evt) =>
+        unless evt.gridId is @get('id')
+          @finishRowEdit()
+      )
+
       for field, column of @columns
         column.editorInstance.on('keydown', (evt) =>
           return unless evt.keyCode is keys.ENTER
-          col = @column(evt)
-          @updateDirty(@row(evt).id, col.field, col.editorInstance.get("value"));
 
-          @save().then () =>
-            @refresh()
+          currentRow = @row(evt)
+          nextRow = @[if evt.shiftKey then 'up' else 'down'](currentRow)
+
+          @finishRowEdit().then( () =>
+            if nextRow.id isnt currentRow.id
+              @editRow(nextRow, @column(evt).field)
+          )
         )
 
       @inherited(arguments)
 
+    finishRowEdit: () ->
+      if (cell = @cell(focusUtil.curNode))? and (col = @column(cell))? and col.editorInstance?
+        @updateDirty(@_activeRowId, col.field, col.editorInstance.get("value"))
+
+      @_activeRowId = null
+      @save().then () =>
+        @refresh()
+
     edit: (cell) ->
       @editRow(cell)
 
-    editRow: (rowHandle) ->
+    editRow: (rowHandle, focusColumn) ->
       row = @row(rowHandle)
       rowId = row.id
-      return if @_activeRow?.toString() is rowId.toString()
-      @_activeRow = rowId
+      return if @_activeRowId?.toString() is rowId.toString()
+      @_activeRowId = rowId
+
+      topic.publish('dgrid-rowedit-start', {
+        gridId: @get('id')
+        rowId: @_activeRowId
+      })
 
       if @_isDirty()
         @save().then () =>
           @refresh()
-          @_beginEditRow(rowId)
+          @_beginEditRow(rowId, focusColumn)
       else
-        @_beginEditRow(rowId)
+        @_beginEditRow(rowId, focusColumn)
 
     _isDirty: () ->
       dirtyCount = 0
@@ -68,8 +92,9 @@ define [
 
       dirtyCount > 0
 
-    _beginEditRow: (rowId) ->
+    _beginEditRow: (rowId, focusColumn) ->
       row = @row(rowId)
+      focusColumn ?= @defaultFocusColumn
 
       cells = row.element.children[0].children
       for cellEl, i in cells
@@ -80,5 +105,5 @@ define [
             @showEditor(column.editorInstance, column, cellEl, if value? and value.id? then value.id else value)
             column._editorBlurHandle.pause()
 
-            if @defaultFocusColumn is column.field
+            if focusColumn is column.field
               column.editorInstance.focus()

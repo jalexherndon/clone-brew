@@ -1,6 +1,6 @@
 (function() {
 
-  define(['dojo/_base/declare', 'dojo/_base/lang', 'dojo/dom-class', 'dojo/keys'], function(declare, lang, domClass, keys) {
+  define(['dojo/_base/declare', 'dojo/_base/lang', 'dojo/dom-class', 'dojo/keys', 'dojo/topic', 'dijit/focus', 'dojo/on'], function(declare, lang, domClass, keys, topic, focusUtil, On) {
     return declare([], {
       _configColumns: function(prefix, rowColumns) {
         var deleteRowColumn;
@@ -38,42 +38,64 @@
           delete _this.dirty[row.id];
           return _this.refresh();
         });
+        topic.subscribe('dgrid-rowedit-start', function(evt) {
+          if (evt.gridId !== _this.get('id')) {
+            return _this.finishRowEdit();
+          }
+        });
         _ref = this.columns;
         for (field in _ref) {
           column = _ref[field];
           column.editorInstance.on('keydown', function(evt) {
-            var col;
+            var currentRow, nextRow;
             if (evt.keyCode !== keys.ENTER) {
               return;
             }
-            col = _this.column(evt);
-            _this.updateDirty(_this.row(evt).id, col.field, col.editorInstance.get("value"));
-            return _this.save().then(function() {
-              return _this.refresh();
+            currentRow = _this.row(evt);
+            nextRow = _this[evt.shiftKey ? 'up' : 'down'](currentRow);
+            return _this.finishRowEdit().then(function() {
+              if (nextRow.id !== currentRow.id) {
+                return _this.editRow(nextRow, _this.column(evt).field);
+              }
             });
           });
         }
         return this.inherited(arguments);
       },
+      finishRowEdit: function() {
+        var cell, col,
+          _this = this;
+        if (((cell = this.cell(focusUtil.curNode)) != null) && ((col = this.column(cell)) != null) && (col.editorInstance != null)) {
+          this.updateDirty(this._activeRowId, col.field, col.editorInstance.get("value"));
+        }
+        this._activeRowId = null;
+        return this.save().then(function() {
+          return _this.refresh();
+        });
+      },
       edit: function(cell) {
         return this.editRow(cell);
       },
-      editRow: function(rowHandle) {
+      editRow: function(rowHandle, focusColumn) {
         var row, rowId, _ref,
           _this = this;
         row = this.row(rowHandle);
         rowId = row.id;
-        if (((_ref = this._activeRow) != null ? _ref.toString() : void 0) === rowId.toString()) {
+        if (((_ref = this._activeRowId) != null ? _ref.toString() : void 0) === rowId.toString()) {
           return;
         }
-        this._activeRow = rowId;
+        this._activeRowId = rowId;
+        topic.publish('dgrid-rowedit-start', {
+          gridId: this.get('id'),
+          rowId: this._activeRowId
+        });
         if (this._isDirty()) {
           return this.save().then(function() {
             _this.refresh();
-            return _this._beginEditRow(rowId);
+            return _this._beginEditRow(rowId, focusColumn);
           });
         } else {
-          return this._beginEditRow(rowId);
+          return this._beginEditRow(rowId, focusColumn);
         }
       },
       _isDirty: function() {
@@ -86,10 +108,13 @@
         }
         return dirtyCount > 0;
       },
-      _beginEditRow: function(rowId) {
+      _beginEditRow: function(rowId, focusColumn) {
         var cellEl, cells, i, row, _i, _len, _results,
           _this = this;
         row = this.row(rowId);
+        if (focusColumn == null) {
+          focusColumn = this.defaultFocusColumn;
+        }
         cells = row.element.children[0].children;
         _results = [];
         for (i = _i = 0, _len = cells.length; _i < _len; i = ++_i) {
@@ -101,7 +126,7 @@
               value = _this.store.get(rowId)[column.field];
               _this.showEditor(column.editorInstance, column, cellEl, (value != null) && (value.id != null) ? value.id : value);
               column._editorBlurHandle.pause();
-              if (_this.defaultFocusColumn === column.field) {
+              if (focusColumn === column.field) {
                 return column.editorInstance.focus();
               }
             }

@@ -1,6 +1,6 @@
 (function() {
 
-  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'dojo/store/Memory', 'dojo/store/JsonRest', 'dgrid/OnDemandGrid', 'Brew/ui/grid/RowEditingMixin', 'dgrid/editor', 'dijit/form/NumberSpinner', 'dijit/form/ValidationTextBox', 'dijit/form/FilteringSelect', 'dijit/form/Button', 'dojo/_base/lang'], function(declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) {
+  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'dojo/store/Memory', 'dojo/store/JsonRest', 'dgrid/OnDemandGrid', 'Brew/ui/grid/RowEditingMixin', 'dgrid/Keyboard', 'dgrid/editor', 'dijit/form/NumberSpinner', 'dijit/form/ValidationTextBox', 'dijit/form/FilteringSelect', 'dijit/form/Button', 'dojo/_base/lang'], function(declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, Keyboard, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) {
     var defaultNew;
     defaultNew = function() {
       return {
@@ -20,24 +20,32 @@
           label: "+ Add " + this.ingredient_category,
           onClick: function(a, b, c) {
             var grid, rowId;
-            grid = _this._getGrid();
+            grid = _this._getGrid(true);
             rowId = grid.store.add(defaultNew());
             grid.refresh();
             return grid.editRow(rowId);
           }
         }, query("." + this.baseClass + "-add-button", this.domNode)[0]);
       },
-      _getGrid: function() {
+      getData: function() {
+        var _ref;
+        return (_ref = this._getGrid()) != null ? _ref.store.data : void 0;
+      },
+      _getGrid: function(create) {
         var grid,
           _this = this;
         if (this.grid != null) {
           return this.grid;
         }
-        grid = declare([OnDemandGrid, RowEditingMixin]);
+        if (!create) {
+          return null;
+        }
+        grid = declare([OnDemandGrid, Keyboard, RowEditingMixin]);
         this.grid = new grid({
           store: new Memory(),
           defaultFocusColumn: "ingredient",
-          columns: this._getColumnConfig()
+          columns: this._getColumnConfig(),
+          selectionMode: "single"
         }, query("." + this.baseClass + "-grid", this.domNode)[0]);
         this.grid.refresh();
         this.grid.on('dgrid-datachange', function(evt) {
