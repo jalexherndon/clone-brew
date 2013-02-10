@@ -6,8 +6,10 @@ define [
   'Brew/content/recipe/RecipeInfo',
   'Brew/content/recipe/RecipeBuilderSection',
   'dijit/form/Button',
+  'dojo/request',
+  'dojo/json'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, Button) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, Button, request, json) ->
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-recipe-builder"
 
@@ -26,9 +28,9 @@ define [
     beer: null
 
     postCreate: () ->
-      new RecipeInfo({}, query("." + @baseClass + "-info", @domNode)[0])
+      @_info = new RecipeInfo({}, query("." + @baseClass + "-info", @domNode)[0])
 
-      @sections = [
+      @_sections = [
         new RecipeBuilderSection({
           title: 'Grains & Extracts'
           ingredient_category: 'Fermentable'
@@ -54,8 +56,26 @@ define [
       new Button({
         label: "Create Recipe"
         class: "#{@baseClass}-create-recipe"
-        onClick: (a,b,c) =>
-          for section in @sections
-            data =section.getData()
-            debugger
+        onClick: () =>
+          @_createRecipe()
       }, query(".#{@baseClass}-create-recipe", @domNode)[0])
+
+    _createRecipe: () ->
+      request.post('/recipes',
+        handleAs: 'json'
+        data: json.stringify({
+          recipe: @_gatherRecipeData()
+        })
+      ).then((resp)=>
+      )
+
+    _gatherRecipeData: () ->
+      recipe = @_info.get('value')
+      recipe.beer_id = @beer.id
+      recipe.ingredient_details = []
+
+      for section in @_sections
+        recipe.ingredient_details.push.apply(recipe.ingredient_details, section.get('value'))
+
+      recipe
+

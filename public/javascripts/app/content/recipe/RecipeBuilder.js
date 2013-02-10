@@ -1,14 +1,14 @@
 (function() {
 
-  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'Brew/content/recipe/RecipeInfo', 'Brew/content/recipe/RecipeBuilderSection', 'dijit/form/Button'], function(declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, Button) {
+  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'Brew/content/recipe/RecipeInfo', 'Brew/content/recipe/RecipeBuilderSection', 'dijit/form/Button', 'dojo/request', 'dojo/json'], function(declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, Button, request, json) {
     return declare([_WidgetBase, _TemplatedMixin], {
       baseClass: "brew-recipe-builder",
       templateString: "    <div>      <div class=\"${baseClass}-title\">New Recipe</div>      <div class=\"${baseClass}-info\"></div>      <div class=\"${baseClass}-grains\"></div>      <div class=\"${baseClass}-hops\"></div>      <div class=\"${baseClass}-yeasts\"></div>      <div class=\"${baseClass}-miscellaneous\"></div>      <div class=\"${baseClass}-create-recipe\"></div>    </div>    ",
       beer: null,
       postCreate: function() {
         var _this = this;
-        new RecipeInfo({}, query("." + this.baseClass + "-info", this.domNode)[0]);
-        this.sections = [
+        this._info = new RecipeInfo({}, query("." + this.baseClass + "-info", this.domNode)[0]);
+        this._sections = [
           new RecipeBuilderSection({
             title: 'Grains & Extracts',
             ingredient_category: 'Fermentable'
@@ -27,20 +27,31 @@
         return new Button({
           label: "Create Recipe",
           "class": "" + this.baseClass + "-create-recipe",
-          onClick: function(a, b, c) {
-            var data, section, _i, _len, _ref, _results;
-            _ref = _this.sections;
-            _results = [];
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              section = _ref[_i];
-              data = section.getData();
-              _results.push((function() {
-                debugger;
-              })());
-            }
-            return _results;
+          onClick: function() {
+            return _this._createRecipe();
           }
         }, query("." + this.baseClass + "-create-recipe", this.domNode)[0]);
+      },
+      _createRecipe: function() {
+        var _this = this;
+        return request.post('/recipes', {
+          handleAs: 'json',
+          data: json.stringify({
+            recipe: this._gatherRecipeData()
+          })
+        }).then(function(resp) {});
+      },
+      _gatherRecipeData: function() {
+        var recipe, section, _i, _len, _ref;
+        recipe = this._info.get('value');
+        recipe.beer_id = this.beer.id;
+        recipe.ingredient_details = [];
+        _ref = this._sections;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          section = _ref[_i];
+          recipe.ingredient_details.push.apply(recipe.ingredient_details, section.get('value'));
+        }
+        return recipe;
       }
     });
   });

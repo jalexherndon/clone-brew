@@ -32,12 +32,10 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(params[:recipe])
 
-    respond_to do |format|
-      if @recipe.save
-        render :json => @recipe, :status => :created
-      else
-        render :json => @recipe.errors, :status => :unprocessable_entity
-      end
+    if @recipe.save
+      render :json => @recipe, :status => :created
+    else
+      render :json => @recipe.errors, :status => :unprocessable_entity
     end
   end
 

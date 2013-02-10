@@ -49,7 +49,7 @@ define [
           grid.editRow(rowId)
       }, query(".#{@baseClass}-add-button", @domNode)[0])
 
-    getData: () ->
+    _getValueAttr: () ->
       return @_getGrid()?.store.data
 
     _getGrid: (create) ->

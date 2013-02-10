@@ -27,7 +27,7 @@
           }
         }, query("." + this.baseClass + "-add-button", this.domNode)[0]);
       },
-      getData: function() {
+      _getValueAttr: function() {
         var _ref;
         return (_ref = this._getGrid()) != null ? _ref.store.data : void 0;
       },
