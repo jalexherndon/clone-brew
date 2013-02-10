@@ -11,17 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129035654) do
-
-  create_table "beers", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "brewery_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "beers", ["brewery_id"], :name => "index_beers_on_brewery_id"
+ActiveRecord::Schema.define(:version => 20130210060915) do
 
   create_table "breweries", :force => true do |t|
     t.string   "name"
@@ -66,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20130129035654) do
   end
 
   create_table "recipes", :force => true do |t|
-    t.integer  "beer_id"
+    t.string   "beer_id"
     t.integer  "recipe_type_id"
     t.text     "directions"
     t.datetime "created_at",       :null => false
