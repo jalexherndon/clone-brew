@@ -15,16 +15,18 @@ class Recipe < ActiveRecord::Base
                   :recipe_type_id,
                   :ingredient_ids,
                   :ingredient_details,
-                  :user
+                  :user,
+                  :name
 
   accepts_nested_attributes_for :ingredient_details
 
+  validates_presence_of :name
   validates_presence_of :beer_id
   # validates :recipe_type_id, :presence => true
 
   def as_json(options={})
     super((options).merge({
-      :only => [:id, :boil_time, :pre_boil_volume, :post_boil_volume, :beer_id],
+      :only => [:id, :boil_time, :pre_boil_volume, :post_boil_volume, :beer_id, :name],
       :include => [{
         :ingredient_details => {
           :only => [:id, :amount, :notes, :time, :units],

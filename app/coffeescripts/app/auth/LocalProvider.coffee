@@ -12,7 +12,6 @@ define 'Brew/auth/LocalProvider', [
 
   LocalProvider = declare 'Brew.auth.LocalProvider', null,
     CSRFToken: null
-    currentUser: null
     cookieName: 'user'
 
     constructor: (config) ->
@@ -43,23 +42,23 @@ define 'Brew/auth/LocalProvider', [
       request.del('/users/sign_out.json', {
         handleAs: 'json'
         data: {
-          user: json.stringify(@currentUser)
+          user: json.stringify(@getCurrentUser)
         }
       }).then lang.hitch(this, @_onAuthNeeded)
 
     isAuthenticated: (fireAuthEvent) ->
-      authenticated = cookie(@cookieName)?
+      authenticated = @getCurrentUser()?
       if fireAuthEvent and not authenticated
         topic.publish Brew.util.Messages.AUTHORIZATION_NEEDED
 
       authenticated
 
     getCurrentUser: () ->
-      cookie(@cookieName)
+      user_json = cookie(@cookieName) || null
+      json.parse(user_json)
 
     _onAuthSuccess: (opts, user) ->
-      @currentUser = user
-      cookie @cookieName, user
+      cookie @cookieName, json.stringify(user)
       topic.publish Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user
       opts?.success?(user)
 

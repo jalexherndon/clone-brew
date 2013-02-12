@@ -4,7 +4,6 @@
     var LocalProvider;
     LocalProvider = declare('Brew.auth.LocalProvider', null, {
       CSRFToken: null,
-      currentUser: null,
       cookieName: 'user',
       constructor: function(config) {
         var _this = this;
@@ -39,24 +38,25 @@
         return request.del('/users/sign_out.json', {
           handleAs: 'json',
           data: {
-            user: json.stringify(this.currentUser)
+            user: json.stringify(this.getCurrentUser)
           }
         }).then(lang.hitch(this, this._onAuthNeeded));
       },
       isAuthenticated: function(fireAuthEvent) {
         var authenticated;
-        authenticated = cookie(this.cookieName) != null;
+        authenticated = this.getCurrentUser() != null;
         if (fireAuthEvent && !authenticated) {
           topic.publish(Brew.util.Messages.AUTHORIZATION_NEEDED);
         }
         return authenticated;
       },
       getCurrentUser: function() {
-        return cookie(this.cookieName);
+        var user_json;
+        user_json = cookie(this.cookieName) || null;
+        return json.parse(user_json);
       },
       _onAuthSuccess: function(opts, user) {
-        this.currentUser = user;
-        cookie(this.cookieName, user);
+        cookie(this.cookieName, json.stringify(user));
         topic.publish(Brew.util.Messages.AUTHORIZATION_SUCCESSFUL, user);
         return opts != null ? typeof opts.success === "function" ? opts.success(user) : void 0 : void 0;
       },

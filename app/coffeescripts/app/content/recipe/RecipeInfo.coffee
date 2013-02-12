@@ -4,9 +4,11 @@ define [
   'dijit/_TemplatedMixin',
   'dijit/form/_FormMixin',
   'dojo/query',
-  'dijit/form/NumberSpinner'
+  'dijit/form/ValidationTextBox',
+  'dijit/form/NumberSpinner',
+  'Brew/auth/LocalProvider'
 
-], (declare, _WidgetBase, _TemplatedMixin, _FormMixin, query, NumberSpinner) ->
+], (declare, _WidgetBase, _TemplatedMixin, _FormMixin, query, ValidationTextBox, NumberSpinner, LocalProvider) ->
 
   declare [_WidgetBase, _TemplatedMixin, _FormMixin],
     baseClass: 'brew-recipe-builder-info'
@@ -14,6 +16,10 @@ define [
       <div>
         <div class=\"header\">Recipe Info</div>
         <table class=\"table\">
+          <tr>
+            <td class=\"label\">Recipe Name:</td>
+            <td class=\"recipe-name\"></td>
+          </tr>
           <tr>
             <td class=\"label\">Pre-boil Volume:</td>
             <td class=\"pre-boil-volume\"></td>
@@ -41,6 +47,14 @@ define [
     postCreate: () ->
       @inherited(arguments)
       @containerNode = @domNode
+
+      user_name = LocalProvider.getCurrentUser().first_name + "'s " || ""
+      recipe_name = new ValidationTextBox({
+        name: "name"
+        required: "true"
+        style: "width:250px;"
+        value: "#{user_name}Clone of " + @beer.name
+      }, query(".recipe-name", this.domNode)[0])
       
       pre_boil = new NumberSpinner({
         name: "pre_boil_volume"

@@ -28,7 +28,9 @@ define [
     beer: null
 
     postCreate: () ->
-      @_info = new RecipeInfo({}, query("." + @baseClass + "-info", @domNode)[0])
+      @_info = new RecipeInfo({
+        beer: @beer
+      }, query("." + @baseClass + "-info", @domNode)[0])
 
       @_sections = [
         new RecipeBuilderSection({

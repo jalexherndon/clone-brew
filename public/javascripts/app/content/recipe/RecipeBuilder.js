@@ -7,7 +7,9 @@
       beer: null,
       postCreate: function() {
         var _this = this;
-        this._info = new RecipeInfo({}, query("." + this.baseClass + "-info", this.domNode)[0]);
+        this._info = new RecipeInfo({
+          beer: this.beer
+        }, query("." + this.baseClass + "-info", this.domNode)[0]);
         this._sections = [
           new RecipeBuilderSection({
             title: 'Grains & Extracts',
