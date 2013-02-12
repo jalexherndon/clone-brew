@@ -30,12 +30,24 @@ class RecipesController < ApplicationController
   # POST /recipes
   # POST /recipes.json
   def create
-    @recipe = Recipe.new(params[:recipe])
+    recipe_data = ActiveSupport::JSON.decode(params[:recipe]).symbolize_keys
+    ingredient_details = recipe_data.delete(:ingredient_details)
+
+    @recipe = Recipe.new(recipe_data)
+    
+    if @recipe.save
+      ingredient_details.each do |ingredient_detail|
+        ingredient_detail[:recipe_id] = @recipe.id
+        @recipe.ingredient_details.build(ingredient_detail)
+      end
+    end
 
     if @recipe.save
       render :json => @recipe, :status => :created
     else
-      render :json => @recipe.errors, :status => :unprocessable_entity
+      recipe_errors = @recipe.errors
+      @recipe.delete
+      render :json => recipe_errors, :status => :unprocessable_entity
     end
   end
 

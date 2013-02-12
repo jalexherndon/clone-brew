@@ -50,7 +50,14 @@ define [
       }, query(".#{@baseClass}-add-button", @domNode)[0])
 
     _getValueAttr: () ->
-      return @_getGrid()?.store.data
+      values = @_getGrid()?.store.data or []
+
+      for value in values
+        value.ingredient_id = value.ingredient.id
+        delete value.id
+        delete value.ingredient
+
+      values
 
     _getGrid: (create) ->
       return @grid if @grid?

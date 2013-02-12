@@ -63,10 +63,10 @@ define [
     _createRecipe: () ->
       request.post('/recipes',
         handleAs: 'json'
-        data: json.stringify({
-          recipe: @_gatherRecipeData()
-        })
+        data:
+          recipe: json.stringify(@_gatherRecipeData())
       ).then((resp)=>
+
       )
 
     _gatherRecipeData: () ->

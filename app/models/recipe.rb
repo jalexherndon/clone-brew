@@ -7,17 +7,29 @@ class Recipe < ActiveRecord::Base
   attr_accessible :directions,
                   :mash_temperature,
                   :boil_time,
+                  :pre_boil_volume,
+                  :post_boil_volume,
                   :beer_id,
                   :recipe_type_id,
                   :ingredient_ids,
-                  :ingredient_detail_ids
-                  
-  accepts_nested_attributes_for :ingredient_details, :allow_destroy => true
+                  :ingredient_details
 
-  validates :beer_id, :presence => true
+  accepts_nested_attributes_for :ingredient_details
+
+  validates_presence_of :beer_id
   # validates :recipe_type_id, :presence => true
 
-  def display_name
-    "#{beer.name}:  #{recipe_type.name}"
+  def as_json(options={})
+    super((options).merge({
+      :only => [:id, :boil_time, :pre_boil_volume, :post_boil_volume, :beer_id],
+      :include => {
+        :ingredient_details => {
+          :only => [:id, :amount, :notes, :time, :units],
+          :include => {
+            :ingredient => {:only => [:id, :name]}
+          }
+        }
+      }
+    }))
   end
 end

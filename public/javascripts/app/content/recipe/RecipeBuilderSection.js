@@ -28,8 +28,15 @@
         }, query("." + this.baseClass + "-add-button", this.domNode)[0]);
       },
       _getValueAttr: function() {
-        var _ref;
-        return (_ref = this._getGrid()) != null ? _ref.store.data : void 0;
+        var value, values, _i, _len, _ref;
+        values = ((_ref = this._getGrid()) != null ? _ref.store.data : void 0) || [];
+        for (_i = 0, _len = values.length; _i < _len; _i++) {
+          value = values[_i];
+          value.ingredient_id = value.ingredient.id;
+          delete value.id;
+          delete value.ingredient;
+        }
+        return values;
       },
       _getGrid: function(create) {
         var grid,

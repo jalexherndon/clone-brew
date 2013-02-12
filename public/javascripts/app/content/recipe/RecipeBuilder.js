@@ -36,9 +36,9 @@
         var _this = this;
         return request.post('/recipes', {
           handleAs: 'json',
-          data: json.stringify({
-            recipe: this._gatherRecipeData()
-          })
+          data: {
+            recipe: json.stringify(this._gatherRecipeData())
+          }
         }).then(function(resp) {});
       },
       _gatherRecipeData: function() {
