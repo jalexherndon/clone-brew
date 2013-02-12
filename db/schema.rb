@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212035754) do
+ActiveRecord::Schema.define(:version => 20130212040657) do
 
   create_table "breweries", :force => true do |t|
     t.string   "name"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20130212035754) do
     t.integer  "boil_time"
     t.float    "pre_boil_volume"
     t.float    "post_boil_volume"
+    t.integer  "user_id"
   end
 
   add_index "recipes", ["beer_id"], :name => "index_recipe_recipes_on_beer_id"

@@ -33,6 +33,8 @@ class RecipesController < ApplicationController
     recipe_data = ActiveSupport::JSON.decode(params[:recipe]).symbolize_keys
     ingredient_details = recipe_data.delete(:ingredient_details)
 
+    recipe_data[:user] = current_user
+
     @recipe = Recipe.new(recipe_data)
     
     if @recipe.save
