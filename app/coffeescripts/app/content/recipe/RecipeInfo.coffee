@@ -48,13 +48,14 @@ define [
       @inherited(arguments)
       @containerNode = @domNode
 
-      user_name = LocalProvider.getCurrentUser().first_name + "'s " || ""
+      current_user = LocalProvider.getCurrentUser()
+      user_name = if current_user.first_name? then current_user.first_name + "'s " else ""
       recipe_name = new ValidationTextBox({
         name: "name"
         required: "true"
         style: "width:250px;"
         value: "#{user_name}Clone of " + @beer.name
-      }, query(".recipe-name", this.domNode)[0])
+      }, query(".recipe-name", @domNode)[0])
       
       pre_boil = new NumberSpinner({
         name: "pre_boil_volume"
@@ -62,7 +63,7 @@ define [
         constraints:
           min: 0
           max: 100
-      }, query(".pre-boil-volume", this.domNode)[0])
+      }, query(".pre-boil-volume", @domNode)[0])
       
       post_boil = new NumberSpinner({
         name: "post_boil_volume"
@@ -72,7 +73,7 @@ define [
           max: 100
           less_than: pre_boil
         validator: @_postBoilValidator
-      }, query(".post-boil-volume", this.domNode)[0])
+      }, query(".post-boil-volume", @domNode)[0])
 
       pre_boil.on 'change', (newValue) ->
         post_boil.validate()
@@ -83,9 +84,9 @@ define [
         constraints:
           min: 0
           max: 150
-      }, query(".boil-time", this.domNode)[0])
+      }, query(".boil-time", @domNode)[0])
 
-      this.set('value', @default_values)
+      @set('value', @default_values)
 
     _postBoilValidator: (value, constraints) ->
       constraint_value = constraints.less_than.get("value")

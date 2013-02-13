@@ -10,10 +10,11 @@
         boil_time: 60
       },
       postCreate: function() {
-        var post_boil, pre_boil, recipe_name, user_name;
+        var current_user, post_boil, pre_boil, recipe_name, user_name;
         this.inherited(arguments);
         this.containerNode = this.domNode;
-        user_name = LocalProvider.getCurrentUser().first_name + "'s " || "";
+        current_user = LocalProvider.getCurrentUser();
+        user_name = current_user.first_name != null ? current_user.first_name + "'s " : "";
         recipe_name = new ValidationTextBox({
           name: "name",
           required: "true",

@@ -5,11 +5,13 @@ define [
   'dojo/query',
   'Brew/content/recipe/RecipeInfo',
   'Brew/content/recipe/RecipeBuilderSection',
+  'Brew/content/recipe/RecipeNotes',
   'dijit/form/Button',
   'dojo/request',
-  'dojo/json'
+  'dojo/json',
+  'dojo/_base/lang'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, Button, request, json) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, RecipeNotes, Button, request, json, lang) ->
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-recipe-builder"
 
@@ -21,6 +23,7 @@ define [
       <div class=\"${baseClass}-hops\"></div>
       <div class=\"${baseClass}-yeasts\"></div>
       <div class=\"${baseClass}-miscellaneous\"></div>
+      <div class=\"${baseClass}-notes-and-instructions\"></div>
       <div class=\"${baseClass}-create-recipe\"></div>
     </div>
     "
@@ -55,6 +58,8 @@ define [
         }, query("." + @baseClass + "-miscellaneous", @domNode)[0])
       ]
 
+      @_notes = new RecipeNotes({}, query("." + @baseClass + "-notes-and-instructions", @domNode)[0])
+
       new Button({
         label: "Create Recipe"
         class: "#{@baseClass}-create-recipe"
@@ -72,10 +77,9 @@ define [
       )
 
     _gatherRecipeData: () ->
-      recipe = @_info.get('value')
-      recipe.beer_id = @beer.id
-      recipe.ingredient_details = []
+      recipe = lang.mixin({beer_id: @beer.id}, @_info.get('value'), @_notes.get('value'))
 
+      recipe.ingredient_details = []
       for section in @_sections
         recipe.ingredient_details.push.apply(recipe.ingredient_details, section.get('value'))
 

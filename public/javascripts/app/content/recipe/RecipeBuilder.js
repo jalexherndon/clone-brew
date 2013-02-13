@@ -1,9 +1,9 @@
 (function() {
 
-  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'Brew/content/recipe/RecipeInfo', 'Brew/content/recipe/RecipeBuilderSection', 'dijit/form/Button', 'dojo/request', 'dojo/json'], function(declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, Button, request, json) {
+  define(['dojo/_base/declare', 'dijit/_WidgetBase', 'dijit/_TemplatedMixin', 'dojo/query', 'Brew/content/recipe/RecipeInfo', 'Brew/content/recipe/RecipeBuilderSection', 'Brew/content/recipe/RecipeNotes', 'dijit/form/Button', 'dojo/request', 'dojo/json', 'dojo/_base/lang'], function(declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, RecipeNotes, Button, request, json, lang) {
     return declare([_WidgetBase, _TemplatedMixin], {
       baseClass: "brew-recipe-builder",
-      templateString: "    <div>      <div class=\"${baseClass}-title\">New Recipe</div>      <div class=\"${baseClass}-info\"></div>      <div class=\"${baseClass}-grains\"></div>      <div class=\"${baseClass}-hops\"></div>      <div class=\"${baseClass}-yeasts\"></div>      <div class=\"${baseClass}-miscellaneous\"></div>      <div class=\"${baseClass}-create-recipe\"></div>    </div>    ",
+      templateString: "    <div>      <div class=\"${baseClass}-title\">New Recipe</div>      <div class=\"${baseClass}-info\"></div>      <div class=\"${baseClass}-grains\"></div>      <div class=\"${baseClass}-hops\"></div>      <div class=\"${baseClass}-yeasts\"></div>      <div class=\"${baseClass}-miscellaneous\"></div>      <div class=\"${baseClass}-notes-and-instructions\"></div>      <div class=\"${baseClass}-create-recipe\"></div>    </div>    ",
       beer: null,
       postCreate: function() {
         var _this = this;
@@ -26,6 +26,7 @@
             ingredient_category: 'Miscellaneous'
           }, query("." + this.baseClass + "-miscellaneous", this.domNode)[0])
         ];
+        this._notes = new RecipeNotes({}, query("." + this.baseClass + "-notes-and-instructions", this.domNode)[0]);
         return new Button({
           label: "Create Recipe",
           "class": "" + this.baseClass + "-create-recipe",
@@ -45,8 +46,9 @@
       },
       _gatherRecipeData: function() {
         var recipe, section, _i, _len, _ref;
-        recipe = this._info.get('value');
-        recipe.beer_id = this.beer.id;
+        recipe = lang.mixin({
+          beer_id: this.beer.id
+        }, this._info.get('value'), this._notes.get('value'));
         recipe.ingredient_details = [];
         _ref = this._sections;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
