@@ -38,7 +38,7 @@
         return request.del('/users/sign_out.json', {
           handleAs: 'json',
           data: {
-            user: json.stringify(this.getCurrentUser)
+            user: json.stringify(this.getCurrentUser())
           }
         }).then(lang.hitch(this, this._onAuthNeeded));
       },

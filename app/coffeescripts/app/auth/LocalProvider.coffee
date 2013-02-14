@@ -42,7 +42,7 @@ define 'Brew/auth/LocalProvider', [
       request.del('/users/sign_out.json', {
         handleAs: 'json'
         data: {
-          user: json.stringify(@getCurrentUser)
+          user: json.stringify(@getCurrentUser())
         }
       }).then lang.hitch(this, @_onAuthNeeded)
 
