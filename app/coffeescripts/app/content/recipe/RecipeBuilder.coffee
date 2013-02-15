@@ -9,9 +9,10 @@ define [
   'dijit/form/Button',
   'dojo/request',
   'dojo/json',
-  'dojo/_base/lang'
+  'dojo/_base/lang',
+  'Brew/ui/StandbyManager'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, RecipeNotes, Button, request, json, lang) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, RecipeNotes, Button, request, json, lang, StandbyManager) ->
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-recipe-builder"
 
@@ -64,6 +65,8 @@ define [
         label: "Create Recipe"
         class: "#{@baseClass}-create-recipe"
         onClick: () =>
+          return unless @_info.validate()
+          StandbyManager.showStandby(@domNode)
           @_createRecipe()
       }, query(".#{@baseClass}-create-recipe", @domNode)[0])
 
@@ -71,12 +74,13 @@ define [
       request.post('/recipes',
         handleAs: 'json'
         data:
-          recipe: json.stringify(@_gatherRecipeData())
-      ).then((resp)=>
-
+          recipe: json.stringify(@get("value"))
+      ).then( (resp) =>
+        @set('value', null)
+        StandbyManager.hideStandby()
       )
 
-    _gatherRecipeData: () ->
+    _getValueAttr: () ->
       recipe = lang.mixin({beer_id: @beer.id}, @_info.get('value'), @_notes.get('value'))
 
       recipe.ingredient_details = []
@@ -85,3 +89,11 @@ define [
 
       recipe
 
+    _setValueAttr: (value) ->
+      @_notes.set('value', if value? then value.notes else value)
+      delete value?.notes
+      
+      section.set('value', if value? then value.ingredient_details else value) for section in @_sections
+      delete value?.ingredient_details
+
+      @_info.set('value', value)

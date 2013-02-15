@@ -59,6 +59,17 @@ define [
 
       values
 
+    _setValueAttr: (values) ->
+      grid = @_getGrid()
+
+      if grid?
+        if values? and values.length > 0
+          grid.store.data = values
+          grid.refresh()
+        else
+          grid.destroy()
+          delete @grid
+
     _getGrid: (create) ->
       return @grid if @grid?
 

@@ -21,6 +21,9 @@ define [
         notes: @notes_textarea.get('value')
       }
 
+    _setValueAttr: (value) ->
+      @notes_textarea.set('value', if value then value else "")
+
     postCreate: () ->
       @inherited(arguments)
 

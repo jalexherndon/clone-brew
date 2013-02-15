@@ -1,4 +1,4 @@
-define 'Brew/util/navigation/PageManager', [
+define [
   'dojo/_base/declare',
   'Brew/auth/LocalProvider'
   'dojo/router',
@@ -32,7 +32,7 @@ define 'Brew/util/navigation/PageManager', [
     registerDetailPage page for page in pageList.detail
 
 
-  pageManager = declare "Brew.util.navigation.PageManager", null,
+  PageManager = declare [],
     pageContainer: null
     pageCls: "brew-page"
 
@@ -60,6 +60,7 @@ define 'Brew/util/navigation/PageManager', [
         do (child) ->
           child.resize?()
 
-  lang.getObject "util.navigation.PageManager", true, Brew
-  Brew.util.navigation.PageManager = new pageManager()
+  unless lang.getObject("util.navigation.PageManager", false, Brew)?
+    lang.setObject("util.navigation.PageManager", new PageManager(), Brew)
+
   Brew.util.navigation.PageManager

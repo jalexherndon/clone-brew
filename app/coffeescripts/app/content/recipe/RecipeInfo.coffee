@@ -44,17 +44,18 @@ define [
       post_boil_volume: 5
       boil_time: 60
 
+    "-chains-": {
+      _setValueAttr: "manual"
+    }
+
     postCreate: () ->
       @inherited(arguments)
       @containerNode = @domNode
 
-      current_user = LocalProvider.getCurrentUser()
-      user_name = if current_user.first_name? then current_user.first_name + "'s " else ""
       recipe_name = new ValidationTextBox({
-        name: "name"
+        name: "recipe_name"
         required: "true"
         style: "width:250px;"
-        value: "#{user_name}Clone of " + @beer.name
       }, query(".recipe-name", @domNode)[0])
       
       pre_boil = new NumberSpinner({
@@ -86,7 +87,24 @@ define [
           max: 150
       }, query(".boil-time", @domNode)[0])
 
-      @set('value', @default_values)
+      @set('value')
+
+    _getValueAttr: () ->
+      value = @inherited(arguments)
+      value.name = value.recipe_name
+      delete value.recipe_name
+      value
+
+    _setValueAttr: (value) ->
+      unless value?
+        value = @default_values
+
+        users_first_name = LocalProvider.getCurrentUser().first_name
+        recipe_name = if users_first_name? then users_first_name + "'s " else ""
+        recipe_name += "Clone of " + @beer.name
+        value.recipe_name = recipe_name
+
+      @inherited(arguments, [value])
 
     _postBoilValidator: (value, constraints) ->
       constraint_value = constraints.less_than.get("value")
