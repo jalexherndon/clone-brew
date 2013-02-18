@@ -4,8 +4,13 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.json
   def index
-    @recipes = Recipe.all
-    render :json => @recipes
+    @recipes = Recipe
+
+    if params.has_key? :beer_id
+      @recipes = @recipes.where(:beer_id => params[:beer_id])
+    end
+
+    render :json => @recipes.all
   end
 
   # GET /recipes/1

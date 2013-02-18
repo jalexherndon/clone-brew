@@ -2,7 +2,7 @@ define 'Brew/content/library/LibraryPage', [
   'dojo/_base/declare',
   'Brew/content/_Page',
   'dijit/layout/TabContainer',
-  'Brew/content/library/BeerListView'
+  'Brew/ui/listview/BeerListView'
 
 ], (declare, _Page, TabContainer, BeerListView) ->
 

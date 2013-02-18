@@ -49,7 +49,21 @@ define 'Brew/ui/grid/StructureFactory', [
             beer.srm?.name
       }
 
-    structureFor: (modelName) ->
+      recipes: {
+        name:
+          label: 'Name'
+
+        brewer:
+          label: 'Brewer'
+          get: (recipe) ->
+            owner = recipe.user
+            if owner.first_name? and owner.last_name?
+              "#{owner.first_name} #{owner.last_name}"
+            else
+              owner.email
+      }
+
+    structureFor: (modelName, opts) ->
       @structures[modelName]
                 
 

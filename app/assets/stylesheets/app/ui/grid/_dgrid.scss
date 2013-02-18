@@ -14,27 +14,25 @@
     }
 
     .dgrid-scroller {
-        margin-top: 29px;
+        margin: 29px 0 18px 0;
         position:relative;
     }
 
     .dgrid-content {
         height: 100%;
+        min-height: 65px;
+
+        .dgrid-no-data {
+            text-align: center;
+            padding-top: 10px;
+        }
 
         .dgrid-cell {
             vertical-align: middle;
-
-            &.clickable {
-                cursor: pointer;
-            }
         }
 
         .dgrid-cell-spacing {
             padding: 6px;
-        }
-
-        .dgrid-row-even {
-            background-color: $white;
         }
     }
 }

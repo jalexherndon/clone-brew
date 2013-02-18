@@ -3,9 +3,9 @@ define "Brew/content/detail/beer/BeerPage", [
   "Brew/content/_Page",
   "dojo/request/xhr",
   "Brew/content/detail/beer/BeerDetailPane",
-  "Brew/content/recipe/RecipeBuilder"
+  "Brew/content/recipe/RecipePanel"
 
-], (declare, _Page, xhr, BeerDetailPane, RecipeBuilder) ->
+], (declare, _Page, xhr, BeerDetailPane, RecipePanel) ->
 
   declare "Brew.content.detail.beer.BeerPage", _Page,
     beerId: null
@@ -15,7 +15,6 @@ define "Brew/content/detail/beer/BeerPage", [
 
     postCreate: () ->
       @inherited arguments
-      me = this
 
       xhr("/beers/" + @beerId, {
         handleAs: "json"
@@ -23,5 +22,5 @@ define "Brew/content/detail/beer/BeerPage", [
           withBreweries: 'Y'
         }
       }).then (beer) =>
-        me.addChild new BeerDetailPane(beer: beer)
-        me.addChild new RecipeBuilder(beer: beer)
+        @addChild new BeerDetailPane(beer: beer)
+        @addChild new RecipePanel(beer: beer)

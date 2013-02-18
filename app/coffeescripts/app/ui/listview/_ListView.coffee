@@ -1,10 +1,10 @@
-define 'Brew/content/library/_ListView', [
+define [
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'Brew/ui/grid/Grid',
-  'Brew/content/library/ListViewSearch',
+  'Brew/ui/listview/ListViewSearch',
   'dojox/widget/Standby',
   'dojo/_base/window'
 
@@ -14,7 +14,7 @@ define 'Brew/content/library/_ListView', [
   FILTER_CT_CLASS = "filter-ct"
   SEARCH_CT_CLASS = "search-ct"
 
-  declare 'Brew.content.library._ListView', [_WidgetBase, _TemplatedMixin],
+  declare [_WidgetBase, _TemplatedMixin],
     baseClass: 'brew-list-view'
     gridClass: 'sage'
 

@@ -1,11 +1,11 @@
-define 'Brew/content/library/BeerListView', [
+define [
   'dojo/_base/declare',
-  'Brew/content/library/_ListView',
+  'Brew/ui/listview/_ListView',
   'Brew/data/BreweryDBStore'
 
 ], (declare, _ListView, BreweryDBStore) ->
 
-  declare 'Brew.content.library.BeerListView', _ListView,
+  declare [_ListView],
     getGridConfig: () ->
       store: new BreweryDBStore {target: '/beers'}
       columns: Brew.ui.grid.StructureFactory.structureFor('beers')

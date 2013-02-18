@@ -1,4 +1,4 @@
-define 'Brew/content/library/ListViewSearch', [
+define [
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dijit/_WidgetBase',
@@ -13,7 +13,7 @@ define 'Brew/content/library/ListViewSearch', [
   SEARCH_BUTTON_CLASS = 'brew-list-view-search-button'
   CLEAR_SEARCH_BUTTON_CLASS = 'brew-list-view-clear-search-button'
 
-  declare 'Brew.content.library.ListViewSearch', [_WidgetBase, _TemplatedMixin],
+  declare [_WidgetBase, _TemplatedMixin],
     searchType: null
     grid: null
 
@@ -63,8 +63,8 @@ define 'Brew/content/library/ListViewSearch', [
       @grid.set("query", {}, {})
 
     searchGrid: (searchValue) ->
-      @_getClearSearchButton().set("disabled", false)
       return unless searchValue
+      @_getClearSearchButton().set("disabled", false)
       query = {
         q: searchValue.replace(/\s/, "+")
         type: @searchType
