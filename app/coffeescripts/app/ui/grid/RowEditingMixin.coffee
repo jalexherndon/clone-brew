@@ -5,9 +5,9 @@ define [
   'dojo/keys',
   'dojo/topic',
   'dijit/focus',
-  'dojo/on'
+  'put-selector/put'
 
-], (declare, lang, domClass, keys, topic, focusUtil, On) ->
+], (declare, lang, domClass, keys, topic, focusUtil, put) ->
 
   declare [],
 
@@ -96,7 +96,7 @@ define [
       row = @row(rowId)
       focusColumn ?= @defaultFocusColumn
 
-      cells = row.element.children[0].children
+      cells = row.element.children[0].children[0].children
       for cellEl, i in cells
         do (cellEl) =>
           column = @column(cellEl)

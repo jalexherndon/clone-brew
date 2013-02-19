@@ -13,17 +13,30 @@
         background-color: $pistachio-brown;
     }
 
-    .brew-content-section-title {
+    .brew-content-section-title-bar {
         @include rounded-corners-detail(5px, 5px, 0px, 0px);
         margin: 0;
         padding: 4px;
         margin-bottom: 4px;
-        line-height: 30px;
+        height: 24px;
         background-color: $pistachio-off-white;
 
-        font-size: 18px;
-        font-weight: bold;
-        font-family: 'LobsterTwoRegular';
-        color: $pistachio-brown;
+        .brew-content-section-title-text,
+        .brew-content-section-actions {
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'LobsterTwoRegular';
+            color: $pistachio-brown;
+            float:left;
+        }
+
+        .brew-content-section-actions {
+            float: right;
+            font-size: 14px;
+
+            >.dijitButton {
+                margin: 0;
+            }
+        }
     }
 }

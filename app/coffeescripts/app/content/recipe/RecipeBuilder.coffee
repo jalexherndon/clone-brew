@@ -18,7 +18,6 @@ define [
 
     templateString: "
     <div>
-      <div class=\"${baseClass}-title\">New Recipe</div>
       <div class=\"${baseClass}-info\"></div>
       <div class=\"${baseClass}-grains\"></div>
       <div class=\"${baseClass}-hops\"></div>
@@ -78,6 +77,7 @@ define [
       ).then( (resp) =>
         @set('value', null)
         StandbyManager.hideStandby()
+        @emit('brew-recipe-after-create', resp)
       )
 
     _getValueAttr: () ->

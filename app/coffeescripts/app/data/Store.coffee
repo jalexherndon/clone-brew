@@ -1,10 +1,24 @@
 define 'Brew/data/Store', [
   'dojo/_base/declare',
-  'dojox/data/JsonRestStore'
+  'dojo/store/JsonRest',
+  'dojo/Evented',
+  'dojo/_base/lang'
 
-  ], (declare, JsonRestStore) ->
+  ], (declare, JsonRest, Evented, lang) ->
 
-    declare 'Brew.data.Store', JsonRestStore,
+    declare 'Brew.data.Store', [JsonRest, Evented],
+
+      defaultParams: {}
+
+      query: (query, options={}) ->
+        lang.mixin query, @defaultParams
+
+        @emit "beforequery"
+        results = @inherited(arguments)
+        results.then (results) =>
+          @emit("load", results)
+
+        results
 
       getValue: (item, property, defaultValue) ->
         value = @inherited arguments

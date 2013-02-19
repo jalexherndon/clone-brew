@@ -32,12 +32,15 @@ define [
 
     postCreate: () ->
       @inherited(arguments)
-      grid = @_attachGrid()
-      @_attachSearch(grid)
+      @grid = @_attachGrid()
+      @_attachSearch(@grid)
 
     # Abstract
-    getGridConfig: (container) ->
+    getGrid: (container) ->
       throw new Brew.util.Errors.UNIMPLEMENTED_METHOD(arguments.callee)
+
+    _getGridAttr: () ->
+      @grid
 
     # Abstract
     getSearchBarConfig: () ->
@@ -53,7 +56,7 @@ define [
 
     _attachGrid: () ->
       srcNodeRef = dojo.query(".#{GRID_DIV_CLASS}", this.domNode)[0]
-      grid = new Grid(@getGridConfig(), srcNodeRef)
+      grid = @getGrid(srcNodeRef)
 
       grid.store?.on "beforequery", () =>
         @_getStandBy().show()

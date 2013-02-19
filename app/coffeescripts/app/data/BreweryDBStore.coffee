@@ -1,11 +1,9 @@
 define 'Brew/data/BreweryDBStore', [
   'dojo/_base/declare',
-  'dojo/store/JsonRest',
-  'dojo/Evented',
-  'dojo/request/xhr',
-  'dojo/_base/lang'
+  'Brew/data/Store',
+  'dojo/request/xhr'
 
-], (declare, JsonRest, Evented, xhr, lang) ->
+], (declare, Store, xhr) ->
 
   scrubPagingOptions = (query, options) ->
     if options.start? and options.count is 50
@@ -13,7 +11,7 @@ define 'Brew/data/BreweryDBStore', [
       delete options.start
       delete options.count
 
-  declare 'Brew.data.BreweryDBStore', [JsonRest, Evented],
+  declare 'Brew.data.BreweryDBStore', [Store],
     defaultParams: {
       withBreweries: 'Y'
     }
@@ -23,11 +21,9 @@ define 'Brew/data/BreweryDBStore', [
 
     constructor: (config) ->
       @defaultTarget = config.target
-      @inherited arguments
+      @inherited(arguments, [config])
 
     query: (query, options={}) ->
-      lang.mixin query, @defaultParams
-
       if options.isSearch
         @target = @searchTarget
       else
@@ -35,9 +31,4 @@ define 'Brew/data/BreweryDBStore', [
 
       scrubPagingOptions query, options
 
-      @emit "beforequery"
-      results = @inherited arguments
-      results.then () =>
-        @emit "load"
-
-      results
+      @inherited(arguments, [query, options])
