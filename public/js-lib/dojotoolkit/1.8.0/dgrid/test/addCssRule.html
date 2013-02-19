@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>list.addCssRule tests</title>
+		<title>addCssRule tests</title>
 		<style>
 .box {
-	padding: 8px;
+	display: inline-block;
+	font-size: 0;
 	margin: 2px;
-	float: left;
+	padding: 8px;
+	width: 0;
 }
 		</style>
 	</head>
@@ -14,24 +16,30 @@
 		<p>Click a box to remove its unique style.</p>
 		<div id="container">&nbsp;</div>
 		<hr style="clear: left;">
+		<p>Modify style for first box:
+			<button type="button" id="btnModify">Modify</button></p>
 		<p>Simple stress test (open console / use Firebug Lite for IE):
 			<button type="button" id="btnTest">Go</button></p>
 		<script src="../../dojo/dojo.js" data-dojo-config="async:1"></script>
 		<script>
-require(["dgrid/List", "put-selector/put", "dojo/on", "dojo/query"], function(List, put, on){
-	var
-		addRule = List.prototype.addCssRule,
-		container = byId("container"),
-		rules = {}, sheet, i;
+require(["put-selector/put", "dojo/on", "dgrid/util/misc", "dojo/query"], function(put, on, miscUtil){
 	
 	function byId(id){ return document.getElementById(id); }
 	
+	function getRandomColor() {
+		return "rgb(" +
+			Math.floor(Math.random() * 256) + "," +
+			Math.floor(Math.random() * 256) + "," +
+			Math.floor(Math.random() * 256) +	")";
+	}
+	
+	var addRule = miscUtil.addCssRule,
+		container = byId("container"),
+		rules = {}, i;
+	
 	for(i = 1; i <= 20; i++){
-		put(container, "div#box" + i + ".box");
-		rules["box" + i] = addRule("#box" + i, "background-color: rgb(" +
-			Math.floor(Math.random() * 256) + "," +
-			Math.floor(Math.random() * 256) + "," +
-			Math.floor(Math.random() * 256) +	");");
+		put(container, "span#box" + i + ".box");
+		rules["box" + i] = addRule("#box" + i, "background-color: " + getRandomColor() + ";");
 	}
 	
 	on(container, ".box:click", function(evt){
@@ -49,10 +57,7 @@ require(["dgrid/List", "put-selector/put", "dojo/on", "dojo/query"], function(Li
 		// thousands of rules programmatically all at once!
 		console.time(title);
 		for(i = 4000; i--;){
-			rule = addRule("#test" + i, "background-color: rgb(" +
-			Math.floor(Math.random() * 256) + "," +
-			Math.floor(Math.random() * 256) + "," +
-			Math.floor(Math.random() * 256) +	");");
+			rule = addRule("#test" + i, "background-color: " + getRandomColor() + ";");
 			if(!firstRule){ firstRule = rule; }
 		}
 		console.timeEnd(title);
@@ -64,11 +69,15 @@ require(["dgrid/List", "put-selector/put", "dojo/on", "dojo/query"], function(Li
 		firstRule.remove();
 		console.timeEnd(title);
 	}
+	
+	on(byId("btnModify"), "click", function(){
+		rules.box1.set("backgroundColor", getRandomColor());
+	});
 	on(byId("btnTest"), "click", function(evt){
 		stressTest();
 		evt.target.setAttribute("disabled", "disabled");
 	});
-})
+});
 		</script>
 	</body>
 </html>

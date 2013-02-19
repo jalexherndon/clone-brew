@@ -1,4 +1,4 @@
-_var miniExcludes = {
+var miniExcludes = {
 		"dgrid/CHANGES.md": 1,
 		"dgrid/LICENSE": 1,
 		"dgrid/README.md": 1,
