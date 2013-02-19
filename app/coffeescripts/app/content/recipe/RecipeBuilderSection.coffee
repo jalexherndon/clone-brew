@@ -15,29 +15,13 @@ define [
   'dijit/form/Button',
   'dojo/_base/lang'
 
-], (declare,
-    _WidgetBase,
-    _TemplatedMixin,
-    query,
-    Memory,
-    JsonRest,
-    OnDemandGrid,
-    RowEditingMixin,
-    Keyboard,
-    editor,
-    NumberSpinner,
-    ValidationTextBox,
-    FilteringSelect,
-    Button,
-    lang) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, Keyboard, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) ->
 
   defaultNew = () ->
-    {
-      ingredient: null
-      amount: 0
-      time: 0
-      notes: ""
-    }
+    ingredient: null
+    amount: 0
+    time: 0
+    notes: ""
 
 
   declare [_WidgetBase, _TemplatedMixin],

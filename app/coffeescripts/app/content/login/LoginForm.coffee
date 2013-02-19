@@ -2,7 +2,7 @@ define 'Brew/content/login/LoginForm', [
     'dojo/_base/declare',
     'dijit/form/Form',
     'dijit/form/ValidationTextBox',
-    '`',
+    'dijit/form/Button',
     'dijit/_Container',
     'dojo/dom-construct',
     'dojo/_base/event',
