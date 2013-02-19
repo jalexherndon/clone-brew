@@ -50,6 +50,7 @@ define [
       })
       @set('content', recipe_builder)
       Listen.once recipe_builder, 'brew-recipe-after-create', () =>
+        @set('title', 'Recipes')
         @_showRecipeListView()
 
     _setTitleAttr: (title) ->
