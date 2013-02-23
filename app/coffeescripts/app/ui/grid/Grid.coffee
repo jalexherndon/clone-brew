@@ -8,3 +8,5 @@ define [
 ], (declare, lang, Grid, Pagination, DijitRegistry) ->
 
   declare [Grid, Pagination, DijitRegistry], {}
+
+  

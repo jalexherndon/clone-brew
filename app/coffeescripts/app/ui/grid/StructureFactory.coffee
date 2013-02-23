@@ -55,6 +55,7 @@ define 'Brew/ui/grid/StructureFactory', [
 
         brewer:
           label: 'Brewer'
+          sortable: false
           get: (recipe) ->
             owner = recipe.user
             if owner.first_name? and owner.last_name?

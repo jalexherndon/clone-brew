@@ -1,5 +1,6 @@
 .brew-list-view {
     height: 100%;
+    overflow: auto;
 
     .left-column, .grid-ct {
         height: 98%;

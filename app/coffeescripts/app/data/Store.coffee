@@ -13,6 +13,13 @@ define 'Brew/data/Store', [
       query: (query, options={}) ->
         lang.mixin query, @defaultParams
 
+        if options?.sort
+          sort = options.sort[0]
+          sort_dir = if sort.descending then "desc" else "asc"
+
+          query.order = encodeURIComponent(sort.attribute) + " " + sort_dir
+          delete options.sort
+
         @emit "beforequery"
         results = @inherited(arguments)
         results.then (results) =>

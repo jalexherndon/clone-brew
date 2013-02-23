@@ -14,7 +14,7 @@ define [
         columns: Brew.ui.grid.StructureFactory.structureFor('recipes')
         rowsPerPage: 50
         pagingTextBox: true
-        noDataMessage: "No one has added a recipe for #{@beer.name} yet.<br /><p class=\"clickable link\">Add one now!</p>"
+        noDataMessage: "No one has added a recipe for #{@beer.name} yet.<br /><p class=\"clickable link add-recipe\">Add one now!</p>"
         loadingMessage: "Loading recipes for #{@beer.name}..."
         query:
           beer_id: @beer.id
