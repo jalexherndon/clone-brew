@@ -15,11 +15,16 @@ define [
 
     renderQuery: (query, preloadNode, options) ->
       results = @inherited(arguments)
-      results.then (res) =>
-        if res.length is 0
-          @noDataNode = put(@contentNode, "div.dgrid-no-data");
-          @noDataNode.innerHTML = @noDataMessage;
+      if lang.isArray(results)
+        @_renderNoDataMessage() if results.length is 0
+      else
+        results.then (res) =>
+          @_renderNoDataMessage() if res.length is 0
 
       results
+
+    _renderNoDataMessage: () ->
+      @noDataNode = put(@contentNode, "div.dgrid-no-data");
+      @noDataNode.innerHTML = @noDataMessage;
 
       

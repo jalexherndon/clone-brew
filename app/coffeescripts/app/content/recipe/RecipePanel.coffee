@@ -27,11 +27,6 @@ define [
     postCreate: () ->
       @_showRecipeListView()
 
-      # # Clicking on a specific recipe should direct you to the detail view of that recipe
-      # grid = list_view.get('grid')
-      # grid?.on ".dgrid-row:click", (e) =>
-      #   recipe_id = grid.row(e).id
-
     _showRecipeListView: () ->
       @set('title', 'Recipes')
       @set('actions', @_listViewActions())
@@ -43,14 +38,21 @@ define [
       listview.on("p.add-recipe:click", () =>
         @_showRecipeBuilder()
       )
+
+      # Clicking on a specific recipe should direct you to the detail view of that recipe
+      grid = listview.get('grid')
+      grid?.on ".dgrid-row:click", (e) =>
+        @_showRecipeBuilder(grid.row(e).data)
+
       @set('content', listview)
 
-    _showRecipeBuilder: () ->
-      @set('title', 'New Recipe')
+    _showRecipeBuilder: (recipe) ->
+      @set('title', if recipe? then recipe.name else 'New Recipe')
       @set('actions', @_builderActions())
 
       recipe_builder = new RecipeBuilder({
         beer: @beer
+        recipe: recipe
       })
       @set('content', recipe_builder)
 
@@ -88,7 +90,7 @@ define [
     _builderActions: () ->
       [
         new Button({
-          label: "Discard Recipe"
+          label: "Discard Changes"
           onClick: () =>
             @_showRecipeListView()
         })

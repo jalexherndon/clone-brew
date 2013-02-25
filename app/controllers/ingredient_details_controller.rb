@@ -4,12 +4,9 @@ class IngredientDetailsController < ApplicationController
   # GET /ingredient_details
   # GET /ingredient_details.json
   def index
-    @ingredient_details = IngredientDetail.all
+    @ingredient_details = IngredientDetail.query(params)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @ingredient_details }
-    end
+    render :json => @ingredient_details.all
   end
 
   # GET /ingredient_details/1

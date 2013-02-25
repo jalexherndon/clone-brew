@@ -5,7 +5,7 @@ define [
   'dojo/query',
   'dojo/store/Memory',
   'dojo/store/JsonRest',
-  'dgrid/OnDemandGrid',
+  'Brew/ui/grid/OnDemandGrid',
   'Brew/ui/grid/RowEditingMixin',
   'dgrid/Keyboard',
   'dgrid/editor',
@@ -13,9 +13,11 @@ define [
   'dijit/form/ValidationTextBox',
   'dijit/form/FilteringSelect',
   'dijit/form/Button',
-  'dojo/_base/lang'
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'Brew/data/helper/RecipeHelper'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, Keyboard, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, Memory, JsonRest, OnDemandGrid, RowEditingMixin, Keyboard, editor, NumberSpinner, ValidationTextBox, FilteringSelect, Button, lang, Arrays, RecipeHelper) ->
 
   defaultNew = () ->
     ingredient: null
@@ -35,8 +37,17 @@ define [
       </div>
     "
 
+    recipe: null
+    ingredient_category: null
+
     postCreate: () ->
       @inherited(arguments)
+
+      if @recipe?.ingredient_details?
+        RecipeHelper.getDetailsForCategory(@recipe, @ingredient_category)
+          .then( (ingredient_details) =>
+            @set("value", ingredient_details)
+          )
 
       new Button({
         label: "+ Add " + @ingredient_category
@@ -58,11 +69,12 @@ define [
       values
 
     _setValueAttr: (values) ->
-      grid = @_getGrid()
+      values_exist = values.length > 0
+      grid = @_getGrid(values_exist)
 
       if grid?
-        if values? and values.length > 0
-          grid.store.data = values
+        if values_exist
+          grid.store.setData(values)
           grid.refresh()
         else
           grid.destroy()

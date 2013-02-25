@@ -1,4 +1,5 @@
 class IngredientCategory < ActiveRecord::Base
+  extend Queryable
 
   belongs_to :parent_ingredient_category, :class_name => "IngredientCategory"
   has_many :ingredients

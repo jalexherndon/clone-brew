@@ -4,12 +4,9 @@ class IngredientCategoriesController < ApplicationController
   # GET /ingredient_categories
   # GET /ingredient_categories.json
   def index
-    @ingredient_categories = IngredientCategory.all
+    @ingredient_categories = IngredientCategory.query(params)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @ingredient_categories }
-    end
+    render :json => @ingredient_categories.all
   end
 
   # GET /ingredient_categories/1

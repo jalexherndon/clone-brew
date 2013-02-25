@@ -1,4 +1,6 @@
 class IngredientDetail < ActiveRecord::Base
+  extend Queryable
+
   belongs_to :recipe
   belongs_to :ingredient
 
@@ -14,7 +16,17 @@ class IngredientDetail < ActiveRecord::Base
 
   def as_json(options={})
     super((options).merge({
-      :only => [:id, :notes, :amount, :units, :time, :ingredient_id, :recipe_id]
+      :only => [:id, :notes, :amount, :units, :time, :recipe_id],
+      :include => {
+        :ingredient => {
+          :only => [:id, :name],
+          :include => {
+            :ingredient_category => {
+              :only => [:id, :name]
+            }
+          }
+        }
+      }
     }))
   end
 end

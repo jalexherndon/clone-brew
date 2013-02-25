@@ -44,9 +44,7 @@ define [
       post_boil_volume: 5
       boil_time: 60
 
-    "-chains-": {
-      _setValueAttr: "manual"
-    }
+    recipe: null
 
     postCreate: () ->
       @inherited(arguments)
@@ -97,12 +95,16 @@ define [
 
     _setValueAttr: (value) ->
       unless value?
-        value = @default_values
+        if @recipe
+          value = @recipe
+          value.recipe_name = @recipe.name
+        else
+          value = @default_values
 
-        users_first_name = LocalProvider.getCurrentUser().first_name
-        recipe_name = if users_first_name? then users_first_name + "'s " else ""
-        recipe_name += "Clone of " + @beer.name
-        value.recipe_name = recipe_name
+          users_first_name = LocalProvider.getCurrentUser().first_name
+          recipe_name = if users_first_name? then users_first_name + "'s " else ""
+          recipe_name += "Clone of " + @beer.name
+          value.recipe_name = recipe_name
 
       @inherited(arguments, [value])
 

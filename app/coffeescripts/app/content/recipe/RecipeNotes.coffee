@@ -31,3 +31,5 @@ define [
         name: "notes"
         style: "min-height:100px;_height:100px;"
       }, query(".#{@baseClass}-textarea", @domNode)[0])
+
+      @notes_textarea.set("value", @recipe.notes) if @recipe?

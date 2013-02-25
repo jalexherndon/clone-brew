@@ -5,16 +5,17 @@ define [
   'dojo/keys',
   'dojo/topic',
   'dijit/focus',
-  'put-selector/put'
+  'dojo/number'
 
-], (declare, lang, domClass, keys, topic, focusUtil, put) ->
+], (declare, lang, domClass, keys, topic, focusUtil, number) ->
 
   declare [],
 
     _configColumns: (prefix, rowColumns) ->
-      deleteRowColumn = { deleterow: {
-        label: " "
-        className: 'dijitIconDelete'
+      deleteRowColumn = {
+        deleterow: {
+          label: " "
+          className: 'dijitIconDelete'
         }
       }
       if lang.isObject(rowColumns)
@@ -30,9 +31,9 @@ define [
 
     postCreate: () ->
       @on(".dgrid-cell.dgrid-column-deleterow:click", (evt) =>
-        row = @row(evt)
-        @store.remove(row.id)
-        delete @dirty[row.id]
+        row_id = number.parse(@row(evt).id)
+        @store.remove(row_id)
+        delete @dirty[row_id]
         @refresh()
       )
 

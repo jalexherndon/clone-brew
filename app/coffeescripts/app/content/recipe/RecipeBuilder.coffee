@@ -4,7 +4,7 @@ define [
   'dijit/_TemplatedMixin',
   'dojo/query',
   'Brew/content/recipe/RecipeInfo',
-  'Brew/content/recipe/RecipeBuilderSection',
+  'Brew/content/recipe/RecipeIngredientSection',
   'Brew/content/recipe/RecipeNotes',
   'dijit/form/Button',
   'dojo/request',
@@ -12,7 +12,7 @@ define [
   'dojo/_base/lang',
   'Brew/ui/StandbyManager'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeBuilderSection, RecipeNotes, Button, request, json, lang, StandbyManager) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeIngredientSection, RecipeNotes, Button, request, json, lang, StandbyManager) ->
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-recipe-builder"
 
@@ -29,59 +29,69 @@ define [
     "
 
     beer: null
+    recipe: null
 
     postCreate: () ->
       @_info = new RecipeInfo({
         beer: @beer
+        recipe: @recipe
       }, query("." + @baseClass + "-info", @domNode)[0])
 
       @_sections = [
-        new RecipeBuilderSection({
+        new RecipeIngredientSection({
           title: 'Grains & Extracts'
           ingredient_category: 'Fermentable'
+          recipe: @recipe
         }, query("." + @baseClass + "-grains", @domNode)[0]),
 
-        new RecipeBuilderSection({
+        new RecipeIngredientSection({
           title: 'Hops'
           ingredient_category: 'Hops'
           has_time: true
+          recipe: @recipe
         }, query("." + @baseClass + "-hops", @domNode)[0]),
 
-        new RecipeBuilderSection({
+        new RecipeIngredientSection({
           title: 'Yeasts'
           ingredient_category: 'Yeast'
+          recipe: @recipe
         }, query("." + @baseClass + "-yeasts", @domNode)[0]),
 
-        new RecipeBuilderSection({
+        new RecipeIngredientSection({
           title: 'Miscellaneous'
           ingredient_category: 'Miscellaneous'
+          recipe: @recipe
         }, query("." + @baseClass + "-miscellaneous", @domNode)[0])
       ]
 
-      @_notes = new RecipeNotes({}, query("." + @baseClass + "-notes-and-instructions", @domNode)[0])
+      @_notes = new RecipeNotes({
+        recipe: @recipe
+      }, query("." + @baseClass + "-notes-and-instructions", @domNode)[0])
 
       new Button({
-        label: "Create Recipe"
+        label: "#{(if @recipe? then "Save" else "Create")} Recipe"
         class: "#{@baseClass}-create-recipe"
         onClick: () =>
           return unless @_info.validate()
           StandbyManager.showStandby(@domNode)
-          @_createRecipe()
+          @_saveRecipe()
       }, query(".#{@baseClass}-create-recipe", @domNode)[0])
 
-    _createRecipe: () ->
-      request.post('/recipes',
+    _saveRecipe: () ->
+      data = @get("value")
+      request[if data.id? then "put" else "post"]('/recipes/' + (if data.id? then data.id else ""),
         handleAs: 'json'
         data:
-          recipe: json.stringify(@get("value"))
+          recipe: json.stringify(data)
       ).then( (resp) =>
-        @set('value', null)
+        @set('value', resp)
         StandbyManager.hideStandby()
         @emit('brew-recipe-after-create', resp)
       )
 
     _getValueAttr: () ->
       recipe = lang.mixin({beer_id: @beer.id}, @_info.get('value'), @_notes.get('value'))
+      lang.mixin(recipe, {id: @recipe.id}) if @recipe?
 
       recipe.ingredient_details = []
       for section in @_sections

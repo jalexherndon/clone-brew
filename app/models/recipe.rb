@@ -34,7 +34,12 @@ class Recipe < ActiveRecord::Base
         :ingredient_details => {
           :only => [:id, :amount, :notes, :time, :units],
           :include => {
-            :ingredient => {:only => [:id, :name]}
+            :ingredient => {
+              :only => [:id, :name],
+              :include => {
+                :ingredient_category => {:only => [:id, :name]}
+              }
+            }
           }
         }
       },{
