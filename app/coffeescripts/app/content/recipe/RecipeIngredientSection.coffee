@@ -39,6 +39,11 @@ define [
 
     recipe: null
     ingredient_category: null
+    is_editable: null
+
+    constructor: (config) ->
+      @inherited(arguments)
+      @is_editable = RecipeHelper.isEditable(config?.recipe)
 
     postCreate: () ->
       @inherited(arguments)
@@ -49,14 +54,15 @@ define [
             @set("value", ingredient_details)
           )
 
-      new Button({
-        label: "+ Add " + @ingredient_category
-        onClick: (a,b,c) =>
-          grid = @_getGrid(true)
-          rowId = grid.store.add(defaultNew())
-          grid.refresh()
-          grid.editRow(rowId)
-      }, query(".#{@baseClass}-add-button", @domNode)[0])
+      if @is_editable
+        new Button({
+          label: "+ Add " + @ingredient_category
+          onClick: (a,b,c) =>
+            grid = @_getGrid(true)
+            rowId = grid.store.add(defaultNew())
+            grid.refresh()
+            grid.editRow(rowId)
+        }, query(".#{@baseClass}-add-button", @domNode)[0])
 
     _getValueAttr: () ->
       values = @_getGrid()?.store.data or []
@@ -85,7 +91,11 @@ define [
 
       return null unless create
 
-      grid = declare [OnDemandGrid, Keyboard, RowEditingMixin]
+      mixins = [OnDemandGrid, Keyboard]
+      if @is_editable
+        mixins.push(RowEditingMixin)
+
+      grid = declare mixins
       @grid = new grid({
         store: new Memory()
         defaultFocusColumn: "ingredient"
@@ -105,7 +115,7 @@ define [
 
     _getColumnConfig: () ->
       config = {
-        ingredient: editor({
+        ingredient: {
           label: "Ingredient"
           get: (object) ->
             if object.ingredient?
@@ -125,10 +135,10 @@ define [
             _getValueAttr: () ->
               return @item
 
-        }, FilteringSelect, 'click')
+        }
       }
 
-      config.amount = editor({
+      config.amount = {
         label: "Amount (lbs)"
         editorArgs:
           style: "width: 100px"
@@ -136,10 +146,10 @@ define [
             min: 0
             max: 20
 
-      }, NumberSpinner, 'click')
+      }
 
       if (@has_time)
-        config.time = editor({
+        config.time = {
           label: "Time (min)"
           editorArgs:
             style: "width: 100px"
@@ -147,15 +157,22 @@ define [
               min: 0
               max: 120
 
-        }, NumberSpinner, 'click')
+        }
 
-      config.notes = editor({
+      config.notes = {
         name: "Notes"
         editorArgs:
           placeHolder: "Notes"
           style: "width: 98%"
 
-      }, ValidationTextBox, 'click')
+      }
+
+      if @is_editable
+        config.ingredient = editor(config.ingredient, FilteringSelect, 'click')
+        config.amount = editor(config.amount, NumberSpinner, 'click')
+        config.notes = editor(config.notes, ValidationTextBox, 'click')
+        if config.time?
+          config.time = editor(config.time, NumberSpinner, 'click')
 
       config
 

@@ -3,9 +3,10 @@ define [
   'dojo/_base/lang',
   'dojo/request/xhr',
   'dojo/_base/array',
-  'dojo/Deferred'
+  'dojo/Deferred',
+  'Brew/auth/LocalProvider'
 
-], (declare, lang, xhr, Arrays, Deferred) ->
+], (declare, lang, xhr, Arrays, Deferred, LocalProvider) ->
 
   helper = declare [],
 
@@ -15,6 +16,12 @@ define [
           query:
             order: 'name'
         })
+
+    isEditable: (recipe) ->
+      if recipe?
+        recipe.user.id is LocalProvider.getCurrentUser().id
+      else
+        true
 
     getDetailsForCategory: (recipe, reference_category_name) ->
       reference_category_name = reference_category_name.name if lang.isObject(reference_category_name)

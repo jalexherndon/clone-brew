@@ -3,18 +3,21 @@ define [
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'dojo/query',
-  'dijit/form/Textarea'
+  'dijit/form/Textarea',
+  'Brew/data/helper/RecipeHelper'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, Textarea) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, Textarea, RecipeHelper) ->
 
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: 'brew-recipe-builder-notes-and-instructions'
     templateString: "
       <div>
         <div class=\"header\">Notes & Instructions</div>
-        <div class=\"${baseClass}-textarea\"></div>
+        <div class=\"${baseClass}-textarea\" data-dojo-attach-point=\"notesNode\"></div>
       </div>
     "
+
+    recipe: null
 
     _getValueAttr: () ->
       return {
@@ -27,9 +30,14 @@ define [
     postCreate: () ->
       @inherited(arguments)
 
-      @notes_textarea = new Textarea({
-        name: "notes"
-        style: "min-height:100px;_height:100px;"
-      }, query(".#{@baseClass}-textarea", @domNode)[0])
+      if RecipeHelper.isEditable(@recipe)
+        @notes_textarea = new Textarea({
+          name: "notes"
+          style: "min-height:100px;_height:100px;"
+        }, query(".#{@baseClass}-textarea", @domNode)[0])
 
-      @notes_textarea.set("value", @recipe.notes) if @recipe?
+        @notes_textarea.set("value", @recipe.notes) if @recipe?
+
+    _setRecipeAttr: (recipe) ->
+      return unless recipe?
+      @notesNode.innerHTML = recipe.notes

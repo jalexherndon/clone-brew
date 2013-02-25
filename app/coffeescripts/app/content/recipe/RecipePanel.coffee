@@ -48,7 +48,7 @@ define [
 
     _showRecipeBuilder: (recipe) ->
       @set('title', if recipe? then recipe.name else 'New Recipe')
-      @set('actions', @_builderActions())
+      @set('actions', @_builderActions(recipe))
 
       recipe_builder = new RecipeBuilder({
         beer: @beer
@@ -87,11 +87,9 @@ define [
         })
       ]
 
-    _builderActions: () ->
-      [
-        new Button({
-          label: "Discard Changes"
-          onClick: () =>
-            @_showRecipeListView()
-        })
-      ]
+    _builderActions: (recipe) ->
+      new Button({
+        label: "See All Recipes"
+        onClick: () =>
+          @_showRecipeListView()
+      })
