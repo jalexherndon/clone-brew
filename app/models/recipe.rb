@@ -12,7 +12,7 @@ class Recipe < ActiveRecord::Base
                   :mash_temperature,
                   :boil_time,
                   :pre_boil_volume,
-                  :post_boil_volume,
+                  :boil_size,
                   :recipe_type_id,
                   :ingredient_ids,
                   :ingredient_details,
@@ -29,7 +29,7 @@ class Recipe < ActiveRecord::Base
 
   def as_json(options={})
     super((options).merge({
-      :only => [:id, :boil_time, :pre_boil_volume, :post_boil_volume, :beer_id, :name, :notes],
+      :only => [:id, :boil_time, :pre_boil_volume, :boil_size, :beer_id, :name, :notes],
       :include => [{
         :ingredient_details => {
           :only => [:id, :amount, :notes, :time, :units],

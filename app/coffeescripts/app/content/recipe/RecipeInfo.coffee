@@ -27,8 +27,8 @@ define [
             <td class=\"units\">gal</td>
           </tr>
           <tr>
-            <td class=\"label\">Post-boil Volume:</td>
-            <td class=\"post-boil-volume\" data-dojo-attach-point=\"postBoilVolumeNode\"></td>
+            <td class=\"label\">Boil Size:</td>
+            <td class=\"boil-size\" data-dojo-attach-point=\"boilSizeNode\"></td>
             <td class=\"units\">gal</td>
           </tr>
           <tr>
@@ -42,7 +42,7 @@ define [
 
     default_values:
       pre_boil_volume: 6.5
-      post_boil_volume: 5
+      boil_size: 7
       boil_time: 60
 
     recipe: null
@@ -67,14 +67,13 @@ define [
         }, query(".pre-boil-volume", @domNode)[0])
         
         post_boil = new NumberSpinner({
-          name: "post_boil_volume"
+          name: "boil_size"
           style: "width:60px;"
           constraints:
             min: 0
             max: 100
             less_than: pre_boil
-          validator: @_postBoilValidator
-        }, query(".post-boil-volume", @domNode)[0])
+        }, query(".boil-size", @domNode)[0])
 
         pre_boil.on 'change', (newValue) ->
           post_boil.validate()
@@ -114,13 +113,5 @@ define [
       return unless recipe?
       @nameNode.innerHTML = recipe.name
       @preBoilVolumeNode.innerHTML = recipe.pre_boil_volume
-      @postBoilVolumeNode.innerHTML = recipe.post_boil_volume
+      @boilSizeNode.innerHTML = recipe.boil_size
       @boilTimeNode.innerHTML = recipe.boil_time
-
-    _postBoilValidator: (value, constraints) ->
-      constraint_value = constraints.less_than.get("value")
-      if (constraint_value? and constraint_value < value)
-        @invalidMessage = "Post-boil volume cannot be greater than pre-boil volume."
-        return false
-
-      return true
