@@ -22,8 +22,8 @@ define [
             <td class=\"recipe-name\" colSpan=\"2\" data-dojo-attach-point=\"nameNode\"></td>
           </tr>
           <tr>
-            <td class=\"label\">Pre-boil Volume:</td>
-            <td class=\"pre-boil-volume\" data-dojo-attach-point=\"preBoilVolumeNode\"></td>
+            <td class=\"label\">Batch Size:</td>
+            <td class=\"batch-size\" data-dojo-attach-point=\"batchSizeNode\"></td>
             <td class=\"units\">gal</td>
           </tr>
           <tr>
@@ -41,7 +41,7 @@ define [
     "
 
     default_values:
-      pre_boil_volume: 6.5
+      batch_size: 5
       boil_size: 7
       boil_time: 60
 
@@ -59,12 +59,12 @@ define [
         }, query(".recipe-name", @domNode)[0])
         
         pre_boil = new NumberSpinner({
-          name: "pre_boil_volume"
+          name: "batch_size"
           style: "width:60px;"
           constraints:
             min: 0
             max: 100
-        }, query(".pre-boil-volume", @domNode)[0])
+        }, query(".batch-size", @domNode)[0])
         
         post_boil = new NumberSpinner({
           name: "boil_size"
@@ -112,6 +112,6 @@ define [
     _setRecipeAttr: (recipe) ->
       return unless recipe?
       @nameNode.innerHTML = recipe.name
-      @preBoilVolumeNode.innerHTML = recipe.pre_boil_volume
+      @batchSizeNode.innerHTML = recipe.batch_size
       @boilSizeNode.innerHTML = recipe.boil_size
       @boilTimeNode.innerHTML = recipe.boil_time
