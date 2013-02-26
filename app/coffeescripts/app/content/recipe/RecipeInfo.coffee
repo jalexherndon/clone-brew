@@ -36,6 +36,11 @@ define [
             <td class=\"boil-time\" data-dojo-attach-point=\"boilTimeNode\"></td>
             <td class=\"units\">min</td>
           </tr>
+          <tr>
+            <td class=\"label\">Efficiency:</td>
+            <td data-dojo-attach-point=\"efficiencyNode\"></td>
+            <td class=\"units\">%</td>
+          </tr>
         </table>
       </div>
     "
@@ -44,6 +49,7 @@ define [
       batch_size: 5
       boil_size: 7
       boil_time: 60
+      efficiency: 70
 
     recipe: null
 
@@ -58,7 +64,7 @@ define [
           style: "width:250px;"
         }, query(".recipe-name", @domNode)[0])
         
-        pre_boil = new NumberSpinner({
+        new NumberSpinner({
           name: "batch_size"
           style: "width:60px;"
           constraints:
@@ -66,18 +72,14 @@ define [
             max: 100
         }, query(".batch-size", @domNode)[0])
         
-        post_boil = new NumberSpinner({
+        new NumberSpinner({
           name: "boil_size"
           style: "width:60px;"
           constraints:
             min: 0
             max: 100
-            less_than: pre_boil
         }, query(".boil-size", @domNode)[0])
 
-        pre_boil.on 'change', (newValue) ->
-          post_boil.validate()
-        
         new NumberSpinner({
           name: "boil_time"
           style: "width:60px;"
@@ -85,6 +87,14 @@ define [
             min: 0
             max: 150
         }, query(".boil-time", @domNode)[0])
+        
+        new NumberSpinner({
+          name: "efficiency"
+          style: "width:60px;"
+          constraints:
+            min: 0
+            max: 100
+        }, @efficiencyNode)
 
         @set('value')
 
