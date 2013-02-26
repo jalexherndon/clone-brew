@@ -13,11 +13,10 @@ define [
 
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-content-section"
-    title: "Recipes"
     templateString: "
       <div>
         <div class=\"${baseClass}-title-bar\">
-          <div class=\"${baseClass}-title-text\">${title}</div>
+          <div class=\"${baseClass}-title-text\"></div>
           <div class=\"${baseClass}-actions\"></div>
         </div>
         <div class=\"${baseClass}-content\"><div></div></div>
@@ -28,7 +27,7 @@ define [
       @_showRecipeListView()
 
     _showRecipeListView: () ->
-      @set('title', 'Recipes')
+      @set('title', "Clones of #{@beer.name}")
       @set('actions', @_listViewActions())
 
       listview = new RecipeListView({
@@ -47,7 +46,7 @@ define [
       @set('content', listview)
 
     _showRecipeBuilder: (recipe) ->
-      @set('title', if recipe? then recipe.name else 'New Recipe')
+      @set('title', if recipe? then recipe.name else 'New Clone Recipe')
       @set('actions', @_builderActions(recipe))
 
       recipe_builder = new RecipeBuilder({
@@ -81,7 +80,7 @@ define [
     _listViewActions: () ->
       [
         new Button({
-          label: "+ Add Recipe"
+          label: "+ Add Clone Recipe"
           onClick: () =>
             @_showRecipeBuilder()
         })
@@ -89,7 +88,7 @@ define [
 
     _builderActions: (recipe) ->
       new Button({
-        label: "See All Recipes"
+        label: "See All Cone Recipes"
         onClick: () =>
           @_showRecipeListView()
       })
