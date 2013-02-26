@@ -10,9 +10,10 @@ define [
   'dojo/request',
   'dojo/json',
   'dojo/_base/lang',
-  'Brew/ui/StandbyManager'
+  'Brew/ui/StandbyManager',
+  'Brew/data/helper/RecipeHelper'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeIngredientSection, RecipeNotes, Button, request, json, lang, StandbyManager) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeIngredientSection, RecipeNotes, Button, request, json, lang, StandbyManager, RecipeHelper) ->
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-recipe-builder"
 
@@ -68,14 +69,15 @@ define [
         recipe: @recipe
       }, query("." + @baseClass + "-notes-and-instructions", @domNode)[0])
 
-      new Button({
-        label: "#{(if @recipe? then "Save" else "Create")} Recipe"
-        class: "#{@baseClass}-create-recipe"
-        onClick: () =>
-          return unless @_info.validate()
-          StandbyManager.showStandby(@domNode)
-          @_saveRecipe()
-      }, query(".#{@baseClass}-create-recipe", @domNode)[0])
+      if RecipeHelper.isEditable(@recipe)
+        new Button({
+          label: "#{(if @recipe? then "Save" else "Create")} Recipe"
+          class: "#{@baseClass}-create-recipe"
+          onClick: () =>
+            return unless @_info.validate()
+            StandbyManager.showStandby(@domNode)
+            @_saveRecipe()
+        }, query(".#{@baseClass}-create-recipe", @domNode)[0])
 
     _saveRecipe: () ->
       data = @get("value")
