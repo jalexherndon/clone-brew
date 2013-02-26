@@ -49,7 +49,7 @@ define [
       batch_size: 5
       boil_size: 7
       boil_time: 60
-      efficiency: 70
+      efficiency: 75
 
     recipe: null
 
