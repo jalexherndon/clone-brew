@@ -59,7 +59,7 @@ define [
       @set('content', listview)
 
     _showRecipeBuilder: (recipe) ->
-      HashManager.set({recipe: recipe.id}, true)
+      HashManager.set({recipe: recipe?.id}, true)
       @set('title', if recipe? then recipe.name else 'New Clone Recipe')
       @set('actions', @_builderActions(recipe))
 
