@@ -7,9 +7,11 @@ define [
   'Brew/ui/listview/RecipeListView',
   'Brew/content/recipe/RecipeBuilder',
   'dijit/form/Button',
-  'dojo/on'
+  'dojo/on',
+  'dojo/request/xhr',
+  'Brew/util/navigation/HashManager'
 
-], (declare, lang, _WidgetBase, _TemplatedMixin, query, RecipeListView, RecipeBuilder, Button, Listen) ->
+], (declare, lang, _WidgetBase, _TemplatedMixin, query, RecipeListView, RecipeBuilder, Button, Listen, xhr, HashManager) ->
 
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-content-section"
@@ -24,9 +26,20 @@ define [
     "
 
     postCreate: () ->
-      @_showRecipeListView()
+      recipe_id = HashManager.get('recipe')
+      if recipe_id?
+        xhr.get("/recipes?beer_id=#{@beer.id}&id=#{recipe_id}", {
+          handleAs: 'json'
+        }).then (result) =>
+          if result.length is 1
+            @_showRecipeBuilder(result[0])
+          else
+            @_showRecipeListView()
+      else
+        @_showRecipeListView()
 
     _showRecipeListView: () ->
+      HashManager.set({recipe: null})
       @set('title', "Clones of #{@beer.name}")
       @set('actions', @_listViewActions())
 
@@ -46,6 +59,7 @@ define [
       @set('content', listview)
 
     _showRecipeBuilder: (recipe) ->
+      HashManager.set({recipe: recipe.id}, true)
       @set('title', if recipe? then recipe.name else 'New Clone Recipe')
       @set('actions', @_builderActions(recipe))
 

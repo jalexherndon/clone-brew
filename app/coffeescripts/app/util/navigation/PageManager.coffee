@@ -7,10 +7,14 @@ define [
   'dojo/query'
 ], (declare, LocalProvider, router, topic, lang, query) ->
 
+  query_change = false
+
   loadNavigationPage = (page, evt) ->
+    return query_change = false if query_change
     Brew.util.navigation.PageManager.loadPage(page, evt.params)
 
   loadDetailPage = (page, evt) ->
+    return query_change = false if query_change
     page.view = page.view.replace /_TYPE_/g, evt.params.type
 
     page.view = (page.view.split('/').map (word) ->
@@ -27,6 +31,12 @@ define [
     router.register page.hash, lang.hitch(@, loadDetailPage, page)
 
   registerAllPages = ->
+    router.registerBefore(".*", (evt) ->
+      if evt.newPath.split('?')[0] is evt.oldPath.split('?')[0]
+        evt.stopImmediatePropagation()
+        query_change = true
+    )
+
     pageList = Brew.util.navigation.PageList.getPages()
     registerNavigationPage page for page in pageList.navigation
     registerDetailPage page for page in pageList.detail

@@ -2,9 +2,10 @@ define "Brew/util/navigation/HashManager", [
   "dojo/_base/declare",
   "dojo/_base/lang",
   "dojo/hash",
-  "dojo/topic"
+  "dojo/topic",
+  "dojo/io-query"
 
-], (declare, lang, hash, topic) ->
+], (declare, lang, hash, topic, ioQuery) ->
 
   HashManager = declare "Brew.util.navigation.HashManager", null,
     defaultHash: "/library"
@@ -29,6 +30,27 @@ define "Brew/util/navigation/HashManager", [
 
     getHash: ->
       hash()
+
+    get: (key) ->
+      param = null
+      cur_hash = @getHash()
+      if cur_hash.indexOf('?') > -1
+        param = ioQuery.queryToObject(cur_hash.split('?')[1])[key]
+
+      param
+
+    set: (obj, silent) ->
+      hash_parts = @getHash().split('?')
+      query_obj = {}
+
+      if hash_parts.length is 2
+        lang.mixin(query_obj, ioQuery.queryToObject(hash_parts[1]))
+
+      lang.mixin(query_obj, obj)
+      hash_parts[1] = ioQuery.objectToQuery(query_obj)
+      new_hash = hash_parts[0] + (if hash_parts[1].length > 0 then "?#{hash_parts[1]}" else "")
+
+      @setHash(new_hash, false, false, silent)
 
     _onHashChange: (hash) ->
       if @_silent
