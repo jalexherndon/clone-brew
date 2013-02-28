@@ -102,7 +102,7 @@ define [
       recipe
 
     _setValueAttr: (value) ->
-      @_notes.set('value', if value? then value.notes else value)
+      @_notes.set('value', value)
       delete value?.notes
       
       section.set('value', if value? then value.ingredient_details else value) for section in @_sections

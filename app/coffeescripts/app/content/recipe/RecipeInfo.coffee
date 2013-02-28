@@ -62,7 +62,7 @@ define [
           name: "recipe_name"
           required: "true"
           style: "width:250px;"
-        }, query(".recipe-name", @domNode)[0])
+        }, @nameNode)
         
         new NumberSpinner({
           name: "batch_size"
@@ -70,7 +70,7 @@ define [
           constraints:
             min: 0
             max: 100
-        }, query(".batch-size", @domNode)[0])
+        }, @batchSizeNode)
         
         new NumberSpinner({
           name: "boil_size"
@@ -78,7 +78,7 @@ define [
           constraints:
             min: 0
             max: 100
-        }, query(".boil-size", @domNode)[0])
+        }, @boilSizeNode)
 
         new NumberSpinner({
           name: "boil_time"
@@ -86,11 +86,12 @@ define [
           constraints:
             min: 0
             max: 150
-        }, query(".boil-time", @domNode)[0])
+        }, @boilTimeNode)
         
         new NumberSpinner({
           name: "efficiency"
           style: "width:60px;"
+          required: true
           constraints:
             min: 0
             max: 100

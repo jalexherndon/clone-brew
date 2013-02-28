@@ -26,7 +26,7 @@
         width: 200px;
         height: 25px;
         text-align: center;
-        margin: 12px 6px 10px;
+        margin: 12px 6px 6px;
 
         > span {
             width: 100%;
@@ -43,11 +43,12 @@
     }
 
     >div {
-        margin: 6px 6px 8px;
+        margin: 0 6px;
+
         .header {
             @include rounded-corners();
             padding: 4px;
-            margin-bottom: 4px;
+            margin: 12px 0 4px;
             background-color: $pistachio-off-white;
             overflow: auto;
 

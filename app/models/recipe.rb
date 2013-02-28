@@ -20,7 +20,8 @@ class Recipe < ActiveRecord::Base
                   :user,
                   :name,
                   :notes,
-                  :efficiency
+                  :efficiency,
+                  :source
 
   accepts_nested_attributes_for :ingredient_details
 
@@ -31,7 +32,7 @@ class Recipe < ActiveRecord::Base
 
   def as_json(options={})
     super((options).merge({
-      :only => [:id, :batch_size, :beer_id, :boil_size, :boil_time, :efficiency, :name, :notes],
+      :only => [:id, :batch_size, :beer_id, :boil_size, :boil_time, :efficiency, :name, :notes, :source],
       :include => [{
         :ingredient_details => {
           :only => [:id, :amount, :notes, :time, :units],
