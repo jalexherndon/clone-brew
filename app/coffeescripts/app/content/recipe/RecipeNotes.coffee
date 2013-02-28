@@ -26,17 +26,18 @@ define [
       @inherited(arguments)
       @containerNode = @domNode
 
-      if @recipe? and RecipeHelper.isEditable(@recipe)
+      if RecipeHelper.isEditable(@recipe)
         new Textarea({
           name: "notes"
           style: "min-height:100px;_height:100px;"
-          value: @recipe.notes
+          value: @recipe?.notes
         }, @notesNode)
 
         new Textarea({
           name: "source"
           style: "min-height:100px;_height:100px;"
-          value: @recipe.source
+          placeholder: "Where did you find this recipe? Include URLs if available."
+          value: @recipe?.source
         }, @sourceNode)
 
     _setRecipeAttr: (recipe) ->
