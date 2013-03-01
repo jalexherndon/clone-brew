@@ -6,10 +6,12 @@ define [
   'dojo/query',
   'dijit/form/ValidationTextBox',
   'dijit/form/NumberSpinner',
+  'dijit/form/FilteringSelect',
+  'dojo/store/Memory',
   'Brew/auth/LocalProvider',
   'Brew/data/helper/RecipeHelper'
 
-], (declare, _WidgetBase, _TemplatedMixin, _FormMixin, query, ValidationTextBox, NumberSpinner, LocalProvider, RecipeHelper) ->
+], (declare, _WidgetBase, _TemplatedMixin, _FormMixin, query, ValidationTextBox, NumberSpinner, FilteringSelect, Memory, LocalProvider, RecipeHelper) ->
 
   declare [_WidgetBase, _TemplatedMixin, _FormMixin],
     baseClass: 'brew-recipe-builder-info'
@@ -20,6 +22,10 @@ define [
           <tr>
             <td class=\"label\">Recipe Name:</td>
             <td class=\"recipe-name\" colSpan=\"2\" data-dojo-attach-point=\"nameNode\"></td>
+          </tr>
+          <tr>
+            <td class=\"label\">Brew Method:</td>
+            <td class=\"brew-method\" data-dojo-attach-point=\"brewMethodNode\"></td>
           </tr>
           <tr>
             <td class=\"label\">Batch Size:</td>
@@ -51,6 +57,12 @@ define [
       boil_time: 60
       efficiency: 75
 
+    brew_methods: [
+      {id: 0, name: "All Grain"},
+      {id: 1, name: "Extract"}
+      {id: 2, name: "Partial Mash"},
+    ]
+
     recipe: null
 
     postCreate: () ->
@@ -63,6 +75,16 @@ define [
           required: "true"
           style: "width:250px;"
         }, @nameNode)
+
+        new FilteringSelect({
+          name: "brew_method"
+          style: "width:250px;"
+          required: true
+          value: @brew_methods[0].id
+          store: new Memory({
+            data: @brew_methods
+          })
+        }, @brewMethodNode)
         
         new NumberSpinner({
           name: "batch_size"

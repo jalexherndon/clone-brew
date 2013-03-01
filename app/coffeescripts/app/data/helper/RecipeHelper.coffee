@@ -10,12 +10,21 @@ define [
 
   helper = declare [],
 
+    brew_methods: [
+      "All Grain",
+      "Extract",
+      "Partial Mash"
+    ]
+
     constructor: (config) ->
       @categories = xhr.get("/ingredient_categories", {
           handleAs: 'json'
           query:
             order: 'name'
         })
+
+    getBrewMethodName: (recipe) ->
+      @brew_methods[recipe?.brew_method]
 
     isEditable: (recipe) ->
       if recipe?

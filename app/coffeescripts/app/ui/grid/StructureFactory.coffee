@@ -1,8 +1,9 @@
 define 'Brew/ui/grid/StructureFactory', [
-  'dojo/_base/declare'
-  'dojo/_base/lang'
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'Brew/data/helper/RecipeHelper'
 
-], (declare, lang) ->
+], (declare, lang, RecipeHelper) ->
 
   factory = declare 'Brew.ui.grid.StructureFactory', null,
 
@@ -62,6 +63,11 @@ define 'Brew/ui/grid/StructureFactory', [
               "#{owner.first_name} #{owner.last_name}"
             else
               owner.email
+
+        brew_method:
+          label: 'Brew Method'
+          get: (recipe) ->
+            RecipeHelper.getBrewMethodName(recipe)
       }
 
     structureFor: (modelName, opts) ->

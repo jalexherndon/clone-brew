@@ -2,9 +2,9 @@ class Recipe < ActiveRecord::Base
   extend Queryable
 
   BREW_METHODS = [
-    :all_grain,
-    :partial_mash,
-    :extract
+    0,  # All Grain
+    1,   # Extract
+    2  # Partial Mash
   ]
 
   belongs_to  :beer
@@ -39,7 +39,7 @@ class Recipe < ActiveRecord::Base
 
   def as_json(options={})
     super((options).merge({
-      :only => [:id, :batch_size, :beer_id, :boil_size, :boil_time, :efficiency, :name, :notes, :source],
+      :only => [:id, :batch_size, :beer_id, :boil_size, :boil_time, :brew_method, :efficiency, :name, :notes, :source],
       :include => [{
         :ingredient_details => {
           :only => [:id, :amount, :notes, :time, :units],
