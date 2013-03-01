@@ -1,8 +1,13 @@
 class Recipe < ActiveRecord::Base
   extend Queryable
 
+  BREW_METHODS = [
+    :all_grain,
+    :partial_mash,
+    :extract
+  ]
+
   belongs_to  :beer
-  belongs_to  :recipe_type
   belongs_to  :user
 
   has_many    :ingredient_details
@@ -13,7 +18,7 @@ class Recipe < ActiveRecord::Base
                   :boil_time,
                   :batch_size,
                   :boil_size,
-                  :recipe_type_id,
+                  :brew_method,
                   :ingredient_ids,
                   :ingredient_details,
                   :beer_id,
@@ -27,8 +32,10 @@ class Recipe < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :beer_id
+  validates_presence_of :brew_method
   validates_presence_of :efficiency
-  # validates :recipe_type_id, :presence => true
+  
+  validates :brew_method, :inclusion => {:in => BREW_METHODS}
 
   def as_json(options={})
     super((options).merge({
