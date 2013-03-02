@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  recipe_id: 1
+  step_type: 1
+  temperature: 1
+  time: 1
+  mash_volume: 1
+  description: MyText
+
+two:
+  recipe_id: 1
+  step_type: 1
+  temperature: 1
+  time: 1
+  mash_volume: 1
+  description: MyText

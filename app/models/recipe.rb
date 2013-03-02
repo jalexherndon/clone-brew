@@ -1,10 +1,14 @@
 class Recipe < ActiveRecord::Base
   extend Queryable
 
+  ALL_GRAIN = 0
+  EXTRACT = 1
+  PARTIAL_MASH = 2
+
   BREW_METHODS = [
-    0,  # All Grain
-    1,   # Extract
-    2  # Partial Mash
+    ALL_GRAIN,
+    EXTRACT,
+    PARTIAL_MASH
   ]
 
   belongs_to  :beer

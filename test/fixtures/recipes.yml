@@ -1,11 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  beer_id: 1
+  beer_id: abc
   directions: MyText
-  recipe_type_id: 1
+  name: BeerOne
+  efficiency: 70
+  brew_method: 0
 
 two:
-  beer_id: 1
+  beer_id: def
   directions: MyText
-  recipe_type_id: 2
+  name: BeerTwo
+  efficiency: 75
+  brew_method: 1
