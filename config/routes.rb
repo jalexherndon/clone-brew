@@ -1,5 +1,8 @@
 CloneBrew::Application.routes.draw do
 
+  resources :mash_steps
+
+
   devise_for :users, :controllers => {
     :registrations => 'registrations',
     :sessions => 'sessions'
@@ -9,7 +12,6 @@ CloneBrew::Application.routes.draw do
   resources :ingredient_categories
   resources :ingredients
   resources :recipes
-  resources :recipe_types
   resources :beers
   resources :breweries
 
