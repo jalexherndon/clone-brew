@@ -11,8 +11,8 @@ class IngredientDetail < ActiveRecord::Base
                   :ingredient_id,
                   :recipe_id
 
-  validates_presence_of :ingredient_id
-  validates_presence_of :recipe_id
+  validates_presence_of :ingredient_id,
+                        :recipe_id
 
   def as_json(options={})
     super((options).merge({

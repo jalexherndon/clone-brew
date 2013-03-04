@@ -8,7 +8,7 @@ class IngredientCategory < ActiveRecord::Base
                   :description,
                   :parent_ingredient_category_id
                   
-  validates :name, :presence => true
+  validates_presence_of :name
 
   def as_json(options={})
     super((options).merge({

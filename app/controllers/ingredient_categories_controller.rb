@@ -14,26 +14,7 @@ class IngredientCategoriesController < ApplicationController
   def show
     @ingredient_category = IngredientCategory.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @ingredient_category }
-    end
-  end
-
-  # GET /ingredient_categories/new
-  # GET /ingredient_categories/new.json
-  def new
-    @ingredient_category = IngredientCategory.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @ingredient_category }
-    end
-  end
-
-  # GET /ingredient_categories/1/edit
-  def edit
-    @ingredient_category = IngredientCategory.find(params[:id])
+    render :json => @ingredient_category
   end
 
   # POST /ingredient_categories
@@ -41,14 +22,10 @@ class IngredientCategoriesController < ApplicationController
   def create
     @ingredient_category = IngredientCategory.new(params[:ingredient_category])
 
-    respond_to do |format|
-      if @ingredient_category.save
-        format.html { redirect_to @ingredient_category, notice: 'Ingredient category was successfully created.' }
-        format.json { render json: @ingredient_category, status: :created, location: @ingredient_category }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @ingredient_category.errors, status: :unprocessable_entity }
-      end
+    if @ingredient_category.save
+      render :json => @ingredient_category, :status => :created
+    else
+      render :json => @ingredient_category.errors, :status => :unprocessable_entity
     end
   end
 
@@ -57,14 +34,10 @@ class IngredientCategoriesController < ApplicationController
   def update
     @ingredient_category = IngredientCategory.find(params[:id])
 
-    respond_to do |format|
-      if @ingredient_category.update_attributes(params[:ingredient_category])
-        format.html { redirect_to @ingredient_category, notice: 'Ingredient category was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @ingredient_category.errors, status: :unprocessable_entity }
-      end
+    if @ingredient_category.update_attributes(params[:ingredient_category])
+      render :json => @ingredient_category, :status => :ok
+    else
+      render :json => @ingredient_category.errors, :status => :unprocessable_entity
     end
   end
 
@@ -74,9 +47,6 @@ class IngredientCategoriesController < ApplicationController
     @ingredient_category = IngredientCategory.find(params[:id])
     @ingredient_category.destroy
 
-    respond_to do |format|
-      format.html { redirect_to ingredient_categories_url }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 end

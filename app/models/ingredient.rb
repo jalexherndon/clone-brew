@@ -8,8 +8,8 @@ class Ingredient < ActiveRecord::Base
                   :ingredient_category_id,
                   :ingredient_detail_ids
 
-  validates :name, :presence => true
-  validates :ingredient_category_id, :presence => true
+  validates_presence_of :name,
+                        :ingredient_category_id
 
   def as_json(options={})
     super((options).merge({

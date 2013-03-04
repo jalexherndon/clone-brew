@@ -17,28 +17,29 @@ class Recipe < ActiveRecord::Base
   has_many    :ingredient_details
   has_many    :ingredients, :through => :ingredient_details
 
-  attr_accessible :directions,
-                  :mash_temperature,
-                  :boil_time,
-                  :batch_size,
-                  :boil_size,
-                  :brew_method,
-                  :ingredient_ids,
-                  :ingredient_details,
+  attr_accessible :batch_size,
                   :beer_id,
-                  :user,
+                  :boil_size,
+                  :boil_time,
+                  :brew_method,
+                  :directions,
+                  :efficiency,
+                  :ingredient_details,
+                  :ingredient_ids,
+                  :mash_temperature,
                   :name,
                   :notes,
-                  :efficiency,
-                  :source
+                  :source,
+                  :user
 
   accepts_nested_attributes_for :ingredient_details
 
-  validates_presence_of :name
-  validates_presence_of :beer_id
-  validates_presence_of :brew_method
-  validates_presence_of :efficiency
-  
+  validates_presence_of :name,
+                        :beer_id,
+                        :brew_method,
+                        :efficiency,
+                        :user
+
   validates :brew_method, :inclusion => {:in => BREW_METHODS}
 
   def as_json(options={})

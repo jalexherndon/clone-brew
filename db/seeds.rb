@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities[0])
+
+require 'rake'
+Rake::Task['db:import:ingredients'].invoke
