@@ -4,9 +4,10 @@ define [
   'dojo/request/xhr',
   'dojo/_base/array',
   'dojo/Deferred',
-  'Brew/auth/LocalProvider'
+  'Brew/auth/LocalProvider',
+  'dojo/store/Memory'
 
-], (declare, lang, xhr, Arrays, Deferred, LocalProvider) ->
+], (declare, lang, xhr, Arrays, Deferred, LocalProvider, Memory) ->
 
   helper = declare [],
 
@@ -15,14 +16,16 @@ define [
       "Extract",
       "Partial Mash"
     ]
-    step_types: [
-      'Decoction',
-      'Fly Sparge',
-      'Infusion',
-      'Sparge',
-      'Temperature'
-    ]
 
+    step_types: new Memory(
+      data: [
+          {id: 0, name: 'Decoction'},
+          {id: 1, name: 'Fly Sparge'},
+          {id: 2, name: 'Infusion'},
+          {id: 3, name: 'Sparge'},
+          {id: 4, name: 'Temperature'}
+        ]
+    )
 
     constructor: (config) ->
       @categories = xhr.get("/ingredient_categories", {
@@ -35,7 +38,10 @@ define [
       @brew_methods[recipe?.brew_method]
 
     getMashStepTypeName: (mash_step) ->
-      @step_types[mash_step?.step_type]
+      @step_types.get(mash_step?.step_type).name
+
+    getMashStepTypeStore: () ->
+      @step_types
 
     isEditable: (recipe) ->
       if recipe?

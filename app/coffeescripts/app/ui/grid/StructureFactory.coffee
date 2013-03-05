@@ -76,7 +76,7 @@ define [
           get: (mash_step) =>
             RecipeHelper.getMashStepTypeName(mash_step)
           editorArgs:
-            store: new Memory(data: @step_types)
+            store: RecipeHelper.getMashStepTypeStore()
             style: "width: 174px"
             scrollOnFocus: true
             highlightMatch: "first"
