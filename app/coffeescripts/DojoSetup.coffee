@@ -12,7 +12,6 @@ class ApplicationLauncher
     'Brew/util/navigation/PageList',
     'Brew/util/navigation/PageManager',
     'Brew/util/navigation/HashManager',
-    'Brew/ui/grid/StructureFactory'
   ]
 
   instance: null

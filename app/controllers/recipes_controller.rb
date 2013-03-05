@@ -24,13 +24,19 @@ class RecipesController < ApplicationController
     recipe_data[:user] = current_user
 
     ingredient_details = recipe_data.delete(:ingredient_details)
-    
+    mash_steps = recipe_data.delete(:mash_steps)
+
     @recipe = Recipe.new(recipe_data)
     if @recipe.save
       unless ingredient_details.nil?
         ingredient_details.each do |ingredient_detail|
-          ingredient_detail[:recipe_id] = @recipe.id
           @recipe.ingredient_details.build(ingredient_detail)
+        end
+      end
+      
+      unless mash_steps.nil?
+        mash_steps.each do |mash_step|
+          @recipe.mash_steps.build(mash_step)
         end
       end
     end
@@ -49,7 +55,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
 
     if @recipe.user != current_user
-      render :json => {:success=>false, :message=>"Unauthorized to permorm this action"}, :status => 401
+      render :json => {:success=>false, :message=>"Unauthorized to perform this action"}, :status => 401
       return
     end
 
@@ -64,10 +70,18 @@ class RecipesController < ApplicationController
     unless ingredient_details.nil?
       @recipe.ingredient_details.clear
       ingredient_details.each do |ingredient_detail|
-        ingredient_detail[:recipe_id] = @recipe.id
         @recipe.ingredient_details.build(ingredient_detail)
       end
     end
+
+    mash_steps = recipe_data.delete(:mash_steps)
+    unless mash_steps.nil?
+      @recipe.mash_steps.clear
+      mash_steps.each do |mash_step|
+        @recipe.mash_steps.build(mash_step)
+      end
+    end
+
 
     if @recipe.update_attributes(recipe_data)
       render :json => @recipe, :status => :ok

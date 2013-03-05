@@ -33,4 +33,9 @@ class MashStep < ActiveRecord::Base
 
   validates :step_type, :inclusion => {:in => STEP_TYPES}
 
+  def as_json(options={})
+    super((options).merge({
+      :only => [:id, :description, :mash_volume, :recipe_id, :step_type, :temperature, :time],
+    }))
+  end
 end

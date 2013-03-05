@@ -3,14 +3,15 @@ define [
   'Brew/ui/listview/_ListView',
   'Brew/data/BreweryDBStore',
   'Brew/ui/grid/Grid',
-  'Brew/util/navigation/HashManager'
+  'Brew/util/navigation/HashManager',
+  'Brew/ui/grid/StructureFactory'
 
-], (declare, _ListView, BreweryDBStore, Grid, HashManager) ->
+], (declare, _ListView, BreweryDBStore, Grid, HashManager, StructureFactory) ->
 
   declare [_ListView],
     postCreate: () ->
       @inherited(arguments)
-      @grid.on ".dgrid-cell.dgrid-column-name:click", (e) =>
+      @grid.on ".dgrid-row:click", (e) =>
         beerId = @grid.row(e).id
         HashManager.setHash '/beer/detail/' + beerId
 
@@ -18,7 +19,7 @@ define [
     getGrid: (container) ->
       new Grid({
         store: new BreweryDBStore {target: '/beers'}
-        columns: Brew.ui.grid.StructureFactory.structureFor('beers')
+        columns: StructureFactory.structureFor('beers')
         rowsPerPage: 50
         pagingTextBox: true
       }, container)

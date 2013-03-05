@@ -1,22 +1,23 @@
 .brew-recipe-builder .brew-recipe-builder-section {
     .dgrid {
-        .dgrid-column-ingredient {
-            width: 200px;
+        .dgrid-column-ingredient,
+        .dgrid-column-step_type {
+            width: 190px;
 
             &.dgrid-cell-padding {
                 padding-left: 8px;
             }
         }
 
-        .dgrid-column-amount {
-            width: 120px;
-        }
-        
-        .dgrid-column-time {
-            width: 120px;
+        .dgrid-column-amount,
+        .dgrid-column-time,
+        .dgrid-column-temperature,
+        .dgrid-column-mash_volume {
+            width: 110px;
         }
 
-        .dgrid-column-notes {
+        .dgrid-column-notes,
+        .dgrid-column-description {
             width: auto;
         }
     }

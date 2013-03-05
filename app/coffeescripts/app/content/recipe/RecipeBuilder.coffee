@@ -6,6 +6,7 @@ define [
   'Brew/content/recipe/RecipeInfo',
   'Brew/content/recipe/RecipeIngredientSection',
   'Brew/content/recipe/RecipeNotes',
+  'Brew/content/recipe/RecipeMashSteps',
   'dijit/form/Button',
   'dojo/request',
   'dojo/json',
@@ -13,7 +14,7 @@ define [
   'Brew/ui/StandbyManager',
   'Brew/data/helper/RecipeHelper'
 
-], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeIngredientSection, RecipeNotes, Button, request, json, lang, StandbyManager, RecipeHelper) ->
+], (declare, _WidgetBase, _TemplatedMixin, query, RecipeInfo, RecipeIngredientSection, RecipeNotes, RecipeMashSteps, Button, request, json, lang, StandbyManager, RecipeHelper) ->
   declare [_WidgetBase, _TemplatedMixin],
     baseClass: "brew-recipe-builder"
 
@@ -24,6 +25,7 @@ define [
       <div class=\"${baseClass}-hops\"></div>
       <div class=\"${baseClass}-yeasts\"></div>
       <div class=\"${baseClass}-miscellaneous\"></div>
+      <div data-dojo-attach-point=\"mashStepsNode\"></div>
       <div class=\"${baseClass}-notes-and-instructions\"></div>
       <div class=\"${baseClass}-create-recipe\"></div>
     </div>
@@ -38,7 +40,7 @@ define [
         recipe: @recipe
       }, query("." + @baseClass + "-info", @domNode)[0])
 
-      @_sections = [
+      @_ingredient_detail_sections = [
         new RecipeIngredientSection({
           title: 'Grains & Extracts'
           ingredient_category: 'Fermentable'
@@ -64,6 +66,10 @@ define [
           recipe: @recipe
         }, query("." + @baseClass + "-miscellaneous", @domNode)[0])
       ]
+
+      @_mash_steps = new RecipeMashSteps({
+        recipe: @recipe
+      }, @mashStepsNode)
 
       @_notes = new RecipeNotes({
         recipe: @recipe
@@ -96,16 +102,22 @@ define [
       lang.mixin(recipe, {id: @recipe.id}) if @recipe?
 
       recipe.ingredient_details = []
-      for section in @_sections
+      for section in @_ingredient_detail_sections
         recipe.ingredient_details.push.apply(recipe.ingredient_details, section.get('value'))
+
+      recipe.mash_steps = @_mash_steps.get('value')
 
       recipe
 
     _setValueAttr: (value) ->
       @_notes.set('value', value)
       delete value?.notes
-      
-      section.set('value', if value? then value.ingredient_details else value) for section in @_sections
+
+      for section in @_ingredient_detail_sections
+        section.set('value', if value? then value.ingredient_details else value)
       delete value?.ingredient_details
+
+      @_mash_steps.set('value', value?.mash_steps)
+      delete value?.mash_steps
 
       @_info.set('value', value)

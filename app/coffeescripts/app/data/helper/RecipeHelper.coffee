@@ -15,6 +15,14 @@ define [
       "Extract",
       "Partial Mash"
     ]
+    step_types: [
+      'Decoction',
+      'Fly Sparge',
+      'Infusion',
+      'Sparge',
+      'Temperature'
+    ]
+
 
     constructor: (config) ->
       @categories = xhr.get("/ingredient_categories", {
@@ -25,6 +33,9 @@ define [
 
     getBrewMethodName: (recipe) ->
       @brew_methods[recipe?.brew_method]
+
+    getMashStepTypeName: (mash_step) ->
+      @step_types[mash_step?.step_type]
 
     isEditable: (recipe) ->
       if recipe?
@@ -61,9 +72,9 @@ define [
       if categories[mid].name == name
         return categories[mid]
       else if name > categories[mid].name
-        @_findCategoryByName(categories[(mid + 1) .. (categories.length)], name)
+        return @_findCategoryByName(categories[(mid + 1) .. (categories.length)], name)
       else
-        @_findCategoryByName(categories[0 .. (mid - 1)], name)
+        return @_findCategoryByName(categories[0 .. (mid - 1)], name)
 
 
   unless lang.getObject("data.helper.RecipeHelper", false, Brew)?

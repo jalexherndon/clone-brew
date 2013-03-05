@@ -63,6 +63,8 @@ class Recipe < ActiveRecord::Base
         }
       },{
         :user => {:only => [:id, :email, :first_name, :last_name]}
+      },{
+        :mash_steps => {:only => [:id, :description, :mash_volume, :recipe_id, :step_type, :temperature, :time]}
       }]
     }))
   end

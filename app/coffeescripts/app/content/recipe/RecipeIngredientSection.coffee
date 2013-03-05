@@ -75,7 +75,7 @@ define [
       values
 
     _setValueAttr: (values) ->
-      values_exist = values.length > 0
+      values_exist = values?.length > 0
       grid = @_getGrid(values_exist)
 
       if grid?

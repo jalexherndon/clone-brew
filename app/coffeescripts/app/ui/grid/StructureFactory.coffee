@@ -1,11 +1,12 @@
-define 'Brew/ui/grid/StructureFactory', [
+define [
   'dojo/_base/declare',
   'dojo/_base/lang',
-  'Brew/data/helper/RecipeHelper'
+  'Brew/data/helper/RecipeHelper',
+  'dojo/store/Memory'
 
-], (declare, lang, RecipeHelper) ->
+], (declare, lang, RecipeHelper, Memory) ->
 
-  factory = declare 'Brew.ui.grid.StructureFactory', null,
+  factory = declare [],
 
     structures:
       beers: {
@@ -21,7 +22,6 @@ define 'Brew/ui/grid/StructureFactory', [
 
         name: 
           label: 'Name'
-          className: 'clickable'
 
         brewery:
           label: 'Brewery'
@@ -70,10 +70,53 @@ define 'Brew/ui/grid/StructureFactory', [
             RecipeHelper.getBrewMethodName(recipe)
       }
 
+      mash_steps: {
+        step_type:
+          label: "Step Type"
+          get: (mash_step) =>
+            RecipeHelper.getMashStepTypeName(mash_step)
+          editorArgs:
+            store: new Memory(data: @step_types)
+            style: "width: 174px"
+            scrollOnFocus: true
+            highlightMatch: "first"
+            trim: true
+
+        temperature:
+          label: "Temperature"
+          editorArgs:
+            style: "width: 100px"
+            constraints:
+              min: 0
+              max: 250
+
+        time:
+          label: 'Time'
+          editorArgs:
+            style: "width: 100px"
+            constraints:
+              min: 0
+              max: 200
+
+        mash_volume:
+          label: 'Mash Volume'
+          editorArgs:
+            style: "width: 100px"
+            constraints:
+              min: 0
+              max: 100
+
+        description:
+          label: 'Description'
+          editorArgs:
+            placeHolder: "Description"
+            style: "width: 98%"
+      }
+
     structureFor: (modelName, opts) ->
       @structures[modelName]
                 
+  unless lang.getObject("ui.grid.StructureFactory", false, Brew)?
+    lang.setObject("ui.grid.StructureFactory", new factory(), Brew)
 
-  lang.getObject 'ui.grid.StructureFactory', true, Brew
-  Brew.ui.grid.StructureFactory = new factory()
   Brew.ui.grid.StructureFactory
