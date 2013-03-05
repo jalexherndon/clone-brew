@@ -1,6 +1,7 @@
 class Recipe < ActiveRecord::Base
   extend Queryable
 
+  # Keep these in alphabetical order from 0 up
   ALL_GRAIN = 0
   EXTRACT = 1
   PARTIAL_MASH = 2
@@ -16,6 +17,7 @@ class Recipe < ActiveRecord::Base
 
   has_many    :ingredient_details
   has_many    :ingredients, :through => :ingredient_details
+  has_many    :mash_steps
 
   attr_accessible :batch_size,
                   :beer_id,
@@ -26,6 +28,7 @@ class Recipe < ActiveRecord::Base
                   :efficiency,
                   :ingredient_details,
                   :ingredient_ids,
+                  :mash_steps,
                   :mash_temperature,
                   :name,
                   :notes,
@@ -33,6 +36,7 @@ class Recipe < ActiveRecord::Base
                   :user
 
   accepts_nested_attributes_for :ingredient_details
+  accepts_nested_attributes_for :mash_steps
 
   validates_presence_of :name,
                         :beer_id,

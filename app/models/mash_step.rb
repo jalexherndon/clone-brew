@@ -1,6 +1,7 @@
 class MashStep < ActiveRecord::Base
   extend Queryable
 
+  # Keep in alphabetical order from 0 up
   DECOCTION = 0
   FLY_SPARGE = 1
   INFUSION = 2
