@@ -1,6 +1,24 @@
 class IngredientDetail < ActiveRecord::Base
   extend Queryable
 
+  CUPS = 0
+  G = 1
+  KG = 2
+  LBS = 3
+  OZ = 4
+  PERCENT = 5
+  PKG = 6
+
+  UNITS = [
+    CUPS,
+    G,
+    KG,
+    LBS,
+    OZ,
+    PERCENT,
+    PKG
+  ]
+
   belongs_to :recipe
   belongs_to :ingredient
 
@@ -11,8 +29,12 @@ class IngredientDetail < ActiveRecord::Base
                   :ingredient_id,
                   :recipe_id
 
-  validates_presence_of :ingredient_id,
-                        :recipe_id
+  validates_presence_of :amount,
+                        :ingredient_id,
+                        :recipe_id,
+                        :units
+
+  validates :units, :inclusion => {:in => UNITS}
 
   def as_json(options={})
     super((options).merge({

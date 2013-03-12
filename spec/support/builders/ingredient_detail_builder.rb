@@ -11,6 +11,8 @@ class IngredientDetailBuilder
     def basic_ingredient_detail
       ingredient_detail.with_ingredient_id
                        .with_recipe_id
+                       .with_amount
+                       .with_units
 
       self
     end
@@ -33,6 +35,15 @@ class IngredientDetailBuilder
 
       @ingredient_detail_data[:recipe_id] = recipe_id
       self
+    end
+
+    def with_amount(amount = rand(100))
+      @ingredient_detail_data[:amount] = amount
+      self
+    end
+
+    def with_units(units = IngredientDetail::OZ)
+      @ingredient_detail_data[:units] = units
     end
 
     def build

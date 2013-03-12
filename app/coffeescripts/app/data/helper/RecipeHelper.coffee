@@ -17,6 +17,16 @@ define [
       "Partial Mash"
     ]
 
+    ingredient_units: [
+      'cups',
+      'g',
+      'kg',
+      'lbs',
+      'oz',
+      '%',
+      'pkg',
+    ]
+
     step_types: new Memory(
       data: [
           {id: 0, name: 'Decoction'},

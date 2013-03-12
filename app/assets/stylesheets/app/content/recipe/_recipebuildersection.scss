@@ -9,9 +9,17 @@
             }
         }
 
-        .dgrid-column-amount,
-        .dgrid-column-time,
+        .dgrid-column-amount {
+            width: 80px;
+            text-align: right;
+        }
+
         .dgrid-column-temperature,
+        .dgrid-column-time,
+        .dgrid-column-units {
+            width: 70px;
+        }
+
         .dgrid-column-mash_volume {
             width: 110px;
         }

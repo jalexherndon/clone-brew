@@ -23,7 +23,8 @@ define [
     ingredient: null
     amount: 0
     time: 0
-    notes: ""
+    notes: ''
+    units: 4
 
 
   declare [_WidgetBase, _TemplatedMixin],
@@ -40,6 +41,16 @@ define [
     recipe: null
     ingredient_category: null
     is_editable: null
+
+    units: [
+      {id: 0, name: 'cups'},
+      {id: 1, name:'g'},
+      {id: 2, name: 'kg'},
+      {id: 3, name: 'lbs'},
+      {id: 4, name: 'oz'},
+      {id: 5, name: '%'},
+      {id: 6, name: 'pkg'},
+    ]
 
     constructor: (config) ->
       @inherited(arguments)
@@ -139,20 +150,30 @@ define [
       }
 
       config.amount = {
-        label: "Amount (lbs)"
         editorArgs:
-          style: "width: 100px"
+          style: "width: 60px"
           constraints:
             min: 0
-            max: 20
+            max: 100
 
+      }
+
+      config.units = {
+        label: " "
+        get: (ingredient_detail) ->
+          this.editorInstance.store.get(ingredient_detail.units).name
+        editorArgs:
+          store: new Memory({data: @units})
+          value: @units[4].id
+          style: "width: 50px"
+          required: true
       }
 
       if (@has_time)
         config.time = {
           label: "Time (min)"
           editorArgs:
-            style: "width: 100px"
+            style: "width: 50px"
             constraints:
               min: 0
               max: 120
@@ -170,6 +191,7 @@ define [
       if @is_editable
         config.ingredient = editor(config.ingredient, FilteringSelect, 'click')
         config.amount = editor(config.amount, NumberSpinner, 'click')
+        config.units = editor(config.units, FilteringSelect, 'click')
         config.notes = editor(config.notes, ValidationTextBox, 'click')
         if config.time?
           config.time = editor(config.time, NumberSpinner, 'click')

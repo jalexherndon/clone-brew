@@ -83,17 +83,17 @@ define [
             trim: true
 
         temperature:
-          label: "Temperature"
+          label: "Temp (F)"
           editorArgs:
-            style: "width: 100px"
+            style: "width: 50px"
             constraints:
               min: 0
               max: 250
 
         time:
-          label: 'Time'
+          label: 'Time (MIN)'
           editorArgs:
-            style: "width: 100px"
+            style: "width: 50px"
             constraints:
               min: 0
               max: 200
@@ -101,7 +101,7 @@ define [
         mash_volume:
           label: 'Mash Volume'
           editorArgs:
-            style: "width: 100px"
+            style: "width: 90px"
             constraints:
               min: 0
               max: 100

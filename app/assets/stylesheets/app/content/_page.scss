@@ -5,6 +5,7 @@
 
     .brew-content-section {
         @include rounded-corners();
+        opacity: .9;
 
         width: 100%;
         margin-top: 8px;
@@ -15,6 +16,7 @@
 
     .brew-content-section-title-bar {
         @include rounded-corners-detail(5px, 5px, 0px, 0px);
+
         margin: 0;
         padding: 4px;
         margin-bottom: 4px;

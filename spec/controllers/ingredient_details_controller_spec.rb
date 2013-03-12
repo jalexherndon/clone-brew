@@ -22,7 +22,8 @@ describe IngredientDetailsController do
       post :create, ingredient_detail: {
         :recipe_id => recipe.id,
         :ingredient_id => Ingredient.first.id,
-        :amount => 4
+        :amount => 4,
+        :units => IngredientDetail::OZ
       }
     end
 
