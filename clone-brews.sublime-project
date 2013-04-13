@@ -2,7 +2,7 @@
     "folders": [{
         "folder_exclude_patterns": [
             "tmp",
-            // "public/javascripts",
+            "public/javascripts",
             "node_modules"
         ],
         "path": "/Users/jacob/projects/clone-brew",

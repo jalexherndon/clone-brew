@@ -4,13 +4,24 @@
   <title>CloneBrew</title>
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= stylesheet_link_tag "application", :media => "all" %>
+
+  <%= stylesheet_link_tag "/lib/bootstrap/css/bootstrap.min.css", :media => "all" %>
+  <%= stylesheet_link_tag "/lib/bootstrap/css/bootstrap-responsive.min.css", :media => "all" %>
 </head>
-<body class="nihilo">
+<body>
    <p class="notice" style="display:none;"><%= notice %></p>
    <p class="alert" style="display:none;"><%= alert %></p>
    
 <%= yield %>
 
+  <% if Rails.env == "development" %>
+    <script type="text/javascript" src="/lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" data-main="javascripts/main.js" src="/lib/requirejs/requirejs.js"></script>
+  <% else %>
+    <script type="text/javascript" src="/lib/jquery/jquery.minjs"></script>
+    <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" data-main="javascripts/main.js" src="/lib/requirejs/requirejs.min.js"></script>
+  <% end %>
 </body>
 </html>

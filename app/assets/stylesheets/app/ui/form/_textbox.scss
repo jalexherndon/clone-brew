@@ -1,9 +1,0 @@
-.dijitTextBox {
-    @include rounded-corners(5px);
-    border: 1px inset $lighter-grey !important;
-    padding: 2px 4px;
-
-    .dijitValidationIcon, .dijitInputInner {
-        padding-bottom: 1px;
-    }
-}

@@ -1,6 +1,6 @@
 require.config
   paths:
-    'angular'         : 'angularloader'
+    'angular'         : '../helpers/angular-requirejs-loader'
     'angular-raw'     : '../lib/angular/angular'
     'angular-cookies' : '../lib/angular/angular-cookies'
     'angular-loader'  : '../lib/angular/angular-loader'
@@ -26,7 +26,7 @@ require.config
   deps: [
     'angular'
     'directives/appversion'
-    'filters/$interpolate'
+    'filters/interpolate'
     'routes'
     'services/version'
   ]

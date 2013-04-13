@@ -1,0 +1,27 @@
+.library-page {
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .pagination {
+        margin: 0 !important;
+    }
+
+    .search {
+        margin-bottom: 0;
+    }
+
+    .label-th {
+        width: 70px;
+    }
+
+    .label-td {
+        text-align: center;
+
+        img {
+            height: 64px;
+            width: 64px;
+        }
+    }
+}
