@@ -4,8 +4,8 @@
     -webkit-border-radius: $radius;
 }
 
-@mixin rounded-corners-detail ($top, $right, $bottom, $left) {
-    border-radius: $top $right $bottom $left;
-    -moz-border-radius: $top $right $bottom $left;
-    -webkit-border-radius: $top $right $bottom $left;
+@mixin rounded-corners-detail ($top-left, $top-right, $bottom-right, $bottom-left) {
+    border-radius: $top-left $top-right $bottom-right $bottom-left;
+    -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
+    -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
 }

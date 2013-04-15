@@ -1,5 +1,1 @@
 angular.module 'clonebrews', ['ngResource']
-angular.module 'clonebrews.controllers' , []
-angular.module 'clonebrews.directives'  , []
-angular.module 'clonebrews.filters'     , []
-angular.module 'clonebrews.services'    , []

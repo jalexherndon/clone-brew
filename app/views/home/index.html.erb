@@ -1,5 +1,14 @@
-<div id="page-wrapper" class="container">
-  <div id="page-ct" class="row-fluid">
-    <div id="page" class="span12"></div>
+<div id="doc">
+  <div ng-include="'partials/navigation.html'"></div>
+
+  <div id="alert-ct" data-spy="affix" data-offset-top="80" class="affix-top"></div>
+
+  <div id="page-wrapper" class="content">
+    <div id="page-ct" class="container">
+      <div id="page" class="row-fluid" ng-view></div>
+    </div>
   </div>
+  
+  <div ng-include="'partials/footer.html'"></div>
+  <div id="modal"></div>
 </div>

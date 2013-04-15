@@ -1,6 +1,4 @@
 class BeersController < ApplicationController
-  before_filter :authenticate_user!
-
   require "net/http"
   require "uri"
   

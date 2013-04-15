@@ -19,22 +19,12 @@ h1, h2, h3, h4, h5, .brand, legend {
     margin-bottom: 14px;
 }
 
-.navbar {
-    margin: 0 !important;
-}
-
 #doc {
     #page-wrapper {
-        background: #000 url('/assets/cellar_background.jpg') no-repeat;
-        background-size: cover;
         overflow: scroll;
 
-        #page-ct {
-            background-image: url('/assets/white-wash-thin.png');
-            padding: 60px 14px 44px 14px !important;
-            overflow: visible;
-            min-height: 100%;
-            height: auto;
+        .module {
+            border-color: #5A7239;
         }
 
         &.login {
@@ -44,11 +34,19 @@ h1, h2, h3, h4, h5, .brand, legend {
             #page-ct {
                 background-image: none;
             }
+        }
 
-            .module {
-                border-color: #5A7239;
+        &.content {
+            background: #000 url('/assets/cellar_background.jpg') no-repeat;
+            background-size: cover;
+
+            #page-ct {
+                background-image: url('/assets/white-wash-thin.png');
+                padding: 60px 14px 44px 14px !important;
+                overflow: visible;
+                min-height: 100%;
+                height: auto;
             }
         }
-        
     }
 }

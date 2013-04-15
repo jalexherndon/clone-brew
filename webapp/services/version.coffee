@@ -1,1 +1,1 @@
-angular.module('clonebrews.services').value('version', '0.1')
+angular.module('clonebrews').value('version', '0.1')

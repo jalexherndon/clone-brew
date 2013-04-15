@@ -15,6 +15,9 @@ require.config
 
     'clonebrews'            : ['angular', 'angular-resource']
 
+    'controllers/library'   : ['clonebrews', 'services/beer', 'services/brewerydb']
+    'controllers/navigation': ['clonebrews']
+
     'directives/appversion' : ['clonebrews']
     
     'filters/interpolate'   : ['clonebrews']
@@ -22,13 +25,24 @@ require.config
     'routes'                : ['clonebrews']
 
     'services/version'      : ['clonebrews']
+    'services/beer'         : ['clonebrews']
+    'services/brewerydb'    : ['clonebrews']
 
   deps: [
     'angular'
+    
+    'controllers/library'
+    'controllers/navigation'
+    
     'directives/appversion'
+    
     'filters/interpolate'
+    
     'routes'
+
     'services/version'
+    'services/beer'
+    'services/brewerydb'
   ]
   
   callback: ->

@@ -1,5 +1,5 @@
 describe 'service', () ->
-  beforeEach(module('clonebrews.services'))
+  beforeEach(module('clonebrews'))
 
   describe 'version', () ->
     it 'should return current version', inject (version) ->

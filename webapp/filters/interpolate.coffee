@@ -1,4 +1,4 @@
-angular.module('clonebrews.filters').filter 'interpolate', ['version', (version) ->
+angular.module('clonebrews').filter 'interpolate', ['version', (version) ->
   (text) ->
     String(text).replace(/\%VERSION\%/mg, version)
 ]

@@ -1,5 +1,5 @@
 describe 'filter', () ->
-  beforeEach module('clonebrews.filters')
+  beforeEach module('clonebrews')
 
   describe 'interpolate', () ->
     beforeEach module ($provide) ->

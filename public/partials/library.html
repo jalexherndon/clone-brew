@@ -1,0 +1,28 @@
+<div class="module library-page">
+  <h1 class="pull-left">Library <small>BEERS</small></h1>
+
+  <form ng-submit="searchBeers()" class="form-search pull-right">
+    <i class="icon-remove" ng-show="searchIsActive" ng-click="resetBeers()" data-toggle="tooltip" title="Clear search"></i>
+    <div class="input-append">
+      <input ng-model="query" type="text" class="input-medium search-query" placeholder="Search...">
+      <button class="btn" type="submit"><i class="icon-search"></i></button>
+    </div>
+  </form>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Beer</th>
+        <th>Brewery</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="beer in beers" ng-click="goToBeerDetailPage(beer.id)">
+        <td><img ng-src="{{beer.labels.icon}}" class="img-rounded" /></td>
+        <td>{{beer.name}}</td>
+        <td>{{beer.breweries[0].name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

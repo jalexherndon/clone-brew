@@ -1,5 +1,8 @@
 angular.module('clonebrews').config ['$routeProvider', ($routeProvider) ->
-  # $routeProvider
+  $routeProvider
+  .when '/library',
+    templateUrl: 'partials/library.html'
+    controller: 'LibraryController'
   # .when '/github/:searchTerm',
   #   controller: 'gitHubController'
   #   reloadOnSearch: true

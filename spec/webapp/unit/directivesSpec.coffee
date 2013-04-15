@@ -1,5 +1,5 @@
 describe 'directives', () ->
-  beforeEach module('clonebrews.directives')
+  beforeEach module('clonebrews')
 
   describe 'app-version', () ->
     it 'should print current version', () ->
