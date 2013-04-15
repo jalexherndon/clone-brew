@@ -10,24 +10,38 @@ angular.module('clonebrews').controller 'LibraryController', [
     $scope.searchIsActive = false
     $scope.query = null
     $scope.beers = []
+    $scope.currentPage = 1
 
-    $scope.searchBeers = () =>
+    $scope.searchBeers = (page=1) ->
       $scope.searchIsActive = true
       BreweryDBService.search(
         q: $scope.query
         type: 'beer'
+        p: page
       ).then (results) ->
         $scope.beers = results
+
+    $scope.clearSearch =() ->
+      $scope.query = null
+      $scope.searchIsActive = false
+      $scope.goToPage 1
 
     $scope.goToBeerDetailPage = (beerId) ->
       $location.path "/beer/#{beerId}"
 
-    $scope.resetBeers = () =>
+    $scope.goToPage = (page=1) =>
+      if page < 1 or ($scope.beers.length < 50 && page > $scope.currentPage)
+        return
+
+      if $scope.searchIsActive 
+        $scope.searchBeers page
+        return
+
       @tooltip.tooltip('hide')
-      $scope.searchIsActive = false
-      $scope.query = null
-      BeerService.query().then (results) ->
+      $scope.currentPage = page
+
+      BeerService.query(p: page).then (results) ->
         $scope.beers = results
 
-    $scope.resetBeers()
+    $scope.goToPage $scope.currentPage
 ]

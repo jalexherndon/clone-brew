@@ -1,13 +1,24 @@
-<div class="module library-page">
-  <h1 class="pull-left">Library <small>BEERS</small></h1>
+<div class="module library-page span12">
+  <h1>Library <small>BEERS</small></h1>
 
-  <form ng-submit="searchBeers()" class="form-search pull-right">
-    <i class="icon-remove" ng-show="searchIsActive" ng-click="resetBeers()" data-toggle="tooltip" title="Clear search"></i>
-    <div class="input-append">
-      <input ng-model="query" type="text" class="input-medium search-query" placeholder="Search...">
-      <button class="btn" type="submit"><i class="icon-search"></i></button>
-    </div>
-  </form>
+  <div class="row-fluid">
+    <form ng-submit="searchBeers()" class="form-search span4">
+      <div class="input-prepend">
+        <button class="btn" type="submit"><i class="icon-search"></i></button>
+        <input ng-model="query" type="text" class="input-medium search-query" placeholder="Search...">
+      </div>
+      <i class="icon-remove" ng-show="searchIsActive" ng-click="clearSearch()" data-toggle="tooltip" title="Clear search"></i>
+    </form>
+
+    <ul class="pager span4 offset4">
+      <li class="previous" ng-class="{disabled: currentPage==1}">
+        <a ng-click="goToPage(currentPage - 1)">&larr; Previous Page</a>
+      </li>
+      <li class="next" ng-class="{disabled: beers.length<50}">
+        <a ng-click="goToPage(currentPage + 1)">Next Page &rarr;</a>
+      </li>
+    </ul>
+  </div>
 
   <table class="table table-hover">
     <thead>
