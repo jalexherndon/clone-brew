@@ -1,5 +1,8 @@
 CloneBrew::Application.routes.draw do
 
+  resources :beta_users
+
+
   resources :mash_steps
 
 
