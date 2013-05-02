@@ -8,30 +8,42 @@ require.config
     'angular-sanitize': '../lib/angular/angular-sanitize'
 
   shim:
-    'angular-cookies'       : ['angular-raw']
-    'angular-loader'        : ['angular-raw']
-    'angular-resource'      : ['angular-raw']
-    'angular-sanitize'      : ['angular-raw']
+    'angular-cookies'                 : ['angular-raw']
+    'angular-loader'                  : ['angular-raw']
+    'angular-resource'                : ['angular-raw']
+    'angular-sanitize'                : ['angular-raw']
 
-    'clonebrews'            : ['angular', 'angular-resource']
+    'clonebrews'                      : ['angular', 'angular-resource', 'angular-cookies']
 
-    'controllers/library'   : ['clonebrews', 'services/beer', 'services/brewerydb']
-    'controllers/navigation': ['clonebrews']
+    'controllers/beer/detail'         : ['clonebrews', 'services/beer']
+    'controllers/library'             : ['clonebrews', 'services/beer', 'services/brewerydb']
+    'controllers/login/betasignup'    : ['clonebrews']
+    'controllers/login/login'         : ['clonebrews', 'services/session']
+    'controllers/login/registration'  : ['clonebrews']
+    'controllers/navigation'          : ['clonebrews']
 
-    'directives/appversion' : ['clonebrews']
+    'directives/appversion'           : ['clonebrews']
     
-    'filters/interpolate'   : ['clonebrews']
+    'filters/interpolate'             : ['clonebrews']
 
-    'routes'                : ['clonebrews']
+    'routes'                          : ['clonebrews']
 
-    'services/version'      : ['clonebrews']
-    'services/beer'         : ['clonebrews']
-    'services/brewerydb'    : ['clonebrews']
+    'services/version'                : ['clonebrews']
+    'services/beer'                   : ['clonebrews']
+    'services/betauser'               : ['clonebrews']
+    'services/brewerydb'              : ['clonebrews']
+    'services/recipe'                 : ['clonebrews']
+    'services/registration'           : ['clonebrews']
+    'services/session'                : ['clonebrews']
 
   deps: [
     'angular'
     
+    'controllers/beer/detail'
     'controllers/library'
+    'controllers/login/betasignup'
+    'controllers/login/login'
+    'controllers/login/registration'
     'controllers/navigation'
     
     'directives/appversion'
@@ -42,7 +54,11 @@ require.config
 
     'services/version'
     'services/beer'
+    'services/betauser'
     'services/brewerydb'
+    'services/recipe'
+    'services/registration'
+    'services/session'
   ]
   
   callback: ->

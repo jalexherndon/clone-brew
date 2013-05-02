@@ -1,0 +1,14 @@
+<div class="row-fluid" ng-controller="BetaSignUpController">
+  <form class="module" ng-submit="betaSignUp()">
+    <fieldset>
+      <legend>We are in beta. <small>Sign up to be notified of our launch...</small></legend>
+      <input type="text" ng-model="first_name" placeholder="First name" class="span6">
+      <input type="text" ng-model="last_name" placeholder="Last name" class="span6">
+      <input type="text" ng-model="email" placeholder="Email" class="span12">
+      <label class="checkbox">
+          <input type="checkbox" ng-model="beta_interest" ng-init="false"> I am interested in being a beta user
+      </label>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </fieldset>
+  </form>
+</div>

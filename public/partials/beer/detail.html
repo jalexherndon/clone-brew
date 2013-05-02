@@ -1,0 +1,65 @@
+<div class="beer-detail-page span12">
+  <div class="row-fluid">
+    <div class="module span12">
+      <div class="row-fluid">
+        <h1 class="pull-left"><div class="pull-left">{{beer.name}}&nbsp;&nbsp;</div><small class="pull-left">{{beer.getBreweryDisplayString()}}</small></h1>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span4">
+          <div class="row-fluid">
+            <img ng-src="{{beer.labels.medium}}" class="img-rounded span12" />
+          </div>
+          <div class="row-fluid">
+            <p class="span12">
+              <span ng-repeat="(stat, value) in beer.getStats()">
+                <b>{{stat.toUpperCase()}}:</b> {{value}}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="span8">
+          <div class="row-fluid">
+            <p class="muted span12">{{beer.style.name}}</p>
+          </div>
+          <div class="row-fluid">
+            <p>{{beer.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="module span12">
+      <h1>Clone Recipes <small>for {{beer.name}}</small></h1>
+
+      <table class="table table-hover" ng-show="recipes">
+        <thead>
+          <tr>
+            <th>Recipe</th>
+            <th>Brewer</th>
+            <th>Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recipe in recipes" ng-click="goToBeerDetailPage(beer.id)">
+            <td>{{recipe.name}}</td>
+            <td>{{recipe.user}}</td>
+            <td>{{recipe.method}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div ng-show="!recipes">
+        <p>To see these recipes, sign up for free.</p>
+        <p>
+          <a href="/#/login" class="btn btn-primary">log in</a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="/#/login" class="btn btn-success">sign up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

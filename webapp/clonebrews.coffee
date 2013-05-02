@@ -1,1 +1,1 @@
-angular.module 'clonebrews', ['ngResource']
+angular.module 'clonebrews', ['ngResource', 'ngCookies']

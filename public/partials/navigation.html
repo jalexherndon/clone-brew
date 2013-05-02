@@ -22,7 +22,7 @@
           </a>
           <ul class="dropdown-menu">
             <li ng-repeat="action in userActions">
-              <a href="{{action.href}}">{{action.name}}</a>
+              <div ng-click="action.method()">{{action.name}}</div>
             </li>
           </ul>
         </li>

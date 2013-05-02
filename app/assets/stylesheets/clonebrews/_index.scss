@@ -15,21 +15,32 @@ h1, h2, h3, h4, h5, .brand, legend {
     border: 1px solid #8D5A32;
     background-image: url('/assets/white-wash-thick.png');
 
-    padding: 4px;
+    padding: 4px 10px;
     margin-bottom: 14px;
+}
+
+.navbar {
+    margin: 0 !important;
 }
 
 #doc {
     #page-wrapper {
         overflow: scroll;
+        background-size: cover;
 
         .module {
             border-color: #5A7239;
         }
 
+        #page-ct {
+            padding: 60px 14px 44px 14px !important;
+            overflow: visible;
+            min-height: 100%;
+            height: auto;
+        }
+
         &.login {
             background: #000 url('/assets/hops_background.jpeg') no-repeat;
-            background-size: cover;
 
             #page-ct {
                 background-image: none;
@@ -38,14 +49,9 @@ h1, h2, h3, h4, h5, .brand, legend {
 
         &.content {
             background: #000 url('/assets/cellar_background.jpg') no-repeat;
-            background-size: cover;
 
             #page-ct {
                 background-image: url('/assets/white-wash-thin.png');
-                padding: 60px 14px 44px 14px !important;
-                overflow: visible;
-                min-height: 100%;
-                height: auto;
             }
         }
     }

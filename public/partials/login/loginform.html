@@ -1,0 +1,13 @@
+<div class="row-fluid" ng-controller="LoginController">
+  <form class="module" ng-submit="signIn()">
+    <fieldset>
+      <legend>Already a member? <small>Log in</small></legend>
+      <input type="text" ng-model="email" placeholder="Email" class="span12">
+      <input type="password" ng-model="password" placeholder="Password" class="span12">
+    <!--   <label class="checkbox">
+          <input type="checkbox" name="remember_me"> Remember me
+      </label> -->
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </fieldset>
+  </form>
+</div>

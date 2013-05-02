@@ -1,8 +1,9 @@
 angular.module('clonebrews').controller 'NavigationController', [
-  '$scope',
-  '$location',
+  '$scope'
+  '$location'
+  'SessionService'
 
-  ($scope, $location) ->
+  ($scope, $location, SessionService) ->
     $scope.navigations = [{
       name: 'Library'
       href: 'library'
@@ -10,7 +11,10 @@ angular.module('clonebrews').controller 'NavigationController', [
 
     $scope.userActions = [{
       name: 'Log out'
-      href: ''
+      method: () ->
+        SessionService.signOut()
+        $location.path '/'
+        
     }]
  
     # $scope.search = (searchTerm) ->

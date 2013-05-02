@@ -3,7 +3,7 @@
 
   <div id="alert-ct" data-spy="affix" data-offset-top="80" class="affix-top"></div>
 
-  <div id="page-wrapper" class="content">
+  <div id="page-wrapper" ng-class="{true: 'login', false: 'content'}[isLoginPage]">
     <div id="page-ct" class="container">
       <div id="page" class="row-fluid" ng-view></div>
     </div>

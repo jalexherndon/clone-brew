@@ -4,7 +4,7 @@ class CreateBetaUsers < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.string :email
-      t.boolean :beta_intrest
+      t.boolean :beta_interest
 
       t.timestamps
     end
