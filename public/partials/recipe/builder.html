@@ -1,0 +1,180 @@
+<div ng-controller="RecipeBuilderController">
+  <div class="row-fluid">
+    <h1 class="span11">New Clone Recipe <small>for {{beer.name}}</small></h1>
+    <button ng-click="storeAndExit()" class="span1 btn store-and-exit">
+      <i class="icon-list"></i>
+    </button>
+    <script type="text/javascript">
+      $('.store-and-exit.btn').tooltip({
+        placement: 'left',
+        title: 'Return to library.'
+      });
+    </script>
+  </div>
+
+  <div class="row-fluid">
+    <form class="form span12">
+      <div class="recipe-info row-fluid">
+        <div class="span4 offset1">
+          <div class="control-group name">
+            <label class="control-label" for="inputName">Recipe Name</label>
+            <div class="controls">
+              <input type="text" ng-model="name" placeholder="Name">
+            </div>
+          </div>
+
+          <div class="control-group brew_method row-fluid">
+            <label class="control-label" for="selectBrewName">Brew Method</label>
+            <div class="controls">
+              <select ng-model="brew_method">
+                <option value="0">All Grain</option>
+                <option value="1">Extract</option>
+                <option value="2">Partial Mash</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-group batch_size">
+            <label class="control-label" for="inputBatchSize">Batch Size <small>(gal)</small></label>
+            <div class="controls">
+              <input type="number" ng-model="batch_size">
+            </div>
+          </div>
+        </div>
+
+        <div class="span4 offset2">
+          <div class="control-group boil_size">
+            <label class="control-label" for="inputBoilSize">Boil Size <small>(gal)</small></label>
+            <div class="controls">
+              <input type="number" ng-model="boil_size">
+            </div>
+          </div>
+
+          <div class="control-group boil_time">
+            <label class="control-label" for="inputBoilTime">Boil Time <small>(min)</small></label>
+            <div class="controls">
+              <input type="number" ng-model="boil_time">
+            </div>
+          </div>
+
+          <div class="control-group efficiency">
+            <label class="control-label" for="inputEfficiency">Efficiency <small>(%)</small></label>
+            <div class="controls">
+              <input type="number" ng-model="efficiency">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ingredient-details-ct">
+        <legend>Ingredients&nbsp;<button class="btn btn-mini" ng-click="addIngredientDetail()"><i class="icon-plus"></i></button></legend>
+        <table class="table table-condensed" ng-show="ingredient_details && ingredient_details.length">
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Amount</th>
+              <th>Units</th>
+              <th>Time <small class="muted">min</small></th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="detail in ingredient_details">
+              <td>{{detail.ingredient}}</td>
+              <td><input 
+                    ng-model="detail.amount"
+                    type="number"
+                    class="input-mini">
+                  </input></td>
+              <td><select
+                    ng-model="detail.units"
+                    ng-options="id as label for (label,id) in $parent.units"
+                    class="input-small">
+                  </select>
+              </td>
+              <td><input
+                    ng-model="detail.time"
+                    type="number"
+                    class="input-mini">
+                  </input>
+              </td>
+              <td><textarea
+                    ng-model="detail.notes"
+                    class="input-large">
+                  </textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mash-steps-ct">
+        <legend>Mash Steps&nbsp;<button class="btn btn-mini" ng-click="addMashStep()"><i class="icon-plus"></i></button></legend>
+        <table class="table table-condensed" ng-show="mash_steps && mash_steps.length">
+          <thead>
+            <tr>
+              <th>Step Type</th>
+              <th>Temperature <small class="muted">F</small></th>
+              <th>Time <small class="muted">min</small></th>
+              <th>Mash Volume <small class="muted">gal</small></th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="step in mash_steps">
+              <td><select
+                    ng-model="step.step_type"
+                      ng-options="id as label for (label,id) in $parent.step_types"
+                    class="input">
+                  </select>
+              </td>
+              <td><input
+                    ng-model="step.temperature"
+                    type="number"
+                    class="input-mini">
+                  </input>
+              </td>
+              <td><input
+                    ng-model="step.time"
+                    type="number"
+                    class="input-mini">
+                  </input>
+              </td>
+              <td><input
+                    ng-model="step.mash_volume"
+                    type="number"
+                    class="input-mini">
+                  </input>
+              </td>
+              <td><textarea
+                    ng-model="step.description"
+                    class="input-large">
+                  </textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="control-group notes row-fluid">
+        <legend>Notes &amp; Instructions</legend>
+        <div class="controls">
+          <textarea ng-model="notes" rows="4" class="span12" placeholder="Is there anything specific about this recipe that people should know?"></textarea>
+        </div>
+      </div>
+
+      <div class="control-group source row-fluid">
+        <legend>Sources</legend>
+        <div class="controls">
+          <textarea ng-model="source" rows="4" class="span12" placeholder="Where did you find this recipe? Please include URLs if available."></textarea>
+        </div>
+      </div>
+
+      <p class="text-center">
+        <button ng-click="discardRecipe()" class="btn btn-danger">Discard</button>
+        <button ng-click="createRecipe()" class="btn btn-primary">Create</button>
+      </p>
+
+    </form>
+  </div>
+</div>

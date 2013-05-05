@@ -21,6 +21,7 @@ require.config
     'controllers/login/login'         : ['clonebrews', 'services/session']
     'controllers/login/registration'  : ['clonebrews']
     'controllers/navigation'          : ['clonebrews']
+    'controllers/recipe/builder'      : ['clonebrews']
 
     'directives/appversion'           : ['clonebrews']
     
@@ -45,6 +46,7 @@ require.config
     'controllers/login/login'
     'controllers/login/registration'
     'controllers/navigation'
+    'controllers/recipe/builder'
     
     'directives/appversion'
     

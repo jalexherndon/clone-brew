@@ -16,7 +16,7 @@ class RecipesController < ApplicationController
 
   # POST /recipes
   def create
-    recipe_data = params[:recipe]
+    recipe_data = request.body.read
     if recipe_data.is_a? String
       recipe_data = ActiveSupport::JSON.decode(recipe_data).symbolize_keys
     end

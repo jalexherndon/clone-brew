@@ -4,7 +4,9 @@ angular.module('clonebrews').service 'RecipeService', [
   '$resource',
 
   ($log, $q, $resource) ->
-    Recipe = $resource '/recipes/:id'
+    Recipe = $resource '/recipes/:id', {},
+      create:
+        method: 'POST'
 
     Recipe.prototype.brewMethodDisplayNames = [
       'All Grain'

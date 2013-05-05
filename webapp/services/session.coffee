@@ -6,12 +6,10 @@ angular.module('clonebrews').service 'SessionService', [
   '$cookieStore'
 
   ($log, $q, $resource, $rootScope, $cookieStore) ->
-    UserSession = $resource '/users/:action.json',
-      'user[email]': '@user.email'
-      'user[password]': '@user.password'
-    ,
+    SESSION_COOKIE_NAME = 'session'
+    UserSession = $resource '/users/:action.json', {},
       signIn:
-        method: 'POST'
+        method: 'Post'
         params:
           action: 'sign_in'
 
@@ -23,7 +21,7 @@ angular.module('clonebrews').service 'SessionService', [
     @signIn = (email, password) ->
       defer = $q.defer()
 
-      if $cookieStore.get('session')
+      if $cookieStore.get(SESSION_COOKIE_NAME)
         defer.reject(message: 'already logged in')
 
       new UserSession(
@@ -32,11 +30,11 @@ angular.module('clonebrews').service 'SessionService', [
           password: password
       ).$signIn (session) ->
         $rootScope.isLoggedIn = true
-        $cookieStore.put('session', session)
+        $cookieStore.put(SESSION_COOKIE_NAME, session)
         defer.resolve session
       , (error) ->
         $rootScope.isLoggedIn = false
-        $cookieStore.remove('session')
+        $cookieStore.remove(SESSION_COOKIE_NAME)
         $log.error 'SessionService.signIn error', error
         defer.reject error
 
@@ -45,13 +43,13 @@ angular.module('clonebrews').service 'SessionService', [
     @signOut = () ->
       defer = $q.defer()
 
-      session = $cookieStore.get('session')
+      session = $cookieStore.get(SESSION_COOKIE_NAME)
       new UserSession(
         user:
           email: session.email
       ).$signOut (session) ->
         $rootScope.isLoggedIn = false
-        $cookieStore.remove('session')
+        $cookieStore.remove(SESSION_COOKIE_NAME)
         defer.resolve session
       , (error) ->
         $log.error 'SessionService.signOut error', error
@@ -60,5 +58,5 @@ angular.module('clonebrews').service 'SessionService', [
       defer.promise
 
 
-    $rootScope.isLoggedIn = $cookieStore.get('session')?
+    $rootScope.isLoggedIn = $cookieStore.get(SESSION_COOKIE_NAME)?
 ]
