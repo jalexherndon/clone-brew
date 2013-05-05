@@ -8,8 +8,8 @@ angular.module('clonebrews').controller 'RegistrationController', [
       RegistrationService.signUp(
         email: $scope.email
         password: $scope.password
-        firstName: $scope.firstName
-        lastName: $scope.lastName
-      , $scope.betaKey).then (session) ->
+        first_name: $scope.first_name
+        last_name: $scope.last_name
+      , $scope.brew_beta_key).then (session) ->
         $location.path '/library'
 ]

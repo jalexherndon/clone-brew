@@ -6,13 +6,7 @@ angular.module('clonebrews').service 'RegistrationService', [
   '$cookieStore'
 
   ($log, $q, $resource, $rootScope, $cookieStore) ->
-    UserRegistration = $resource '/users.json',
-      'user[email]': '@user.email'
-      'user[password]': '@user.password'
-      'user[first_name]': '@user.first_name'
-      'user[last_name]': '@user.last_name'
-      'brew_beta_key': '@betaKey'
-    ,
+    UserRegistration = $resource '/users.json', {},
       signUp:
         method: 'POST'
 
@@ -24,7 +18,7 @@ angular.module('clonebrews').service 'RegistrationService', [
 
       new UserRegistration(
         user: userData
-        betaKey: betaKey
+        brew_beta_key: betaKey
       ).$signUp (session) ->
         $rootScope.isLoggedIn = true
         $cookieStore.put('session', session)
