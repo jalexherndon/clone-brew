@@ -7,7 +7,7 @@
     <script type="text/javascript">
       $('.store-and-exit.btn').tooltip({
         placement: 'left',
-        title: 'Return to library.'
+        title: 'Return to all recipes.'
       });
     </script>
   </div>
@@ -66,47 +66,49 @@
         </div>
       </div>
 
-      <div class="ingredient-details-ct">
-        <legend>Ingredients&nbsp;<button class="btn btn-mini" ng-click="addIngredientDetail()"><i class="icon-plus"></i></button></legend>
-        <table class="table table-condensed" ng-show="ingredient_details && ingredient_details.length">
-          <thead>
-            <tr>
-              <th>Ingredient</th>
-              <th>Amount</th>
-              <th>Units</th>
-              <th>Time <small class="muted">min</small></th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="detail in ingredient_details">
-              <td>{{detail.ingredient}}</td>
-              <td><input 
-                    ng-model="detail.amount"
-                    type="number"
-                    class="input-mini">
-                  </input></td>
-              <td><select
-                    ng-model="detail.units"
-                    ng-options="id as label for (label,id) in $parent.units"
-                    class="input-small">
-                  </select>
-              </td>
-              <td><input
-                    ng-model="detail.time"
-                    type="number"
-                    class="input-mini">
-                  </input>
-              </td>
-              <td><textarea
-                    ng-model="detail.notes"
-                    class="input-large">
-                  </textarea>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <legend>Ingredients&nbsp;<button class="btn btn-mini" ng-click="addIngredientDetail()"><i class="icon-plus"></i></button></legend>
+      <table class="table table-condensed" ng-show="ingredient_details && ingredient_details.length">
+        <thead>
+          <tr>
+            <th>Ingredient</th>
+            <th>Amount</th>
+            <th>Units</th>
+            <th>Time <small class="muted">min</small></th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="detail in ingredient_details">
+            <td><select
+                  ng-model="detail.ingredient"
+                  ng-options="i.id as i.name group by i.ingredient_category.name for i in ingredients">
+                </select>
+            </td>
+            <td><input 
+                  ng-model="detail.amount"
+                  type="number"
+                  class="input-mini">
+                </input></td>
+            <td><select
+                  ng-model="detail.units"
+                  ng-options="id as label for (label,id) in $parent.units"
+                  class="input-small">
+                </select>
+            </td>
+            <td><input
+                  ng-model="detail.time"
+                  type="number"
+                  class="input-mini">
+                </input>
+            </td>
+            <td><textarea
+                  ng-model="detail.notes"
+                  class="input-large">d
+                </textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="mash-steps-ct">
         <legend>Mash Steps&nbsp;<button class="btn btn-mini" ng-click="addMashStep()"><i class="icon-plus"></i></button></legend>

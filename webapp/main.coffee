@@ -33,6 +33,7 @@ require.config
     'services/beer'                   : ['clonebrews']
     'services/betauser'               : ['clonebrews']
     'services/brewerydb'              : ['clonebrews']
+    'services/ingredient'             : ['clonebrews']
     'services/recipe'                 : ['clonebrews']
     'services/registration'           : ['clonebrews']
     'services/session'                : ['clonebrews']
@@ -58,6 +59,7 @@ require.config
     'services/beer'
     'services/betauser'
     'services/brewerydb'
+    'services/ingredient'
     'services/recipe'
     'services/registration'
     'services/session'

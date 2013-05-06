@@ -3,8 +3,9 @@ angular.module('clonebrews').controller 'RecipeBuilderController', [
   '$cookieStore'
   '$location'
   'RecipeService'
+  'IngredientService'
 
-  ($scope, $cookieStore, $location, RecipeService) ->
+  ($scope, $cookieStore, $location, RecipeService, IngredientService) ->
     recipeFields = [
       'name'
       'brew_method'
@@ -17,6 +18,8 @@ angular.module('clonebrews').controller 'RecipeBuilderController', [
       'notes'
       'source'
       ]
+
+    $scope.ingredients = IngredientService.query()
 
     $scope.units =
       'cups': 0
@@ -56,7 +59,6 @@ angular.module('clonebrews').controller 'RecipeBuilderController', [
       $location.search 'building', false
 
     $scope.storeAndExit = () ->
-      debugger
       storeRecipe()
       $location.search 'building', false
 
@@ -70,10 +72,13 @@ angular.module('clonebrews').controller 'RecipeBuilderController', [
       $scope.beer.then (beer) ->
         $cookieStore.remove "recipe_builder_#{beer.id}"
 
-    $scope.beer.then (beer) ->
-      recipeData = $cookieStore.get("recipe_builder_#{beer.id}") || {}
-      _.extend $scope, recipeData
+    if recipe?
+      _.extend $scope, recipe
+    else
+      $scope.beer.then (beer) ->
+        recipeData = $cookieStore.get("recipe_builder_#{beer.id}") || {}
+        _.extend $scope, recipeData
 
-    $scope.$on '$destroy', storeRecipe
-    $(window).unload storeRecipe
+      $scope.$on '$destroy', storeRecipe
+      $(window).unload storeRecipe
 ]

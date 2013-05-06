@@ -1,0 +1,50 @@
+<div class="row-fluid">
+  <div class="module span12">
+    <div ng-show="isLoggedIn">
+      <div ng-show="building" ng-include=" 'partials/recipe/builder.html' "></div>
+      
+      <div ng-hide="building">
+        <div class="row-fluid">
+          <h1 class="span11">Clone Recipes <small>for {{beer.name}}</small></h1>
+          <div class="span1">
+            <button class="btn add-recipe" ng-click="building = true">
+              <i class="icon-plus" title="Add a clone recipe for {{beer.name}}."></i>
+            </button>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $('.add-recipe.btn i').tooltip({placement: 'left'});
+        </script>
+
+        <table class="table table-hover" ng-show="recipes.length">
+          <thead>
+            <tr>
+              <th>Recipe</th>
+              <th>Brewer</th>
+              <th>Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="recipe in recipes" ng-click="showRecipe(recipe)">
+              <td>{{recipe.name}}</td>
+              <td>{{recipe.user.first_name + " " + recipe.user.last_name}}</td>
+              <td>{{recipe.getBrewMethod()}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div ng-show="!recipes.length">
+          <p>There are no clone recipes for this beer yet.</p>
+          <p>
+            <button class='btn btn-primary' ng-click="building = true">Add one now</button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div ng-hide="isLoggedIn">
+      <h1>Clone Recipes <small>for {{beer.name}}</small></h1>
+      <ng-include src=" 'partials/login/prompt.html' "></ng-include>
+    </div>
+  </div>
+</div>
