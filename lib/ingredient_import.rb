@@ -14,9 +14,20 @@ module IngredientImport
 
     doc.xpath("/*/#{node_key}").each do |node|
       category = find_or_create_category(node, parent_category, use_child_type)
+      if node_key == "YEAST"
+        name = node.xpath("./LABORATORY").inner_text
+        product_id = node.xpath("./PRODUCT_ID").inner_text
+        if !product_id.nil? && product_id != "-"
+          name += " #{product_id}"
+        else
+          name += " - #{node.xpath("./NAME").inner_text}"
+        end
+      else
+        name = node.xpath("./NAME").inner_text
+      end
 
       Ingredient.create(
-        :name => node.xpath("./NAME").inner_text,
+        :name => name,
         :description => node.xpath("./NOTES").inner_text,
         :ingredient_category_id => category.id
       )
