@@ -80,7 +80,7 @@
         <tbody>
           <tr ng-repeat="detail in ingredient_details">
             <td><select
-                  ng-model="detail.ingredient"
+                  ng-model="detail.ingredient_id"
                   ng-options="i.id as i.name group by i.ingredient_category.name for i in ingredients">
                 </select>
             </td>
