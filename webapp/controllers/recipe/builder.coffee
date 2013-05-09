@@ -32,6 +32,8 @@ angular.module('clonebrews').controller 'RecipeBuilderController', [
     $scope.addIngredientDetail = () ->
       $scope.ingredient_details ?= []
       $scope.ingredient_details.push {}
+    $scope.removeIngredientDetail = (detail) ->
+      $scope.ingredient_details = _.without $scope.ingredient_details, detail
 
     $scope.step_types =
       'Decoction'   : 0
@@ -42,6 +44,8 @@ angular.module('clonebrews').controller 'RecipeBuilderController', [
     $scope.addMashStep = () ->
       $scope.mash_steps ?= []
       $scope.mash_steps.push {}
+    $scope.removeMashStep = (step) ->
+      $scope.mash_steps = _.without $scope.mash_steps, step
 
     $scope.createRecipe = () ->
       $scope.beer.then (beer) ->

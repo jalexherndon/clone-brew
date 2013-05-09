@@ -70,6 +70,7 @@
       <table class="table table-condensed" ng-show="ingredient_details && ingredient_details.length">
         <thead>
           <tr>
+            <th></th>
             <th>Ingredient</th>
             <th>Amount</th>
             <th>Units</th>
@@ -79,6 +80,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="detail in ingredient_details">
+            <td><i class="icon-remove-circle" ng-click="removeIngredientDetail(detail)"></i></td>
             <td><select
                   ng-model="detail.ingredient_id"
                   ng-options="i.id as i.name group by i.ingredient_category.name for i in ingredients">
@@ -115,6 +117,7 @@
         <table class="table table-condensed" ng-show="mash_steps && mash_steps.length">
           <thead>
             <tr>
+              <th></th>
               <th>Step Type</th>
               <th>Temperature <small class="muted">F</small></th>
               <th>Time <small class="muted">min</small></th>
@@ -124,6 +127,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="step in mash_steps">
+              <td><i class="icon-remove-circle" ng-click="removeMashStep(step)"></i></td>
               <td><select
                     ng-model="step.step_type"
                       ng-options="id as label for (label,id) in $parent.step_types"
