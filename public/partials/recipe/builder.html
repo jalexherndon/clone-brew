@@ -37,7 +37,11 @@
           <div class="control-group batch_size">
             <label class="control-label" for="inputBatchSize">Batch Size <small>(gal)</small></label>
             <div class="controls">
-              <input type="number" ng-model="batch_size">
+              <input
+                ng-model="batch_size"
+                type="number"
+                min="0"
+                step="any">
             </div>
           </div>
         </div>
@@ -46,21 +50,31 @@
           <div class="control-group boil_size">
             <label class="control-label" for="inputBoilSize">Boil Size <small>(gal)</small></label>
             <div class="controls">
-              <input type="number" ng-model="boil_size">
+              <input
+                ng-model="boil_size"
+                type="number"
+                min="0"
+                step="any">
             </div>
           </div>
 
           <div class="control-group boil_time">
             <label class="control-label" for="inputBoilTime">Boil Time <small>(min)</small></label>
             <div class="controls">
-              <input type="number" ng-model="boil_time">
+              <input
+                ng-model="boil_time"
+                type="number"
+                min="0">
             </div>
           </div>
 
           <div class="control-group efficiency">
             <label class="control-label" for="inputEfficiency">Efficiency <small>(%)</small></label>
             <div class="controls">
-              <input type="number" ng-model="efficiency">
+              <input
+                ng-model="efficiency"
+                type="number"
+                min="0">
             </div>
           </div>
         </div>
@@ -89,6 +103,8 @@
             <td><input 
                   ng-model="detail.amount"
                   type="number"
+                  min="0"
+                  step="any"
                   class="input-mini">
                 </input></td>
             <td><select
@@ -100,12 +116,13 @@
             <td><input
                   ng-model="detail.time"
                   type="number"
+                  min="0"
                   class="input-mini">
                 </input>
             </td>
             <td><textarea
                   ng-model="detail.notes"
-                  class="input-large">d
+                  class="input-large">
                 </textarea>
             </td>
           </tr>
@@ -137,18 +154,22 @@
               <td><input
                     ng-model="step.temperature"
                     type="number"
+                    min="0"
                     class="input-mini">
                   </input>
               </td>
               <td><input
                     ng-model="step.time"
                     type="number"
+                    min="0"
                     class="input-mini">
                   </input>
               </td>
               <td><input
                     ng-model="step.mash_volume"
                     type="number"
+                    min="0"
+                    step="any"
                     class="input-mini">
                   </input>
               </td>
