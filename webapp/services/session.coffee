@@ -17,26 +17,28 @@ angular.module('clonebrews').service 'SessionService', [
         method: 'DELETE'
         params:
           action: 'sign_out'
+          user: '@user'
 
     @signIn = (email, password) ->
       defer = $q.defer()
 
-      if $cookieStore.get(SESSION_COOKIE_NAME)
-        defer.reject(message: 'already logged in')
-
-      new UserSession(
-        user:
-          email: email
-          password: password
-      ).$signIn (session) ->
-        $rootScope.isLoggedIn = true
-        $cookieStore.put(SESSION_COOKIE_NAME, session)
-        defer.resolve session
-      , (error) ->
-        $rootScope.isLoggedIn = false
-        $cookieStore.remove(SESSION_COOKIE_NAME)
-        $log.error 'SessionService.signIn error', error
-        defer.reject error
+      session = $cookieStore.get(SESSION_COOKIE_NAME)
+      if session?
+        defer.resolve(session)
+      else
+        new UserSession(
+          user:
+            email: email
+            password: password
+        ).$signIn (session) ->
+          $rootScope.isLoggedIn = true
+          $cookieStore.put(SESSION_COOKIE_NAME, session)
+          defer.resolve session
+        , (error) ->
+          $rootScope.isLoggedIn = false
+          $cookieStore.remove(SESSION_COOKIE_NAME)
+          $log.error 'SessionService.signIn error', error
+          defer.reject error
 
       defer.promise
 
@@ -44,16 +46,19 @@ angular.module('clonebrews').service 'SessionService', [
       defer = $q.defer()
 
       session = $cookieStore.get(SESSION_COOKIE_NAME)
-      new UserSession(
-        user:
-          email: session.email
-      ).$signOut (session) ->
-        $rootScope.isLoggedIn = false
-        $cookieStore.remove(SESSION_COOKIE_NAME)
-        defer.resolve session
-      , (error) ->
-        $log.error 'SessionService.signOut error', error
-        defer.reject error
+      if session?
+        new UserSession(
+          user:
+            email: session.email
+        ).$signOut (session) ->
+          $rootScope.isLoggedIn = false
+          $cookieStore.remove(SESSION_COOKIE_NAME)
+          defer.resolve session
+        , (error) ->
+          $log.error 'SessionService.signOut error', error
+          defer.reject error
+      else
+          defer.resolve message: 'already logged out'
 
       defer.promise
 

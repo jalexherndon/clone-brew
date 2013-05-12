@@ -12,8 +12,8 @@ angular.module('clonebrews').controller 'NavigationController', [
     $scope.userActions = [{
       name: 'Log out'
       method: () ->
-        SessionService.signOut()
-        $location.path '/'
+        SessionService.signOut().then () ->
+          $location.path '/'
         
     }]
  
