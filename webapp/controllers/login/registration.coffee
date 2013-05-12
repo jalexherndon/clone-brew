@@ -14,7 +14,6 @@ angular.module('clonebrews').controller 'RegistrationController', [
       , $scope.brew_beta_key).then (session) ->
         $location.path '/library'
       , (error) ->
-        debugger;
         $scope.brew_beta_key = ''
         $scope.password = ''
         if error.data.message?
