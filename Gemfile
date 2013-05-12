@@ -6,7 +6,7 @@ gem 'devise'
 gem 'httparty'
 
 # CoffeeScript support
-gem 'therubyracer'
+gem 'therubyracer' , :platforms => :ruby
 gem 'barista'
 
 # Gems used only for assets and not required
