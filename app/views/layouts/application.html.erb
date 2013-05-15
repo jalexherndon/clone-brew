@@ -7,6 +7,19 @@
   <%= stylesheet_link_tag "/lib/bootstrap/css/bootstrap.min.css", :media => "all" %>
   <%= stylesheet_link_tag "/lib/bootstrap/css/bootstrap-responsive.min.css", :media => "all" %>
   <%= stylesheet_link_tag "application", :media => "all" %>
+  <script type="text/javascript">
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-31998888-1']);
+   _gaq.push(['_setDomainName', 'clonebrews.com']);
+   _gaq.push(['_trackPageview']);
+
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+
+  </script>
 </head>
 <body>
    <p class="notice" style="display:none;"><%= notice %></p>
